@@ -3,9 +3,9 @@
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/a5b22089-6037-4c88-afea-4e62c83a7960" />
 
 ## Resources for the workshop
+- https://github.com/grafana/intro-to-mltp
 
 ## Alloy 101 
-<img width="403" alt="image" src="https://github.com/user-attachments/assets/265947e4-a01e-4994-914a-e3254a74e980" />
 
 ## Infrastructure Observability
 ## Application Observability
