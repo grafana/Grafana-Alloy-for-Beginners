@@ -22,6 +22,26 @@
 ### Syntax is a language used to tell Alloy how you want it to collect, transform, and deliver your telemetry data. 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
+### Alloy configuration syntax consists of:
+- Blocks
+- Experssions
+- Attributes
+
+#### Blocks
+<img width="345" alt="image" src="https://github.com/user-attachments/assets/3a38536c-77af-43e4-b931-293c15275377" />
+```
+// Pattern for creating a labeled block:
+BLOCK_NAME "BLOCK_LABEL" {
+  // Block body can contain attributes and nested unlabeled blocks
+  IDENTIFIER = EXPRESSION // Attribute
+
+  NESTED_BLOCK_NAME {
+    // Nested block body
+  }
+}
+```
+
+
 # Infrastructure Observability
 # Application Observability
 # Debugging
