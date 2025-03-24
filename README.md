@@ -1,6 +1,6 @@
 <img width="916" alt="image" src="https://github.com/user-attachments/assets/8d60bee9-9d0f-4e9f-9d62-74d5f10a4ec5" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/dd978b03-74b9-456e-bedf-d24df79ff069" />
-<img width="531" alt="image" src="https://github.com/user-attachments/assets/99863778-a483-4d63-885f-81252c0742bc" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/83247f92-1975-4802-972f-5a70d2df580f" />
 
 ## Resources for the workshop
 
