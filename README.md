@@ -30,8 +30,10 @@
 #### Blocks
 <img width="345" alt="image" src="https://github.com/user-attachments/assets/3a38536c-77af-43e4-b931-293c15275377" />
 
+You use Blocks to configure components and groups of attributes. Each block can contain any number of attributes or nested blocks. Blocks are steps in the overall pipeline expressed by the configuration.
+
+*Pattern for creating a labeled block:*
 ```
-// Pattern for creating a labeled block:
 BLOCK_NAME "BLOCK_LABEL" {
   // Block body can contain attributes and nested unlabeled blocks
   IDENTIFIER = EXPRESSION // Attribute
@@ -40,8 +42,39 @@ BLOCK_NAME "BLOCK_LABEL" {
     // Nested block body
   }
 }
+
+```
+Example:
+```
+prometheus.remote_write "default" {
+  endpoint {
+    url = "http://localhost:9009/api/prom/push"
+  }
+}
+```
+The preceding example has two blocks:
+
+- prometheus.remote_write "default": A labeled block which instantiates a prometheus.remote_write component. The label is the string "default".
+- endpoint: An unlabeled block inside the component that configures an endpoint to send metrics to. This block sets the url attribute to specify the endpoint.
+
+#### Attributes
+You use Attributes to configure individual settings. Attributes always take the form of `ATTRIBUTE_NAME = ATTRIBUTE_VALUE`.
+
+The following example shows how to set the `log_level` attribute to `"debug"`.
+
+```
+log_level = "debug"
 ```
 
+#### Expressions
+You use expressions to compute the value of an attribute. The simplest expressions are constant values like `"debug"`, `32`, or `[1, 2, 3, 4]`. The Alloy syntax supports complex expressions, for example:
+
+Referencing the exports of components: `local.file.password_file.content`
+Mathematical operations: `1 + 2`, `3 * 4`, `(5 * 6) + (7 + 8)`
+Equality checks: `local.file.file_a.content == local.file.file_b.content`
+Calling functions from Alloy’s standard library: `sys.env("HOME")` retrieves the value of the `HOME` environment variable.
+
+You can use expressions for any attribute inside a component definition.
 
 # Infrastructure Observability
 # Application Observability
