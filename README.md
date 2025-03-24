@@ -32,7 +32,7 @@
 
 You use Blocks to configure components and groups of attributes. Each block can contain any number of attributes or nested blocks. Blocks are steps in the overall pipeline expressed by the configuration.
 
-*Pattern for creating a labeled block:*
+Pattern for creating a labeled block:
 ```
 BLOCK_NAME "BLOCK_LABEL" {
   // Block body can contain attributes and nested unlabeled blocks
@@ -54,19 +54,31 @@ prometheus.remote_write "default" {
 ```
 The preceding example has two blocks:
 
-- prometheus.remote_write "default": A labeled block which instantiates a prometheus.remote_write component. The label is the string "default".
-- endpoint: An unlabeled block inside the component that configures an endpoint to send metrics to. This block sets the url attribute to specify the endpoint.
+- `prometheus.remote_write "default"`: A labeled block which instantiates a prometheus.remote_write component. The label is the string "default".
+- `endpoint`: An unlabeled block inside the component that configures an endpoint to send metrics to. This block sets the url attribute to specify the endpoint.
 
 #### Attributes
 You use Attributes to configure individual settings. Attributes always take the form of `ATTRIBUTE_NAME = ATTRIBUTE_VALUE`.
 
-The following example shows how to set the `log_level` attribute to `"debug"`.
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/efebba52-2e8a-45ee-ade4-c761b9cd9b63" />
 
 ```
-log_level = "debug"
+prometheus.scrape "infra" {
+//The targets array allows us to specify which service targets to scrape from:
+  targets = [
+    {"__address__" = "grafana:3000", group = "infrastrcuture", service = "grafana"},
+  ]
+
+  scrape_interval = "15s"
+  job_name        = "infra"
+  forward_to    = [prometheus.remote)write.mimir.receiver]
+}
 ```
 
-#### Expressions
+#### Types 
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/895f3360-f254-4c36-969f-b7f5eb2fc6a5" />
+
+#### Expressions and Operators 
 You use expressions to compute the value of an attribute. The simplest expressions are constant values like `"debug"`, `32`, or `[1, 2, 3, 4]`. The Alloy syntax supports complex expressions, for example:
 
 Referencing the exports of components: `local.file.password_file.content`
@@ -75,6 +87,10 @@ Equality checks: `local.file.file_a.content == local.file.file_b.content`
 Calling functions from Alloy’s standard library: `sys.env("HOME")` retrieves the value of the `HOME` environment variable.
 
 You can use expressions for any attribute inside a component definition.
+
+#### Standard Library
+
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExODB6OXR3M3JpYzJ4aml1bW9meTU2N2IyazRxNjdxbzZtNmtkdnR3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/128MHrlrHNwwU0/giphy.gif)
 
 # Infrastructure Observability
 # Application Observability
