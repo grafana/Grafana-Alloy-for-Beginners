@@ -196,6 +196,9 @@ OTel telemetry should be
 - [otelcol.processor.batch](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/)
 - [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/)
 
+### Pipeline overview
+Metrics, Logs, Traces: OTLP Receiver → batch processor → OTLP Exporter
+
 ### Configure an OpenTelemtry Protocol exporter 
 Before components can receive OTel data, you must have a component responsible for writing (exporting) the OTel data to an external system.
 
@@ -402,6 +405,217 @@ otelcol.exporter.otlp "default" {
   }
 }
 ```
+
+### Forwarding OTel data to Grafana
+
+#### Grafana Cloud 
+
+Grafana Cloud provides OTLP Endpoints that you can use directly from within Alloy.
+
+You can find the OTLP connection details from the OpenTelemetry Details page in the Grafana Cloud Portal.
+
+You must update the configuration file as follows:
+```
+otelcol.auth.basic "default" {
+  username = "<ACCOUNT ID>"
+  password = "<API TOKEN>"
+}
+
+otelcol.exporter.otlphttp "default" {
+  client {
+    endpoint = "<OTLP_ENDPOINT>"
+    auth     = otelcol.auth.basic.default.handler
+  }
+}
+```
+Replace the following:
+
+- `<ACCOUNT ID>`: Your Grafana Cloud account ID.
+- `<API TOKEN>`: Your Grafana Cloud API token.
+- `<OTLP_ENDPOINT>`: Your OTLP endpoint.
+  
+This configuration uses the credentials stored in `otelcol.auth.basic` "default" to authenticate against the Grafana Cloud OTLP endpoints, and you should start to see your data arrive.
+
+#### Other platforms (Grafana Enterprise, Grafana Open Source)
+You can implement the following pipelines to send your data to Loki, Tempo, and Mimir or Prometheus.
+
+Metrics:
+OTel → batch processor → Mimir or Prometheus remote write
+
+Logs: 
+OTel → batch processor → Loki exporter
+
+Traces: 
+OTel → batch processor → OTel exporter
+
+**Grafana Loki**
+
+Grafana Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus. Similar to Prometheus, to send from OTLP to Loki, you can configure pass-through from the [otelcol.exporter.loki](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.loki/) component to [loki.write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) component.
+
+```
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.default.receiver]
+}
+
+loki.write "default" {
+  endpoint {
+    url = "http://loki-endpoint:8080/loki/api/v1/push"
+        }
+}
+```
+To use Loki with basic-auth, which is required with Grafana Cloud Logs, you must configure the loki.write component. You can get the Loki configuration from the Loki Details page in the Grafana Cloud Portal.
+
+```
+otelcol.exporter.loki "grafana_cloud_logs" {
+  forward_to = [loki.write.grafana_cloud_logs.receiver]
+}
+
+loki.write "grafana_cloud_logs" {
+  endpoint {
+    url = "https://logs-prod-us-central1.grafana.net/loki/api/v1/push"
+
+    basic_auth {
+      username = "5252"
+      password = sys.env("GRAFANA_CLOUD_API_KEY")
+    }
+  }
+}
+```
+**Grafana Tempo**
+Grafana Tempo is an open source, easy-to-use, scalable distributed tracing backend. Tempo can ingest OTLP directly, and you can use the OTLP exporter to send the traces to Tempo.
+```
+otelcol.exporter.otlp "default" {
+  client {
+    endpoint = "tempo-server:4317"
+  }
+}
+```
+To use Tempo with basic-auth, which is required with Grafana Cloud Traces, you must use the otelcol.auth.basic component. You can get the Tempo configuration from the Tempo Details page in the Grafana Cloud Portal.
+
+```
+otelcol.exporter.otlp "grafana_cloud_traces" {
+  client {
+    endpoint = "tempo-us-central1.grafana.net:443"
+    auth     = otelcol.auth.basic.grafana_cloud_traces.handler
+  }
+}
+
+otelcol.auth.basic "grafana_cloud_traces" {
+  username = "4094"
+  password = sys.env("GRAFANA_CLOUD_API_KEY")
+}
+```
+
+**Grafana Mimir or Prometheus Remote Write**
+
+Prometheus Remote Write is a popular metrics transmission protocol supported by most metrics systems, including Grafana Mimir and Grafana Cloud. To send from OTLP to a Prometheus compatible remote_write endpoint, you can configure pass-through from the otelcol.exporter.prometheus to the prometheus.remote_write component. The Prometheus remote write component in Alloy is a robust protocol implementation, including a Write Ahead Log (WAL) for resiliency.
+
+```
+otelcol.exporter.prometheus "default" {
+  forward_to = [prometheus.remote_write.default.receiver]
+}
+
+prometheus.remote_write "default" {
+  endpoint {
+    url = "http://prometheus:9090/api/v1/write"
+  }
+}
+```
+To use Prometheus with basic-auth, which is required with Grafana Cloud Metrics, you must configure the prometheus.remote_write component. You can get the Prometheus configuration from the Prometheus Details page in the Grafana Cloud Portal.
+
+```
+otelcol.exporter.prometheus "grafana_cloud_metrics" {
+        forward_to = [prometheus.remote_write.grafana_cloud_metrics.receiver]
+    }
+
+prometheus.remote_write "grafana_cloud_metrics" {
+    endpoint {
+        url = "https://prometheus-us-central1.grafana.net/api/prom/push"
+
+        basic_auth {
+            username = "12690"
+            password = sys.env("GRAFANA_CLOUD_API_KEY")
+        }
+    }
+}
+```
+
+### Final configuration
+
+```
+otelcol.receiver.otlp "example" {
+  grpc {
+    endpoint = "127.0.0.1:4317"
+  }
+
+  http {
+    endpoint = "127.0.0.1:4318"
+  }
+
+  output {
+    metrics = [otelcol.processor.batch.example.input]
+    logs    = [otelcol.processor.batch.example.input]
+    traces  = [otelcol.processor.batch.example.input]
+  }
+}
+
+otelcol.processor.batch "example" {
+  output {
+    metrics = [otelcol.exporter.prometheus.grafana_cloud_metrics.input]
+    logs    = [otelcol.exporter.loki.grafana_cloud_logs.input]
+    traces  = [otelcol.exporter.otlp.grafana_cloud_traces.input]
+  }
+}
+
+otelcol.exporter.otlp "grafana_cloud_traces" {
+  client {
+    endpoint = "tempo-us-central1.grafana.net:443"
+    auth     = otelcol.auth.basic.grafana_cloud_traces.handler
+  }
+}
+
+otelcol.auth.basic "grafana_cloud_traces" {
+  username = "4094"
+  password = sys.env("GRAFANA_CLOUD_API_KEY")
+}
+
+otelcol.exporter.prometheus "grafana_cloud_metrics" {
+        forward_to = [prometheus.remote_write.grafana_cloud_metrics.receiver]
+    }
+
+prometheus.remote_write "grafana_cloud_metrics" {
+    endpoint {
+        url = "https://prometheus-us-central1.grafana.net/api/prom/push"
+
+        basic_auth {
+            username = "12690"
+            password = sys.env("GRAFANA_CLOUD_API_KEY")
+        }
+    }
+}
+
+otelcol.exporter.loki "grafana_cloud_logs" {
+  forward_to = [loki.write.grafana_cloud_logs.receiver]
+}
+
+loki.write "grafana_cloud_logs" {
+  endpoint {
+    url = "https://logs-prod-us-central1.grafana.net/loki/api/v1/push"
+
+    basic_auth {
+      username = "5252"
+      password = sys.env("GRAFANA_CLOUD_API_KEY")
+    }
+  }
+}
+```
+
+### Checking the pipeline graphically
+Visit http://localhost:12345/graph
+
+<img width="569" alt="image" src="https://github.com/user-attachments/assets/a847e435-b9f0-49ad-8bb2-d465805eb340" />
+
+
 ### Spanmetrics 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/c96cf3c4-1431-4abe-a29d-fd0e9ccf7fe1" />
 
