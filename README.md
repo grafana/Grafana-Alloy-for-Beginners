@@ -16,10 +16,26 @@
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/3aca8547-5d47-4b05-b624-297a1adda4e9" />
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/87e09054-937f-429e-a9e2-7167e1bf65ff" />
 
-## Alloy Syntax
+## Alloy vocabularies 
 
-### Alloy syntax is a language used to tell Alloy how you want it to collect, transform, and deliver your telemetry data. 
+### Think of Alloy as our trusty pal who can collect, transform, and deliver our telemetry data. 
+
+In order to instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
+
+Imagine that you are writing a set of to do list for Alloy. 
+
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHFwc2hwNWZ4Znc3bm03MjZzbjI2M3EwZzNqb3EwaW91Ym5xYXQwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vZFZFVYQvtdidWZltF/giphy.gif)
+
+### Each task item is known as components in Alloy. 
+
+<img width="724" alt="image" src="https://github.com/user-attachments/assets/3291f527-10f4-48e6-82ad-1bb702814d59" />
+
+
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
+
+### Each section can be futher broken down into 
+
+
 
 ### Telemetry pipelines consist of components. 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHFwc2hwNWZ4Znc3bm03MjZzbjI2M3EwZzNqb3EwaW91Ym5xYXQwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vZFZFVYQvtdidWZltF/giphy.gif)
