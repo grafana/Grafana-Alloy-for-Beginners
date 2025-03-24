@@ -27,7 +27,7 @@ In order to instruct Alloy on how we want that done, we must write these instruc
 ### Imagine that you are writing a set of to do list for Alloy. 
 <img width="724" alt="image" src="https://github.com/user-attachments/assets/3291f527-10f4-48e6-82ad-1bb702814d59" />
 
-A single task is known as `component` in Alloy.
+A single task is known as a `component` in Alloy.
 
 These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as `pipeline` in Alloy. 
 
@@ -35,16 +35,6 @@ These components could be put together in any way to form a complete set of inst
 These subtasks/subcomponents are known as `blocks` in Alloy. 
 
 <img width="729" alt="image" src="https://github.com/user-attachments/assets/ed8aa651-f522-45ea-9556-de943f4908f9" />
-
-### Alloy configuration syntax consists of:
-- Blocks
-- Expressions
-- Attributes
-
-#### Blocks
-<img width="345" alt="image" src="https://github.com/user-attachments/assets/3a38536c-77af-43e4-b931-293c15275377" />
-
-You use Blocks to configure components and groups of attributes. Each block can contain any number of attributes or nested blocks. Blocks are steps in the overall pipeline expressed by the configuration.
 
 Pattern for creating a labeled block:
 ```
