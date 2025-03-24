@@ -17,7 +17,7 @@
 
 ## Alloy Syntax
 ### Telemetry pipelines consist of components 
-![Alt Text] (https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWhlZnU2aG9keDdyM2xpb3Voc291OTZ5ZzA4Mmw1b3RwMnVqZzNydiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Cwf290yH98VbpeRqe0/giphy.gif)
+! [Alt Text] (https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWhlZnU2aG9keDdyM2xpb3Voc291OTZ5ZzA4Mmw1b3RwMnVqZzNydiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Cwf290yH98VbpeRqe0/giphy.gif)
 
 # Infrastructure Observability
 # Application Observability
