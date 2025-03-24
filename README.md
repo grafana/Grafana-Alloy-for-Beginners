@@ -17,7 +17,7 @@
 
 ## Alloy Syntax
 ### Telemetry pipelines consist of components. 
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3R1dDJvMWYxOTNtdWpiejZiamNucGd1Z3FhYWFpY3k5cDRtazBlNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Cwf290yH98VbpeRqe0/giphy.gif)
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
 ### Syntax is a language used to tell Alloy how you want it to collect, transform, and deliver your telemetry data. 
 ![Alt Text](https://giphy.com/gifs/dog-list-helping-MJ4Qi9dSACpLG)
