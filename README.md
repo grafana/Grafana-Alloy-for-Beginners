@@ -22,16 +22,16 @@
 
 In order to instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
 
-Imagine that you are writing a set of to do list for Alloy. 
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHFwc2hwNWZ4Znc3bm03MjZzbjI2M3EwZzNqb3EwaW91Ym5xYXQwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vZFZFVYQvtdidWZltF/giphy.gif)
-
-### Each task item is known as components in Alloy. 
-
+### Imagine that you are writing a set of to do list for Alloy. 
 <img width="724" alt="image" src="https://github.com/user-attachments/assets/3291f527-10f4-48e6-82ad-1bb702814d59" />
 
+A single task is known as `component` in Alloy.
 
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
+These components could be put together in any way to become a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as `pipeline`. 
+
+
 
 ### Each section can be futher broken down into 
 
@@ -39,6 +39,8 @@ Imagine that you are writing a set of to do list for Alloy.
 
 ### Telemetry pipelines consist of components. 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHFwc2hwNWZ4Znc3bm03MjZzbjI2M3EwZzNqb3EwaW91Ym5xYXQwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vZFZFVYQvtdidWZltF/giphy.gif)
+
+
 
 ### Each component handles a single task. 
 ![Alt Text] (https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTNuZGoyeXIzNGUxcGJxYm43dXJ2dmZib2Zxb2JzYzk0c211YTlzciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Bdk2YzFKNYLwplLVNw/giphy.gif)
