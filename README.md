@@ -4,6 +4,7 @@
 
 # Resources for the workshop
 - https://github.com/grafana/intro-to-mltp
+- [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/) 
 
 # Alloy 101 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/d37cbbce-2526-443c-83e5-9c0a3a6b481d" />
@@ -92,7 +93,320 @@ You can use expressions for any attribute inside a component definition.
 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExODB6OXR3M3JpYzJ4aml1bW9meTU2N2IyazRxNjdxbzZtNmtkdnR3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/128MHrlrHNwwU0/giphy.gif)
 
+# Best practices for building pipelines with Alloy
+### We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability,
+### We strongly recommend collecting all the telemetry types of a given monitored component using one single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
+
 # Infrastructure Observability
+Prometheus telemetry should be
+- collected using Alloy prometheus.* and discovery.* components
+- enriched using the Alloy Prometheus components
+- sent to Grafana Cloud using the Prometheus Remote Write
+
+## Building a Prometheus pipeline for metrics 
+### Before you begin, make sure: 
+- you have basic familiarity with instrumenting applications with Prometheus.
+- have a set of Prometheus exports or applications exposing Prometheus metrics that you want to collect metrics from.
+- Identify where to write collected metrics.
+  Metrics can be written to Prometheus or Prometheus-compatible endpoints such as Grafana Mimir, Grafana Cloud, or Grafana Enterprise Metrics.
+
+### Components used in this section: 
+- [prometheus.remote_write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)
+- [prometheus.scrape](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/)
+
+### Configure metrics delivery 
+
+Before components can collect Prometheus metrics, you must have a component responsible for writing those metrics somewhere.
+
+The `prometheus.remote_write` component is responsible for delivering Prometheus metrics to one or more Prometheus-compatible endpoints. After a prometheus.remote_write component is defined, you can use other Alloy components to forward metrics to it.
+
+To configure a prometheus.remote_write component for metrics delivery, complete the following steps:
+
+#### Step 1: Add the following prometheus.remote_write component to your configuration file.
+```
+prometheus.remote_write "<LABEL>" {
+  endpoint {
+    url = "<PROMETHEUS_URL>"
+  }
+}
+```
+Replace the follwing: 
+
+- <LABEL>: The label for the component, such as default. The label you use must be unique across all prometheus.remote_write components in the same configuration file.
+- <PROMETHEUS_URL> The full URL of the Prometheus-compatible endpoint where metrics are sent, such as https://prometheus-us-central1.grafana.net/api/v1/write for Prometheus or https://mimir-us-central1.grafana.net/api/v1/push/ for Mimir. The endpoint URL depends on the database you use.
+
+#### Step 2: If your endpoint requires basic authentication, paste the following inside the endpoint block.
+```
+basic_auth {
+  username = "<USERNAME>"
+  password = "<PASSWORD>"
+}
+```
+Replace the following:
+
+- <USERNAME>: The basic authentication username.
+- <PASSWORD>: The basic authentication password or API key.
+
+*If you have more than one endpoint to write metrics to, repeat the endpoint block for additional endpoints.*
+
+#### Example
+```
+prometheus.remote_write "default" {
+  endpoint {
+    url = "http://localhost:9090/api/prom/push"
+  }
+
+  endpoint {
+    url = "https://prometheus-us-central1.grafana.net/api/prom/push"
+
+    // Get basic authentication based on environment variables.
+    basic_auth {
+      username = sys.env("<REMOTE_WRITE_USERNAME>")
+      password = sys.env("<REMOTE_WRITE_PASSWORD>")
+    }
+  }
+}
+
+prometheus.scrape "example" {
+  // Collect metrics from the default listen address.
+  targets = [{
+    __address__ = "127.0.0.1:12345",
+  }]
+
+  forward_to = [prometheus.remote_write.default.receiver]
+}
+```
 # Application Observability
+
+OTel telemetry should be
+- collected using OTel SDKs and OTel Collector Receivers
+- enriched and exported using OTel Collector processors, connectors, and exporters
+- sent to Grafana Cloud using the Grafana Cloud OTLP Endpoint
+
+## Building OTel pipeliens for metrics,logs, and traces
+
+### Before you begin, make sure: 
+- ensure that you have basic familiarity with instrumenting applications with OTel.
+- identify where Alloy writes received telemetry data.
+
+### Components used in this section
+- [otelcol.auth.basic](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.auth.basic/)
+- [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/)
+- [otelcol.exporter.otlphttp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlphttp/)
+- [otelcol.processor.batch](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/)
+- [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/)
+
+### Configure an OpenTelemtry Protocol exporter 
+Before components can receive OTel data, you must have a component responsible for writing (exporting) the OTel data to an external system.
+
+Use the `otelcol.exporter.otlp` component to send OTel data to a server using the OTel Protocol (OTLP). After an exporter component is defined, you can use other Alloy components to forward data to it.
+
+To configure an `otelcol.exporter.otlp` component for exporting OTel data using OTLP, complete the following steps:
+#### Step 1: Add the following otelcol.exporter.otlp component to your configuration file:
+```
+otelcol.exporter.otlp "<EXPORTER_LABEL>" {
+  client {
+    endpoint = "<HOST>:<PORT>"
+  }
+}
+```
+Replace the following:
+- `<EXPORTER_LABEL>`: The label for the component, such as `default`. The label you use must be unique across all `otelcol.exporter.otlp` components in the same configuration file.
+- `<HOST>`: The hostname or IP address of the server to send OTLP requests to.
+- `<PORT>`: The port of the server to send OTLP requests to.
+
+#### Step 2: If your server requires basic authentication, complete the following:
+
+Add the following otelcol.auth.basic component to your configuration file:
+```
+otelcol.auth.basic "<BASIC_AUTH_LABEL>" {
+  username = "<USERNAME>"
+  password = "<PASSWORD>"
+}
+```
+Replace the following: 
+- *<BASIC_AUTH_LABEL>*: The label for the *otelcol.auth.basic* component.
+
+If you have more than one server to export metrics to, create an `otelcol.exporter.otlp` component for each additional server.
+
+NOTE:
+`otelcol.exporter.otlp` sends data using OTLP over gRPC (HTTP/2). To send to a server using HTTP/1.1, follow the preceding steps, but use the `otelcol.exporter.otlphttp` component instead.
+
+Example:
+The following example demonstrates configuring otelcol.exporter.otlp with authentication and a component that forwards data to it:
+```
+otelcol.exporter.otlp "default" {
+  client {
+    endpoint = "my-otlp-grpc-server:4317"
+    auth     = otelcol.auth.basic.credentials.handler
+  }
+}
+
+otelcol.auth.basic "credentials" {
+  // Retrieve credentials using environment variables.
+
+  username = sys.env("BASIC_AUTH_USER")
+  password = sys.env("API_KEY")
+}
+
+otelcol.receiver.otlp "example" {
+  grpc {
+    endpoint = "127.0.0.1:4317"
+  }
+
+  http {
+    endpoint = "127.0.0.1:4318"
+  }
+
+  output {
+    metrics = [otelcol.exporter.otlp.default.input]
+    logs    = [otelcol.exporter.otlp.default.input]
+    traces  = [otelcol.exporter.otlp.default.input]
+  }
+}
+```
+### Data Transformation
+Production-ready Alloy configurations shouldn’t send OTel data directly to an exporter for delivery. Instead, data is usually sent to one or more processor components that perform various transformations on the data.
+
+`otelcol.processor` components are used to process Opentelemtry data. 
+
+#### Configure batching
+Ensuring data is batched is a production-readiness step to improve data compression and reduce the number of outgoing network requests to external systems.
+
+In this task, you configure an `otelcol.processor.batch` component to batch data before sending it to the exporter.
+
+To configure an `otelcol.processor.batch` component, complete the following steps:
+
+Add the following   otelcol.processor.batch   component into your configuration file: 
+```
+otelcol.processor.batch "<PROCESSOR_LABEL>" {
+  output {
+    metrics = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
+    logs    = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
+    traces  = [otelcol.exporter.otlp.>EXPORTER_LABEL>.input]
+  }
+}
+```
+Replace the following:
+
+- `<PROCESSOR_LABEL>`: The label for the component, such as default. The label you use must be unique across all otelcol.processor.batch components in the same configuration file.
+- `<EXPORTER_LABEL>`: The label for your otelcol.exporter.otlp component.
+
+To disable one of the telemetry types, set the relevant type in the `output` block to the empty list, such as `metrics = []`.
+To send batched data to another processor, replace the components in the output list with the processor components to use.
+
+Example:
+The following example demonstrates configuring a sequence of otelcol.processor components before being exported.
+```
+otelcol.processor.memory_limiter "default" {
+  check_interval = "1s"
+  limit          = "1GiB"
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+  output {
+    metrics = [otelcol.exporter.otlp.default.input]
+    logs    = [otelcol.exporter.otlp.default.input]
+    traces  = [otelcol.exporter.otlp.default.input]
+  }
+}
+
+otelcol.exporter.otlp "default" {
+  client {
+    endpoint = "my-otlp-grpc-server:4317"
+  }
+}
+```
+
+### Configure an OTel Protocol receiver 
+You can configure Alloy to receive OTel metrics, logs, and traces. An OTel receiver component is responsible for receiving OTel data from an external system.
+
+In this task, you use the otelcol.receiver.otlp component to receive OTel data over the network using the OTel Protocol (OTLP). You can configure a receiver component to forward received data to other Alloy components.
+
+To configure an `otelcol.receiver.otlp` component for receiving OTLP data, complete the following steps:
+
+- Follow Configure an OpenTelemetry Protocol exporter to ensure received data can be written to an external system.
+- Optional: Follow Configure batching to improve compression and reduce the total amount of network requests.
+- Add the following `otelcol.receiver.otlp` component to your configuration file.
+
+```
+otelcol.receiver.otlp "<LABEL>" {
+  output {
+    metrics = [<COMPONENT_INPUT_LIST>]
+    logs    = [<COMPONENT_INPUT_LIST>]
+    traces  = [<COMPONENT_INPUT_LIST>]
+  }
+}
+```
+Replace the following:
+
+- `<LABEL>`: The label for the component, such as default. The label you use must be unique across all `otelcol.receiver.otlp` components in the same configuration file.
+- `<COMPONENT_INPUT_LIST>`: A comma-delimited list of component inputs to forward received data to. For example, to send data to a batch processor component, use `otelcol.processor.batch.PROCESSOR_LABEL.input`. To send data directly to an exporter component, use `otelcol.exporter.otlp.EXPORTER_LABEL.input`.
+
+To allow applications to send OTLP data over gRPC on port `4317`, add the following to your otelcol.receiver.otlp component.
+```
+grpc {
+  endpoint = "<HOST>:4317"
+}
+```
+Replace the following:
+- `<HOST>`: A host to listen to traffic on. Use a narrowly scoped listen address whenever possible. To listen on all network interfaces, replace `<HOST>` with `0.0.0.0`.
+
+To allow applications to send OTLP data over HTTP/1.1 on port `4318`, add the following to your `otelcol.receiver.otlp` component.
+```
+http {
+  endpoint = "<HOST>:4318"
+}
+```
+Replace the following:
+- `<HOST>`: The host to listen to traffic on. Use a narrowly scoped listen address whenever possible. To listen on all network interfaces, replace `<HOST>` with `0.0.0.0`.
+
+To disable one of the telemetry types, set the relevant type in the `output` block to the empty list, such as `metrics = []`.
+
+The following example demonstrates configuring `otelcol.receiver.otlp` and sending it to an exporter
+
+```
+otelcol.receiver.otlp "example" {
+  grpc {
+    endpoint = "127.0.0.1:4317"
+  }
+
+  http {
+    endpoint = "127.0.0.1:4318"
+  }
+
+  output {
+    metrics = [otelcol.processor.batch.example.input]
+    logs    = [otelcol.processor.batch.example.input]
+    traces  = [otelcol.processor.batch.example.input]
+  }
+}
+
+otelcol.processor.batch "example" {
+  output {
+    metrics = [otelcol.exporter.otlp.default.input]
+    logs    = [otelcol.exporter.otlp.default.input]
+    traces  = [otelcol.exporter.otlp.default.input]
+  }
+}
+
+otelcol.exporter.otlp "default" {
+  client {
+    endpoint = "my-otlp-grpc-server:4317"
+  }
+}
+```
+### Spanmetrics 
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/c96cf3c4-1431-4abe-a29d-fd0e9ccf7fe1" />
+
+
+
 # Debugging
 # Q & A
+![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXU1ZnNwazRmbXdmcGMzZmNueWd3eTk4aWJlNmI0dHd6OXR5azh3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMB2WiOdjpB7K4o/giphy.gif)
