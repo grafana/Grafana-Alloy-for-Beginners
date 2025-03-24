@@ -60,7 +60,7 @@ The preceding example has two blocks:
 #### Attributes
 You use Attributes to configure individual settings. Attributes always take the form of `ATTRIBUTE_NAME = ATTRIBUTE_VALUE`.
 
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/efebba52-2e8a-45ee-ade4-c761b9cd9b63" />
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/675a6f27-654a-4d62-ae45-534da361a496" />
 
 ```
 prometheus.scrape "infra" {
