@@ -17,15 +17,24 @@
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/87e09054-937f-429e-a9e2-7167e1bf65ff" />
 
 ## Alloy Syntax
+
+### Alloy syntax is a language used to tell Alloy how you want it to collect, transform, and deliver your telemetry data. 
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
+
 ### Telemetry pipelines consist of components. 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHFwc2hwNWZ4Znc3bm03MjZzbjI2M3EwZzNqb3EwaW91Ym5xYXQwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vZFZFVYQvtdidWZltF/giphy.gif)
+
+### Each component handles a single task. 
+![Alt Text] (https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTNuZGoyeXIzNGUxcGJxYm43dXJ2dmZib2Zxb2JzYzk0c211YTlzciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Bdk2YzFKNYLwplLVNw/giphy.gif)
+
+### You can use the Alloy configuration syntax to configure these components 
 
 ### Syntax is a language used to tell Alloy how you want it to collect, transform, and deliver your telemetry data. 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
 ### Alloy configuration syntax consists of:
 - Blocks
-- Experssions
+- Expressions
 - Attributes
 
 #### Blocks
