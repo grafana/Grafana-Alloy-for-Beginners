@@ -81,10 +81,10 @@ prometheus.scrape "infra" {
 #### Expressions and Operators 
 You use expressions to compute the value of an attribute. The simplest expressions are constant values like `"debug"`, `32`, or `[1, 2, 3, 4]`. The Alloy syntax supports complex expressions, for example:
 
-Referencing the exports of components: `local.file.password_file.content`
-Mathematical operations: `1 + 2`, `3 * 4`, `(5 * 6) + (7 + 8)`
-Equality checks: `local.file.file_a.content == local.file.file_b.content`
-Calling functions from Alloy’s standard library: `sys.env("HOME")` retrieves the value of the `HOME` environment variable.
+- Referencing the exports of components: `local.file.password_file.content`
+- Mathematical operations: `1 + 2`, `3 * 4`, `(5 * 6) + (7 + 8)`
+- Equality checks: `local.file.file_a.content == local.file.file_b.content`
+- Calling functions from Alloy’s standard library: `sys.env("HOME")` retrieves the value of the `HOME` environment variable.
 
 You can use expressions for any attribute inside a component definition.
 
