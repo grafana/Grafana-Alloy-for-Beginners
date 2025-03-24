@@ -29,26 +29,12 @@ In order to instruct Alloy on how we want that done, we must write these instruc
 
 A single task is known as `component` in Alloy.
 
-These components could be put together in any way to become a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as `pipeline`. 
+These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as `pipeline` in Alloy. 
 
+### Each task/component could be further broken down into a detailed set of instructions.
+These subtasks/subcomponents are known as `blocks` in Alloy. 
 
-
-### Each section can be futher broken down into 
-
-
-
-### Telemetry pipelines consist of components. 
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHFwc2hwNWZ4Znc3bm03MjZzbjI2M3EwZzNqb3EwaW91Ym5xYXQwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vZFZFVYQvtdidWZltF/giphy.gif)
-
-
-
-### Each component handles a single task. 
-![Alt Text] (https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTNuZGoyeXIzNGUxcGJxYm43dXJ2dmZib2Zxb2JzYzk0c211YTlzciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Bdk2YzFKNYLwplLVNw/giphy.gif)
-
-### You can use the Alloy configuration syntax to configure these components 
-
-### Syntax is a language used to tell Alloy how you want it to collect, transform, and deliver your telemetry data. 
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
+<img width="729" alt="image" src="https://github.com/user-attachments/assets/ed8aa651-f522-45ea-9556-de943f4908f9" />
 
 ### Alloy configuration syntax consists of:
 - Blocks
