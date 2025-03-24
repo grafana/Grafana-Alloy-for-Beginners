@@ -3,7 +3,7 @@
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/a5b22089-6037-4c88-afea-4e62c83a7960" />
 
 # Resources for the workshop
-- https://github.com/grafana/intro-to-mltp
+- [Environment set up](https://github.com/grafana/intro-to-mltp)
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/) 
 
 # Alloy 101 
