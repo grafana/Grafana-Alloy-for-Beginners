@@ -6,6 +6,8 @@
 - https://github.com/grafana/intro-to-mltp
 
 ## Alloy 101 
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/c747ae92-32d3-4038-9f93-4ef4055e0815" />
+
 
 ## Infrastructure Observability
 ## Application Observability
