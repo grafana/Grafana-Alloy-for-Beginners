@@ -29,6 +29,7 @@
 
 #### Blocks
 <img width="345" alt="image" src="https://github.com/user-attachments/assets/3a38536c-77af-43e4-b931-293c15275377" />
+
 ```
 // Pattern for creating a labeled block:
 BLOCK_NAME "BLOCK_LABEL" {
