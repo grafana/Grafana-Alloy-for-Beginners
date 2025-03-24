@@ -16,7 +16,8 @@
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/87e09054-937f-429e-a9e2-7167e1bf65ff" />
 
 ## Alloy Syntax
-
+### Telemetry pipelines consist of components 
+https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWhlZnU2aG9keDdyM2xpb3Voc291OTZ5ZzA4Mmw1b3RwMnVqZzNydiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Cwf290yH98VbpeRqe0/giphy.gif
 
 # Infrastructure Observability
 # Application Observability
