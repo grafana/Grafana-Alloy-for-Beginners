@@ -76,7 +76,7 @@ prometheus.scrape "infra" {
 ```
 
 #### Types 
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/895f3360-f254-4c36-969f-b7f5eb2fc6a5" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/56b63fcf-92b1-437c-ac69-2fdcc18bd4d8" />
 
 #### Expressions and Operators 
 You use expressions to compute the value of an attribute. The simplest expressions are constant values like `"debug"`, `32`, or `[1, 2, 3, 4]`. The Alloy syntax supports complex expressions, for example:
