@@ -97,8 +97,8 @@ You can use expressions for any attribute inside a component definition.
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExODB6OXR3M3JpYzJ4aml1bW9meTU2N2IyazRxNjdxbzZtNmtkdnR3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/128MHrlrHNwwU0/giphy.gif)
 
 # Best practices for building pipelines with Alloy
-### We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability,
-### We strongly recommend collecting all the telemetry types of a given monitored component using one single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
+- We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability,
+- We strongly recommend collecting all the telemetry types of a given monitored component using one single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
 
 # Infrastructure Observability
 Prometheus telemetry should be
@@ -114,6 +114,8 @@ Prometheus telemetry should be
   Metrics can be written to Prometheus or Prometheus-compatible endpoints such as Grafana Mimir, Grafana Cloud, or Grafana Enterprise Metrics.
 
 ### Components used in this section: 
+- [prometheus.exporter.postgres]()
+- [prometheus.exporter.unix]()
 - [prometheus.remote_write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)
 - [prometheus.scrape](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/)
 
@@ -193,11 +195,12 @@ OTel telemetry should be
 - identify where Alloy writes received telemetry data.
 
 ### Components used in this section
-- [otelcol.auth.basic](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.auth.basic/)
-- [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/)
-- [otelcol.exporter.otlphttp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlphttp/)
+- [otelcol.receiver.otlp]
 - [otelcol.processor.batch](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/)
-- [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/)
+- [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/)
+- [loki.source.api]()
+- [loki.process]()
+- [loki.write]()
 
 ### Pipeline overview
 Metrics, Logs, Traces: OTLP Receiver → batch processor → OTLP Exporter
@@ -377,35 +380,49 @@ To disable one of the telemetry types, set the relevant type in the `output` blo
 
 The following example demonstrates configuring `otelcol.receiver.otlp` and sending it to an exporter
 
+MISCHA
 ```
-otelcol.receiver.otlp "example" {
-  grpc {
-    endpoint = "127.0.0.1:4317"
-  }
-
-  http {
-    endpoint = "127.0.0.1:4318"
-  }
-
-  output {
-    metrics = [otelcol.processor.batch.example.input]
-    logs    = [otelcol.processor.batch.example.input]
-    traces  = [otelcol.processor.batch.example.input]
-  }
+otelcol.receiver.otlp "otlp_receiver" {
+	output {
+    	traces = [       	 
+        	otelcol.processor.batch.default.input,
+    	]
+    	metrics = [
+        	otelcol.processor.batch.default.input,
+    	]
+	}
 }
 
-otelcol.processor.batch "example" {
-  output {
-    metrics = [otelcol.exporter.otlp.default.input]
-    logs    = [otelcol.exporter.otlp.default.input]
-    traces  = [otelcol.exporter.otlp.default.input]
-  }
+otelcol.processor.batch "default" {
+	send_batch_size = 1000
+	send_batch_max_size = 2000
+
+	// Send at least every 2 seconds, even if we have not reached the minimum batch size
+	timeout = "2s"
+
+	output {
+    	traces = [otelcol.exporter.otlp.tempo.input]
+	}
 }
 
-otelcol.exporter.otlp "default" {
-  client {
-    endpoint = "my-otlp-grpc-server:4317"
-  }
+otelcol.exporter.otlp "tempo" {
+	client {
+    	auth = otelcol.auth.headers.tempo.handler
+
+    	endpoint = "http://tempo:4317"
+
+    	tls {
+        	insecure          	 = true
+        	insecure_skip_verify = true
+    	}
+	}
+}
+
+otelcol.auth.headers "tempo" {
+	header {
+    	key   = "Authorization"
+    	value = ""
+	}
 }
 ```
 
