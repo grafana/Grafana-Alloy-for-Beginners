@@ -96,6 +96,9 @@ You can use expressions for any attribute inside a component definition.
 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExODB6OXR3M3JpYzJ4aml1bW9meTU2N2IyazRxNjdxbzZtNmtkdnR3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/128MHrlrHNwwU0/giphy.gif)
 
+# Environment overview
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
+
 # Best practices for building pipelines with Alloy
 - We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability,
 - We strongly recommend collecting all the telemetry types of a given monitored component using one single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
@@ -107,6 +110,8 @@ Prometheus telemetry should be
 - sent to Grafana Cloud using the Prometheus Remote Write
 
 ## Building a Prometheus pipeline for metrics 
+<img width="1424" alt="image" src="https://github.com/user-attachments/assets/5a47607f-07f6-49b6-ad05-ad1a87318432" />
+
 ### Before you begin, make sure: 
 - you have basic familiarity with instrumenting applications with Prometheus.
 - have a set of Prometheus exports or applications exposing Prometheus metrics that you want to collect metrics from.
@@ -188,7 +193,8 @@ OTel telemetry should be
 - enriched and exported using OTel Collector processors, connectors, and exporters
 - sent to Grafana Cloud using the Grafana Cloud OTLP Endpoint
 
-## Building OTel pipeliens for metrics,logs, and traces
+## Building OTel pipelines for metrics,logs, and traces
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/9639a789-f4e1-4cd4-9023-8c3e14f4d542" />
 
 ### Before you begin, make sure: 
 - ensure that you have basic familiarity with instrumenting applications with OTel.
