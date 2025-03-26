@@ -207,6 +207,7 @@ prometheus.relabel "postgres" {
 }
 ```
 *Send scraped metrics to the Mimir database*
+
 `prometheus.remote_write "mimir"` component is responsible for delivering Prometheus metrics to one or more Prometheus-compatible endpoints.
 
 The full URL of the Prometheus-compatible endpoint where metrics are sent, such as "http://mimir:9009/api/v1/push" for Mimir. The endpoint URL depends on the database you use.
@@ -261,8 +262,10 @@ prometheus.scrape "example" {
 }
 ```
 
-?? Not sure if we could add this to the infra o11y section as these are logs collected from services and not the infrastructure?? 
-Mischa, what do you think? 
+**?? Not sure if we could add this to the infra o11y section as these are logs collected from services and not the infrastructure?? 
+Mischa, what do you think?**
+
+
 **The Loki pipeline**
 1) ingests logs from the mythical application via Loki's HTTP REST API,
 2) parses timestamp data within a logline and uses it as the timestamp for the logline,
