@@ -48,8 +48,8 @@ prometheus.remote_write "default" {
 }
 ```
 The preceding example has two blocks:
-- `prometheus.remote_write "default"`: A labeled block which instantiates a prometheus.remote_write component. The label is the string "default".
-- `endpoint`: An unlabeled block inside the component that configures an endpoint to send metrics to. This block sets the url `attribute` to equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
+- prometheus.remote_write "default": A labeled block which instantiates a `prometheus.remote_write` component. The label is the string "default".
+- endpoint: An unlabeled `block` inside the component that configures an endpoint to send metrics to. This block sets the url `attribute` to equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
 
 # Environment overview
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
@@ -59,12 +59,12 @@ The preceding example has two blocks:
 - We strongly recommend collecting all the telemetry types of a given monitored component using one single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
 
 # Infrastructure Observability
-Prometheus telemetry should be
-- collected using Alloy prometheus.* and discovery.* components
-- enriched using the Alloy Prometheus components
-- sent to Grafana Cloud using the Prometheus Remote Write
+Prometheus/Promtail telemetry should be
+- collected using Alloy prometheus.* , loki.* , and discovery.* components
+- enriched using the Alloy Prometheus and Promtail/Loki components
+- sent to Grafana Cloud using the Prometheus Remote Write and Loki Endpoints
 
-## Building a Prometheus pipeline for metrics 
+## Building pipelines for metrics and logs for infra o11y
 <img width="1424" alt="image" src="https://github.com/user-attachments/assets/5a47607f-07f6-49b6-ad05-ad1a87318432" />
 
 ### Components used in this section: 
@@ -76,24 +76,20 @@ Prometheus telemetry should be
 - [loki.process](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/)
 - [loki.write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/)
   
-### Final configuration for the Prometheus pipeline
-**Metrics**
-The following pipeline
-1) scrapes
-- metrics from the local Alloy collector, Postgres database, mythical services.
-2) adds the label 'group' to all metrics with a value of 'infrastructure'
-3) writes metrics to Mimir database
+### Final configuration for the Prometheus and Loki pipelines
 
-**Logs**
-The following pipeline
-1) ingests logs from teh mythical application via Loki's HTTP REST API
-2) parses timestamp data within a logline and use it as the timestamp for the logline
-3) writes logs to the local Loki instance
+**The Prometheus pipeline**
+1) scrapes metrics from the local Alloy collector, Postgres database, mythical services,
+2) adds the label 'group' to all metrics with a value of 'infrastructure',
+3) writes metrics to Mimir database.
 
 ```
-//metrics
+//Prometheus pipeline
 prometheus.scrape "alloy" {
     targets = [{"__address__" = "localhost:12345", group = "infrastructure", service = "alloy"}]
+
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
 
     forward_to = [prometheus.remote_write.mimir.receiver]
 
@@ -136,8 +132,14 @@ prometheus.remote_write "mimir" {
         url = "http://mimir:9009/api/v1/push"
     }
 }
+```
 
-//Logs
+**The Loki pipeline**
+1) ingests logs from teh mythical application via Loki's HTTP REST API,
+2) parses timestamp data within a logline and use it as the timestamp for the logline,
+3) writes logs to the local Loki instance.
+```
+//Loki pipeline
 loki.source.api "mythical" {
     http {
         listen_address = "0.0.0.0"
@@ -169,29 +171,90 @@ loki.write "mythical" {
     }
 }
 ```
+### Prometheus pipeline explained
+The first step is to scrape metrics from our infrastructure (local Alloy collector and Postgres DB).
 
-### Configure metrics delivery 
-
-Before components can collect Prometheus metrics, you must have a component responsible for writing those metrics somewhere.
-
-The `prometheus.remote_write` component is responsible for delivering Prometheus metrics to one or more Prometheus-compatible endpoints. After a prometheus.remote_write component is defined, you can use other Alloy components to forward metrics to it.
-
-To configure a prometheus.remote_write component for metrics delivery, complete the following steps:
-
-#### Step 1: Add the following prometheus.remote_write component to your configuration file.
+*Alloy*
 ```
-prometheus.remote_write "<LABEL>" {
-  endpoint {
-    url = "<PROMETHEUS_URL>"
-  }
+prometheus.scrape "alloy" {
+    targets = [{"__address__" = "localhost:12345", group = "infrastructure", service = "alloy"}]
+
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    forward_to = [prometheus.remote_write.mimir.receiver]
+
+    job_name = "alloy"
 }
 ```
-Replace the follwing: 
+This `prometheus.scrape` component 
+- scrapes metrics from the `targets` we define (in this case is our local Alloy collector) and instruct alloy to scrape every 2 seconds and if it can't scrape in 2 seconds to time out. 
+- forwards the metrics to a `prometheus.remote_write.mimir.receiver` component which we will define in a bit
+- attaches a job name ("alloy") to the metrics. This is helpful for...(Mischa, could you add an explanation here?)
 
-- <LABEL>: The label for the component, such as default. The label you use must be unique across all prometheus.remote_write components in the same configuration file.
-- <PROMETHEUS_URL> The full URL of the Prometheus-compatible endpoint where metrics are sent, such as https://prometheus-us-central1.grafana.net/api/v1/write for Prometheus or https://mimir-us-central1.grafana.net/api/v1/push/ for Mimir. The endpoint URL depends on the database you use.
+*Postgres DB*
+- We also take similar approach while instructing Alloy to scrape metrics from the Postgres database.  
+- We instruct Alloy which Postgres database we want it to connect to through `prometheus.exporter.postgres` component. 
+- We use the `prometneus.scrape` component which we label "postgres".
+- We tell Alloy that we want to scrape metrics from the database and forward the dtata to the `prometheus.relabel.postgres.receiver` component we will define in the next step. 
+- We label the job_name as "postgres" here.
+  
+```
+prometheus.exporter.postgres "mythical" {
+    data_source_names = ["postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable"]
+}
 
-#### Step 2: If your endpoint requires basic authentication, paste the following inside the endpoint block.
+prometheus.scrape "postgres" {
+    targets = prometheus.exporter.postgres.mythical.targets
+
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    forward_to = [prometheus.relabel.postgres.receiver]
+
+    job_name = "postgres"
+}
+```
+*Data transformation*
+- We will use the `prometheus.relabel` component to relabel metrics data we are scraping from the Postgres database.
+- We instruct Alloy to send (`forward_to`) the transformed data to the `prometheus.remote_write.mimir.receiver` component. 
+- We define two rules to define the relabeling operations we would like to perform. 
+- Note that the rules are evaluated top down, so the order matters! 
+- The first rule identifies all metrics with the value of 'infrastructure' and replaces associated key with the label "group".
+(I have no idea if this is right Mischa. will you rephrase as needed?
+- The second rull identifies all metrics with the value of 'service' and replaces associated key with the label "postgres".
+```
+prometheus.relabel "postgres" {
+    forward_to = [prometheus.remote_write.mimir.receiver]
+
+    rule {
+        action       = "replace"
+        target_label = "group"
+        replacement  = "infrastructure"
+    }
+
+    rule {
+        action       = "replace"
+        target_label = "service"
+        replacement  = "postgres"
+    }
+}
+```
+*Send scraped metrics to the Mimir database*
+
+`prometheus.remote_write "mimir"` component is responsible for delivering Prometheus metrics to one or more Prometheus-compatible endpoints.
+
+The full URL of the Prometheus-compatible endpoint where metrics are sent, such as "http://mimir:9009/api/v1/push" for Mimir. The endpoint URL depends on the database you use.
+
+```
+prometheus.remote_write "mimir" {
+    endpoint {
+        url = "http://mimir:9009/api/v1/push"
+    }
+}
+```
+
+If your endpoint requires basic authentication, paste the following inside the endpoint block.
 ```
 basic_auth {
   username = "<USERNAME>"
@@ -232,6 +295,8 @@ prometheus.scrape "example" {
   forward_to = [prometheus.remote_write.default.receiver]
 }
 ```
+
+
 # Application Observability
 
 OTel telemetry should be
