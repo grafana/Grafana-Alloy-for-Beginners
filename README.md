@@ -32,7 +32,7 @@ A single task is known as a `component` in Alloy.
 These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
-These subtasks/subcomponents are known as `blocks` in Alloy. 
+These subtasks/subcomponents are known as `blocks` in Alloy. Within blocks, you can further use attributes and expressions to give Alloy more information on what you would like it to do. 
 
 <img width="729" alt="image" src="https://github.com/user-attachments/assets/ed8aa651-f522-45ea-9556-de943f4908f9" />
 
@@ -42,7 +42,7 @@ COMPONENT_NAME "BLOCK_LABEL" {
   // Block body can contain attributes and nested unlabeled blocks
   ATTRIBUTE = EXPRESSION 
   NESTED_BLOCK_NAME {
-    // Nested block body
+    // ATTRIBUTE = EXPRESSION 
   }
 }
 
@@ -60,36 +60,7 @@ The preceding example has two blocks:
 - `prometheus.remote_write "default"`: A labeled block which instantiates a prometheus.remote_write component. The label is the string "default".
 - `endpoint`: An unlabeled block inside the component that configures an endpoint to send metrics to. This block sets the url attribute to specify the endpoint.
 
-#### Attributes
-You use Attributes to configure individual settings. Attributes always take the form of `ATTRIBUTE_NAME = ATTRIBUTE_VALUE`.
-
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/675a6f27-654a-4d62-ae45-534da361a496" />
-
-```
-prometheus.scrape "infra" {
-//The targets array allows us to specify which service targets to scrape from:
-  targets = [
-    {"__address__" = "grafana:3000", group = "infrastrcuture", service = "grafana"},
-  ]
-
-  scrape_interval = "15s"
-  job_name        = "infra"
-  forward_to    = [prometheus.remote)write.mimir.receiver]
-}
-```
-
-#### Types 
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/56b63fcf-92b1-437c-ac69-2fdcc18bd4d8" />
-
-#### Expressions and Operators 
-You use expressions to compute the value of an attribute. The simplest expressions are constant values like `"debug"`, `32`, or `[1, 2, 3, 4]`. The Alloy syntax supports complex expressions, for example:
-
-- Referencing the exports of components: `local.file.password_file.content`
-- Mathematical operations: `1 + 2`, `3 * 4`, `(5 * 6) + (7 + 8)`
-- Equality checks: `local.file.file_a.content == local.file.file_b.content`
-- Calling functions from Alloy’s standard library: `sys.env("HOME")` retrieves the value of the `HOME` environment variable.
-
-You can use expressions for any attribute inside a component definition.
+You use expressions to compute the value of an attribute. The simplest expressions are constant values like strings, integers, lists, objects, etc.
 
 # Environment overview
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
