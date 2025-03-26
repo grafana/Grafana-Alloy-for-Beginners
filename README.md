@@ -29,7 +29,7 @@ In order to instruct Alloy on how we want that done, we must write these instruc
 
 A single task is known as a `component` in Alloy.
 
-These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as `pipeline` in Alloy. 
+These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
 These subtasks/subcomponents are known as `blocks` in Alloy. 
@@ -38,10 +38,9 @@ These subtasks/subcomponents are known as `blocks` in Alloy.
 
 Pattern for creating a labeled block:
 ```
-BLOCK_NAME "BLOCK_LABEL" {
+COMPONENT_NAME "BLOCK_LABEL" {
   // Block body can contain attributes and nested unlabeled blocks
-  IDENTIFIER = EXPRESSION // Attribute
-
+  ATTRIBUTE = EXPRESSION 
   NESTED_BLOCK_NAME {
     // Nested block body
   }
@@ -92,10 +91,6 @@ You use expressions to compute the value of an attribute. The simplest expressio
 
 You can use expressions for any attribute inside a component definition.
 
-#### Standard Library
-
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExODB6OXR3M3JpYzJ4aml1bW9meTU2N2IyazRxNjdxbzZtNmtkdnR3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/128MHrlrHNwwU0/giphy.gif)
-
 # Environment overview
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
 
@@ -123,6 +118,62 @@ Prometheus telemetry should be
 - [prometheus.exporter.unix]()
 - [prometheus.remote_write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)
 - [prometheus.scrape](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/)
+
+### Final configuration for Prometheus pipeline
+```
+prometheus.scrape "alloy" {
+    targets = [{"__address__" = "localhost:12345", group = "infrastructure", service = "alloy"}]
+
+    forward_to = [prometheus.remote_write.mimir.receiver]
+
+    job_name = "alloy"
+}
+
+prometheus.exporter.postgres "mythical" {
+    data_source_names = ["postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable"]
+}
+
+prometheus.scrape "postgres" {
+    targets = prometheus.exporter.postgres.mythical.targets
+
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    // Send the metrics to the relabel component to add the 'service' and 'group' labels
+    forward_to = [prometheus.relabel.postgres.receiver]
+
+    // Attach job name to the metrics. This could also be done in the relabel, but the job label is 
+    // important in the Prometheus ecosystem so there's a convenient way to set it here
+    job_name = "postgres"
+}
+
+// Relabel the metrics for postgres to include the 
+prometheus.relabel "postgres" {
+    forward_to = [prometheus.remote_write.mimir.receiver]
+
+    // Each rule defines a relabeling operation we'd like to do. They are evaluated top-down, so order matters!
+    // This rule adds the label 'group' to all metrics with a value of 'infrastructure'
+    rule {
+        action       = "replace"
+        target_label = "group"
+        replacement  = "infrastructure"
+    }
+
+    rule {
+        action       = "replace"
+        target_label = "service"
+        replacement  = "postgres"
+    }
+}
+
+// Define the prometheus remote_write endpoint we'd like to write all Prometheus metrics to
+prometheus.remote_write "mimir" {
+    endpoint {
+        url = "http://mimir:9009/api/v1/push"
+    }
+}
+
+```
 
 ### Configure metrics delivery 
 
@@ -645,8 +696,8 @@ Visit http://localhost:12345/graph
 ### Spanmetrics 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/c96cf3c4-1431-4abe-a29d-fd0e9ccf7fe1" />
 
-
-
 # Debugging
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/8f97d371-d234-48be-b948-1577cdb0f0e7" />
+
 # Q & A
 ![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXU1ZnNwazRmbXdmcGMzZmNueWd3eTk4aWJlNmI0dHd6OXR5azh3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMB2WiOdjpB7K4o/giphy.gif)
