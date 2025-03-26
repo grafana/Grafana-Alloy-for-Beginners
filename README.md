@@ -4,7 +4,8 @@
 
 # Resources for the workshop
 - [Environment set up](https://github.com/grafana/intro-to-mltp)
-- [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/) 
+- [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
+- [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
 
 # Alloy 101 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/d37cbbce-2526-443c-83e5-9c0a3a6b481d" />
@@ -25,29 +26,20 @@ In order to instruct Alloy on how we want that done, we must write these instruc
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
 ### Imagine that you are writing a set of to do list for Alloy. 
-<img width="724" alt="image" src="https://github.com/user-attachments/assets/3291f527-10f4-48e6-82ad-1bb702814d59" />
+<img width="731" alt="image" src="https://github.com/user-attachments/assets/3599a013-7c43-4e01-896d-78e5c9cf363b" />
 
 A single task is known as a `component` in Alloy.
 
-These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver teletry data. These set of instructions are known as a `pipeline` in Alloy. 
+These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. These set of instructions are known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
-These subtasks/subcomponents are known as `blocks` in Alloy. Within blocks, you can further use attributes and expressions to give Alloy more information on what you would like it to do. 
+These subtasks/subcomponents are known as `blocks` in Alloy. Within `blocks`, you can further use `attributes` and `expressions` to give Alloy more information on what you would like it to do. 
+
+You use `expressions` to compute the value of an `attribute`. The simplest `expressions` are constant values like strings, integers, lists, objects, etc.
 
 <img width="729" alt="image" src="https://github.com/user-attachments/assets/ed8aa651-f522-45ea-9556-de943f4908f9" />
 
-Pattern for creating a labeled block:
-```
-COMPONENT_NAME "BLOCK_LABEL" {
-  // Block body can contain attributes and nested unlabeled blocks
-  ATTRIBUTE = EXPRESSION 
-  NESTED_BLOCK_NAME {
-    // ATTRIBUTE = EXPRESSION 
-  }
-}
-
-```
-Example:
+For example:
 ```
 prometheus.remote_write "default" {
   endpoint {
@@ -56,11 +48,8 @@ prometheus.remote_write "default" {
 }
 ```
 The preceding example has two blocks:
-
 - `prometheus.remote_write "default"`: A labeled block which instantiates a prometheus.remote_write component. The label is the string "default".
-- `endpoint`: An unlabeled block inside the component that configures an endpoint to send metrics to. This block sets the url attribute to specify the endpoint.
-
-You use expressions to compute the value of an attribute. The simplest expressions are constant values like strings, integers, lists, objects, etc.
+- `endpoint`: An unlabeled block inside the component that configures an endpoint to send metrics to. This block sets the url `attribute` to equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
 
 # Environment overview
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
@@ -78,20 +67,31 @@ Prometheus telemetry should be
 ## Building a Prometheus pipeline for metrics 
 <img width="1424" alt="image" src="https://github.com/user-attachments/assets/5a47607f-07f6-49b6-ad05-ad1a87318432" />
 
-### Before you begin, make sure: 
-- you have basic familiarity with instrumenting applications with Prometheus.
-- have a set of Prometheus exports or applications exposing Prometheus metrics that you want to collect metrics from.
-- Identify where to write collected metrics.
-  Metrics can be written to Prometheus or Prometheus-compatible endpoints such as Grafana Mimir, Grafana Cloud, or Grafana Enterprise Metrics.
-
 ### Components used in this section: 
-- [prometheus.exporter.postgres]()
-- [prometheus.exporter.unix]()
-- [prometheus.remote_write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)
 - [prometheus.scrape](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/)
+- [prometheus.remote_write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)
+- [prometheus.exporter.postgres](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.postgres/)
+- [prometheus.relabel](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/)
+- [loki.source.api](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/)
+- [loki.process](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/)
+- [loki.write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/)
+  
+### Final configuration for the Prometheus pipeline
+**Metrics**
+The following pipeline
+1) scrapes
+- metrics from the local Alloy collector, Postgres database, mythical services.
+2) adds the label 'group' to all metrics with a value of 'infrastructure'
+3) writes metrics to Mimir database
 
-### Final configuration for Prometheus pipeline
+**Logs**
+The following pipeline
+1) ingests logs from teh mythical application via Loki's HTTP REST API
+2) parses timestamp data within a logline and use it as the timestamp for the logline
+3) writes logs to the local Loki instance
+
 ```
+//metrics
 prometheus.scrape "alloy" {
     targets = [{"__address__" = "localhost:12345", group = "infrastructure", service = "alloy"}]
 
@@ -137,6 +137,37 @@ prometheus.remote_write "mimir" {
     }
 }
 
+//Logs
+loki.source.api "mythical" {
+    http {
+        listen_address = "0.0.0.0"
+        listen_port = "3100"
+    }
+
+    forward_to = [loki.process.mythical.receiver]
+}
+
+loki.process "mythical" {
+
+    stage.logfmt {
+        mapping = {
+            loggedtime = "",
+        }
+    }
+
+    stage.timestamp {
+        source = "loggedtime"
+        format = "2006-01-02T15:04:05.000Z07:00"
+    }
+
+    forward_to = [loki.write.mythical.receiver]
+}
+
+loki.write "mythical" {
+    endpoint {
+        url = "http://loki:3100/loki/api/v1/push"
+    }
+}
 ```
 
 ### Configure metrics delivery 
