@@ -139,20 +139,14 @@ prometheus.scrape "postgres" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    // Send the metrics to the relabel component to add the 'service' and 'group' labels
     forward_to = [prometheus.relabel.postgres.receiver]
 
-    // Attach job name to the metrics. This could also be done in the relabel, but the job label is 
-    // important in the Prometheus ecosystem so there's a convenient way to set it here
     job_name = "postgres"
 }
 
-// Relabel the metrics for postgres to include the 
 prometheus.relabel "postgres" {
     forward_to = [prometheus.remote_write.mimir.receiver]
 
-    // Each rule defines a relabeling operation we'd like to do. They are evaluated top-down, so order matters!
-    // This rule adds the label 'group' to all metrics with a value of 'infrastructure'
     rule {
         action       = "replace"
         target_label = "group"
@@ -166,7 +160,6 @@ prometheus.relabel "postgres" {
     }
 }
 
-// Define the prometheus remote_write endpoint we'd like to write all Prometheus metrics to
 prometheus.remote_write "mimir" {
     endpoint {
         url = "http://mimir:9009/api/v1/push"
