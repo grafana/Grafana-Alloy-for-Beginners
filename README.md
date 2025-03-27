@@ -318,7 +318,8 @@ OTel telemetry should be
 2. sends the ingested traces to a local Tempo instance
 3. sends the ingested traces to a OTel spanlog connector to generate logs from the traces and send the generated logs to a local Loki instance
 
-<img width="916" alt="image" src="https://github.com/user-attachments/assets/40886c1b-dc3c-4670-9f31-2d5a716276f8" />
+<img width="906" alt="image" src="https://github.com/user-attachments/assets/3010d37d-57f9-4100-a7ba-19bda016186b" />
+
 
 ```
 otelcol.receiver.otlp "otlp_receiver" {
