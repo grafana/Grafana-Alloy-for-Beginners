@@ -81,8 +81,8 @@ Prometheus/Promtail telemetry should be
 ### Final configuration for the Prometheus and Loki pipelines
 
 **The Prometheus pipeline**
-1) scrapes metrics from the local Alloy collector and Postgres database,
-2) adds the label 'group' to all metrics with a value of 'infrastructure',
+1) scrapes metrics from the local Alloy collector and Postgres database
+2) adds the label 'group' to all metrics with a value of 'infrastructure'
 3) writes metrics to the Mimir database.
 
 ```
@@ -155,7 +155,8 @@ prometheus.scrape "alloy" {
 This `prometheus.scrape` component 
 - scrapes metrics from the `targets` we define (in this case is our local Alloy collector) and instructs alloy to scrape every 2 seconds and timeout if it cannot within 2 seconds. 
 - forwards the metrics to a `prometheus.remote_write.mimir.receiver` component which we will define shortly.
-- attaches a job name ("alloy") to the metrics. Specifying a job name is useful to identify scraped targets and group metrics.
+- attaches a job name ("alloy") to the metrics. Specifying a job name is useful to identify scraped targets and group metrics
+**[@Mischa, why is this identification important? do we do analysis based on the job name while visualizing data or is it used to point out which data needs to be transformed etc?]**
 
 *Postgres DB*
 - We also take similar approach when instructing Alloy to scrape metrics from the Postgres database.  
@@ -185,8 +186,8 @@ prometheus.scrape "postgres" {
 - We will use the `prometheus.relabel` component to relabel metrics data we are scraping from the Postgres database.
 - We instruct Alloy to send (`forward_to`) the transformed data to the `prometheus.remote_write.mimir.receiver` component. 
 - We define two rules to define the relabeling operations we would like to perform. 
-- The first rule sets the value of the `"group"` label for all metrics to a value of `"infrastructure"`.
-- The second rule sets the value of the `"service"` label for all metrics to a value of `"postgres"` .
+**[@Misha- The first rule sets the value of the `"group"` label for all metrics to a value of `"infrastructure"`.
+- The second rule sets the value of the `"service"` label for all metrics to a value of `"postgres"` .] This part still does not make sense to me. Could you explain this a bit more using examples before and after transformation?**
 - Note that the rules are evaluated top down, so the order matters! 
 ```
 prometheus.relabel "postgres" {
@@ -261,15 +262,12 @@ prometheus.scrape "example" {
 }
 ```
 
-**?? Not sure if we could add this to the infra o11y section as these are logs collected from services and not the infrastructure?? 
-Mischa, what do you think?**
-
-** I added a snippet below this section on how to get Alloy's own logs flowing! Not sure if that's interesting enough, there are maybe a few more transformations we could do
-like adding the info value as a label on logs 
-
-As far as these logs go, you're right that they're App O11y. I think it should be fine to add them there, pending the message on slack**
-
-**Alloy Logs**
+**The Loki pipeline**
+1) scrapes logs from the local Alloy collector
+2) configures Alloy's logging to output logs as logfmt and at the debug level.
+* This is not recommended for production as the logs can be quite noisy, but it's useful for a demo and to see logs flowing.
+3) **[@mischa configures to add a service label] I still don't get this part**
+4) forward transformed logs to the `loki.write` component that sends logs to a local Loki database. 
 
 ```alloy
 logging {
@@ -286,15 +284,13 @@ loki.relabel "alloy_logs" {
 
     forward_to = [loki.write.mythical.receiver]
 }
+
+loki.write "mythical" {
+    endpoint {
+        url = "http://loki:3100/loki/api/v1/push"
+    }
+}
 ```
-
-This snippet configures Alloy's logging to output logs as `logfmt` and at the `debug` level. This is not recommended for production as the logs can be quite noisy,
-but it's useful for a demo and to see logs flowing. 
-
-To do this, we configure the top-level [logging block](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/). This is one of a few unnamed, root-level blocks.
-We also configure the block to forward Alloy's logs to a `loki.relabel` block that we use to add a `service` label. After processing logs and adding the label, the `loki.relabel`
-block sends logs to the same `loki.write` we defined above.
-
 
 # Application Observability
 
@@ -320,6 +316,101 @@ OTel telemetry should be
 
 ### Pipeline overview
 Metrics, Logs, Traces: OTLP Receiver → batch processor → OTLP Exporter
+
+
+### Final configuration for OTel pipeline
+```
+otelcol.receiver.otlp "otlp_receiver" {
+    grpc {
+        endpoint = "0.0.0.0:4317"
+    }
+    http {
+        endpoint = "0.0.0.0:4318"
+    }
+
+    output {
+        traces = [
+            otelcol.processor.batch.default.input,
+            otelcol.connector.spanlogs.autologging.input,
+        ]
+        metrics = [
+            otelcol.processor.batch.default.input,
+        ]
+    }
+}
+
+otelcol.processor.batch "default" {
+    send_batch_size = 1000
+    send_batch_max_size = 2000
+
+    timeout = "2s"
+
+    output {
+        traces = [otelcol.exporter.otlp.tempo.input]
+    }
+}
+
+otelcol.exporter.otlp "tempo" {
+    client {
+        endpoint = "http://tempo:4317"
+
+        tls {
+            insecure = true
+            insecure_skip_verify = true
+        }
+    }
+}
+
+otelcol.connector.spanlogs "autologging" {
+    spans = false
+    roots = true
+    processes = false
+
+    span_attributes = [ "http.method", "http.target", "http.status_code" ]
+
+    overrides {
+        trace_id_key = "traceId"
+    }
+
+    output {
+        logs = [otelcol.exporter.loki.autologging.input]
+    }
+}
+
+otelcol.exporter.loki "autologging" {
+    forward_to = [loki.process.autologging.receiver]
+}
+
+
+loki.process "autologging" {
+    stage.json {
+        expressions = { "body" = "" }
+    }
+
+    stage.output {
+        source = "body"
+    }
+
+    forward_to = [loki.write.autologging.receiver]
+}
+
+
+loki.write "autologging" {
+   
+    external_labels = {
+        job = "alloy",
+    }
+
+    endpoint {
+        url = json_path(local.file.endpoints.content, ".logs.url")[0]
+
+        basic_auth {
+            username = json_path(local.file.endpoints.content, ".logs.basicAuth.username")[0]
+            password = json_path(local.file.endpoints.content, ".logs.basicAuth.password")[0]
+        }
+    }
+}
+```
 
 ### Configure an OpenTelemtry Protocol exporter 
 Before components can receive OTel data, you must have a component responsible for writing (exporting) the OTel data to an external system.
