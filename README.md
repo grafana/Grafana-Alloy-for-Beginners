@@ -155,7 +155,7 @@ prometheus.scrape "alloy" {
 This `prometheus.scrape` component 
 - scrapes metrics from the `targets` we define (in this case is our local Alloy collector) and instructs alloy to scrape every 2 seconds and timeout if it cannot within 2 seconds. 
 - forwards the metrics to a `prometheus.remote_write.mimir.receiver` component which we will define shortly.
-- attaches a job name ("alloy") to the metrics. Specifying a job name is especially helpful for...(Mischa, could you add an explanation here?)
+- attaches a job name ("alloy") to the metrics. Specifying a job name is useful to identify scraped targets and group metrics.
 
 *Postgres DB*
 - We also take similar approach when instructing Alloy to scrape metrics from the Postgres database.  
@@ -185,9 +185,8 @@ prometheus.scrape "postgres" {
 - We will use the `prometheus.relabel` component to relabel metrics data we are scraping from the Postgres database.
 - We instruct Alloy to send (`forward_to`) the transformed data to the `prometheus.remote_write.mimir.receiver` component. 
 - We define two rules to define the relabeling operations we would like to perform. 
-- The first rule tells Alloy to find all metrics with the value of 'infrastructure' and replace the associated key with the label "group".
-(I have no idea if this is right Mischa. will you rephrase as needed for both rules?)
-- The second rull identifies all metrics with the value of 'service' and replace associated key with the label "postgres".
+- The first rule sets the value of the `"group"` label for all metrics to a value of `"infrastructure"`.
+- The second rule sets the value of the `"service"` label for all metrics to a value of `"postgres"` .
 - Note that the rules are evaluated top down, so the order matters! 
 ```
 prometheus.relabel "postgres" {
@@ -265,6 +264,10 @@ prometheus.scrape "example" {
 **?? Not sure if we could add this to the infra o11y section as these are logs collected from services and not the infrastructure?? 
 Mischa, what do you think?**
 
+** I added a snippet below this section on how to get Alloy's own logs flowing! Not sure if that's interesting enough, there are maybe a few more transformations we could do
+like adding the info value as a label on logs 
+
+As far as these logs go, you're right that they're App O11y. I think it should be fine to add them there, pending the message on slack**
 
 **The Loki pipeline**
 1) ingests logs from the mythical application via Loki's HTTP REST API,
@@ -303,6 +306,34 @@ loki.write "mythical" {
     }
 }
 ```
+
+**Alloy Logs**
+
+```alloy
+logging {
+    format     = "logfmt"
+    level      = "debug"
+    write_to   = [loki.relabel.alloy_logs.receiver]
+}
+
+loki.relabel "alloy_logs" {
+    rule {
+        target_label = "service"
+        replacement  = "alloy"
+    }
+
+    forward_to = [loki.write.mythical.receiver]
+}
+```
+
+This snippet configures Alloy's logging to output logs as `logfmt` and at the `debug` level. This is not recommended for production as the logs can be quite noisy,
+but it's useful for a demo and to see logs flowing. 
+
+To do this, we configure the top-level [logging block](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/). This is one of a few unnamed, root-level blocks.
+We also configure the block to forward Alloy's logs to a `loki.relabel` block that we use to add a `service` label. After processing logs and adding the label, the `loki.relabel`
+block sends logs to the same `loki.write` we defined above.
+
+
 # Application Observability
 
 OTel telemetry should be
@@ -507,12 +538,9 @@ MISCHA
 ```
 otelcol.receiver.otlp "otlp_receiver" {
 	output {
-    	traces = [       	 
+    	    traces = [       	 
         	otelcol.processor.batch.default.input,
-    	]
-    	metrics = [
-        	otelcol.processor.batch.default.input,
-    	]
+    	    ]
 	}
 }
 
@@ -524,28 +552,27 @@ otelcol.processor.batch "default" {
 	timeout = "2s"
 
 	output {
-    	traces = [otelcol.exporter.otlp.tempo.input]
+    	    traces = [otelcol.exporter.otlp.tempo.input]
 	}
 }
 
 otelcol.exporter.otlp "tempo" {
-	client {
-    	auth = otelcol.auth.headers.tempo.handler
+    client {
+        auth = otelcol.auth.headers.tempo.handler
+        endpoint = "http://tempo:4317"
 
-    	endpoint = "http://tempo:4317"
-
-    	tls {
-        	insecure          	 = true
-        	insecure_skip_verify = true
-    	}
-	}
+        tls {
+            insecure             = true
+            insecure_skip_verify = true
+        }
+    }
 }
 
 otelcol.auth.headers "tempo" {
-	header {
-    	key   = "Authorization"
-    	value = ""
-	}
+    header {
+        key   = "Authorization"
+        value = ""
+    }
 }
 ```
 
