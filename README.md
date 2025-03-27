@@ -299,26 +299,27 @@ OTel telemetry should be
 - enriched and exported using OTel Collector processors, connectors, and exporters
 - sent to Grafana Cloud using the Grafana Cloud OTLP Endpoint
 
-## Building OTel pipelines for metrics,logs, and traces
+## Building OTel pipelines for traces and logs
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/9639a789-f4e1-4cd4-9023-8c3e14f4d542" />
-
-### Before you begin, make sure: 
-- ensure that you have basic familiarity with instrumenting applications with OTel.
-- identify where Alloy writes received telemetry data.
 
 ### Components used in this section
 - [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/)
 - [otelcol.processor.batch](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/)
-- [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/)
-- [loki.source.api]()
-- [loki.process]()
-- [loki.write]()
-
-### Pipeline overview
-Metrics, Logs, Traces: OTLP Receiver → batch processor → OTLP Exporter
-
+- [otelcol.connector.spanlogs](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.connector.spanlogs/)
+- [otecol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/)
+- [otelcol.exporter.loki](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.loki/)
+- [loki.process](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/)
+- [loki.write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/)
 
 ### Final configuration for OTel pipeline
+
+**The OTel pipeline**
+1. receives all incoming trace spans from the application
+2. sends the ingested traces to a local Tempo instance
+3. sends the ingested traces to a OTel spanlog connector to generate logs from the traces and send the generated logs to a local Loki instance
+
+<img width="916" alt="image" src="https://github.com/user-attachments/assets/40886c1b-dc3c-4670-9f31-2d5a716276f8" />
+
 ```
 otelcol.receiver.otlp "otlp_receiver" {
     grpc {
@@ -332,9 +333,6 @@ otelcol.receiver.otlp "otlp_receiver" {
         traces = [
             otelcol.processor.batch.default.input,
             otelcol.connector.spanlogs.autologging.input,
-        ]
-        metrics = [
-            otelcol.processor.batch.default.input,
         ]
     }
 }
@@ -393,7 +391,6 @@ loki.process "autologging" {
 
     forward_to = [loki.write.autologging.receiver]
 }
-
 
 loki.write "autologging" {
    
