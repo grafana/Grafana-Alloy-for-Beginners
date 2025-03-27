@@ -42,9 +42,9 @@ You use `expressions` to compute the value of an `attribute`. The simplest `expr
 For example:
 ```
 prometheus.remote_write "default" {
-  endpoint {
-    url = "http://localhost:9009/api/prom/push"
-  }
+    endpoint {
+        url = "http://localhost:9009/api/prom/push"
+    }
 }
 ```
 The preceding example has two blocks:
@@ -222,8 +222,8 @@ prometheus.remote_write "mimir" {
 If your endpoint requires basic authentication, paste the following inside the endpoint block.
 ```
 basic_auth {
-  username = "<USERNAME>"
-  password = "<PASSWORD>"
+    username = "<USERNAME>"
+    password = "<PASSWORD>"
 }
 ```
 Replace the following:
@@ -236,28 +236,28 @@ Replace the following:
 #### Example
 ```
 prometheus.remote_write "default" {
-  endpoint {
-    url = "http://localhost:9090/api/prom/push"
-  }
-
-  endpoint {
-    url = "https://prometheus-us-central1.grafana.net/api/prom/push"
-
-    // Get basic authentication based on environment variables.
-    basic_auth {
-      username = sys.env("<REMOTE_WRITE_USERNAME>")
-      password = sys.env("<REMOTE_WRITE_PASSWORD>")
+    endpoint {
+        url = "http://localhost:9090/api/prom/push"
     }
-  }
+
+    endpoint {
+        url = "https://prometheus-us-central1.grafana.net/api/prom/push"
+
+        // Get basic authentication based on environment variables.
+        basic_auth {
+            username = sys.env("<REMOTE_WRITE_USERNAME>")
+            password = sys.env("<REMOTE_WRITE_PASSWORD>")
+        }
+    }
 }
 
 prometheus.scrape "example" {
-  // Collect metrics from the default listen address.
-  targets = [{
-    __address__ = "127.0.0.1:12345",
-  }]
+    // Collect metrics from the default listen address.
+    targets = [{
+        __address__ = "127.0.0.1:12345",
+    }]
 
-  forward_to = [prometheus.remote_write.default.receiver]
+    forward_to = [prometheus.remote_write.default.receiver]
 }
 ```
 
@@ -368,9 +368,9 @@ To configure an `otelcol.exporter.otlp` component for exporting OTel data using 
 #### Step 1: Add the following otelcol.exporter.otlp component to your configuration file:
 ```
 otelcol.exporter.otlp "<EXPORTER_LABEL>" {
-  client {
-    endpoint = "<HOST>:<PORT>"
-  }
+    client {
+        endpoint = "<HOST>:<PORT>"
+    }
 }
 ```
 Replace the following:
@@ -383,8 +383,8 @@ Replace the following:
 Add the following otelcol.auth.basic component to your configuration file:
 ```
 otelcol.auth.basic "<BASIC_AUTH_LABEL>" {
-  username = "<USERNAME>"
-  password = "<PASSWORD>"
+    username = "<USERNAME>"
+    password = "<PASSWORD>"
 }
 ```
 Replace the following: 
@@ -399,33 +399,32 @@ Example:
 The following example demonstrates configuring otelcol.exporter.otlp with authentication and a component that forwards data to it:
 ```
 otelcol.exporter.otlp "default" {
-  client {
-    endpoint = "my-otlp-grpc-server:4317"
-    auth     = otelcol.auth.basic.credentials.handler
-  }
+    client {
+        endpoint = "my-otlp-grpc-server:4317"
+        auth     = otelcol.auth.basic.credentials.handler
+    }
 }
 
 otelcol.auth.basic "credentials" {
-  // Retrieve credentials using environment variables.
-
-  username = sys.env("BASIC_AUTH_USER")
-  password = sys.env("API_KEY")
+    // Retrieve credentials using environment variables.
+    username = sys.env("BASIC_AUTH_USER")
+    password = sys.env("API_KEY")
 }
 
 otelcol.receiver.otlp "example" {
-  grpc {
-    endpoint = "127.0.0.1:4317"
-  }
+    grpc {
+        endpoint = "127.0.0.1:4317"
+    }
 
-  http {
-    endpoint = "127.0.0.1:4318"
-  }
+    http {
+        endpoint = "127.0.0.1:4318"
+    }
 
-  output {
-    metrics = [otelcol.exporter.otlp.default.input]
-    logs    = [otelcol.exporter.otlp.default.input]
-    traces  = [otelcol.exporter.otlp.default.input]
-  }
+    output {
+        metrics = [otelcol.exporter.otlp.default.input]
+        logs    = [otelcol.exporter.otlp.default.input]
+        traces  = [otelcol.exporter.otlp.default.input]
+    }
 }
 ```
 ### Data Transformation
@@ -443,11 +442,11 @@ To configure an `otelcol.processor.batch` component, complete the following step
 Add the following `otelcol.processor.batch` component into your configuration file: 
 ```
 otelcol.processor.batch "<PROCESSOR_LABEL>" {
-  output {
-    metrics = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
-    logs    = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
-    traces  = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
-  }
+    output {
+        metrics = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
+        logs    = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
+        traces  = [otelcol.exporter.otlp.<EXPORTER_LABEL>.input]
+    }
 }
 ```
 Replace the following:
@@ -462,28 +461,28 @@ Example:
 The following example demonstrates configuring a sequence of `otelcol.processor` components before being exported.
 ```
 otelcol.processor.memory_limiter "default" {
-  check_interval = "1s"
-  limit          = "1GiB"
+    check_interval = "1s"
+    limit          = "1GiB"
 
-  output {
-    metrics = [otelcol.processor.batch.default.input]
-    logs    = [otelcol.processor.batch.default.input]
-    traces  = [otelcol.processor.batch.default.input]
-  }
+    output {
+        metrics = [otelcol.processor.batch.default.input]
+        logs    = [otelcol.processor.batch.default.input]
+        traces  = [otelcol.processor.batch.default.input]
+    }
 }
 
 otelcol.processor.batch "default" {
-  output {
-    metrics = [otelcol.exporter.otlp.default.input]
-    logs    = [otelcol.exporter.otlp.default.input]
-    traces  = [otelcol.exporter.otlp.default.input]
-  }
+    output {
+        metrics = [otelcol.exporter.otlp.default.input]
+        logs    = [otelcol.exporter.otlp.default.input]
+        traces  = [otelcol.exporter.otlp.default.input]
+    }
 }
 
 otelcol.exporter.otlp "default" {
-  client {
-    endpoint = "my-otlp-grpc-server:4317"
-  }
+    client {
+        endpoint = "my-otlp-grpc-server:4317"
+    }
 }
 ```
 
@@ -500,11 +499,11 @@ To configure an `otelcol.receiver.otlp` component for receiving OTLP data, compl
 
 ```
 otelcol.receiver.otlp "<LABEL>" {
-  output {
-    metrics = [<COMPONENT_INPUT_LIST>]
-    logs    = [<COMPONENT_INPUT_LIST>]
-    traces  = [<COMPONENT_INPUT_LIST>]
-  }
+    output {
+        metrics = [<COMPONENT_INPUT_LIST>]
+        logs    = [<COMPONENT_INPUT_LIST>]
+        traces  = [<COMPONENT_INPUT_LIST>]
+    }
 }
 ```
 Replace the following:
@@ -515,7 +514,7 @@ Replace the following:
 To allow applications to send OTLP data over gRPC on port `4317`, add the following to your otelcol.receiver.otlp component.
 ```
 grpc {
-  endpoint = "<HOST>:4317"
+    endpoint = "<HOST>:4317"
 }
 ```
 Replace the following:
@@ -524,7 +523,7 @@ Replace the following:
 To allow applications to send OTLP data over HTTP/1.1 on port `4318`, add the following to your `otelcol.receiver.otlp` component.
 ```
 http {
-  endpoint = "<HOST>:4318"
+    endpoint = "<HOST>:4318"
 }
 ```
 Replace the following:
@@ -589,15 +588,15 @@ You can find the OTLP connection details from the OpenTelemetry Details page in 
 You must update the configuration file as follows:
 ```
 otelcol.auth.basic "default" {
-  username = "<ACCOUNT ID>"
-  password = "<API TOKEN>"
+    username = "<ACCOUNT ID>"
+    password = "<API TOKEN>"
 }
 
 otelcol.exporter.otlphttp "default" {
-  client {
-    endpoint = "<OTLP_ENDPOINT>"
-    auth     = otelcol.auth.basic.default.handler
-  }
+    client {
+        endpoint = "<OTLP_ENDPOINT>"
+        auth     = otelcol.auth.basic.default.handler
+    }
 }
 ```
 Replace the following:
