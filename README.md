@@ -21,16 +21,16 @@
 
 ### Think of Alloy as our trusty pal who can collect, transform, and deliver our telemetry data. 
 
-In order to instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
+To instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
-### Imagine that you are writing a set of to do list for Alloy. 
+### Imagine that you are writing a set of to do lists for Alloy. 
 <img width="731" alt="image" src="https://github.com/user-attachments/assets/3599a013-7c43-4e01-896d-78e5c9cf363b" />
 
 A single task is known as a `component` in Alloy.
 
-These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. These set of instructions are known as a `pipeline` in Alloy. 
+These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
 These subtasks/subcomponents are known as `blocks` in Alloy. 
@@ -50,7 +50,7 @@ The preceding example has two blocks:
 - A labeled block which instantiates a `prometheus.remote_write` component. The label is the string "default".
 - endpoint:
 - An unlabeled `block` inside the component that configures an endpoint to send metrics to.
-- Within `blocks`, you can further use `attributes` and `expressions` to give Alloy more information on what you would like it to do as a key value pair. 
+- Within `blocks`, you can further use `attributes` and `expressions` to give Alloy more information on what you would like it to do as a key-value pair. 
 - You use `expressions` to compute or denote the value of an `attribute`. The simplest `expressions` are constant values like strings, integers, lists, objects, etc.
 - This block sets the url `attribute`  equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
 
@@ -61,9 +61,9 @@ The preceding example has two blocks:
 
 *Whenever possible*
 - We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability.
-- We strongly recommend collecting all the telemetry types of a given monitored component using one single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
+- We strongly recommend collecting all the telemetry types of a given monitored component using a single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
 
-* Not every telemetry collection scenario are clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop. 
+* Not every telemetry collection scenario is clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop. 
 
 # Infrastructure Observability
 Prometheus/Promtail telemetry should be
@@ -144,7 +144,7 @@ prometheus.remote_write "mimir" {
 ```
 
 ### Prometheus pipeline explained
-The first step is to scrape metrics from our infrastructure (local Alloy collector and Postgres DB).
+The first step is to scrape metrics from our infrastructure (local Alloy collector).
 
 *Alloy*
 ```
@@ -160,9 +160,9 @@ prometheus.scrape "alloy" {
 }
 ```
 This `prometheus.scrape` component 
-- scrapes metrics from the `targets` we define (in this case is our local Alloy collector) and instructs alloy to scrape every 2 seconds and timeout if it cannot within 2 seconds. 
+- scrapes metrics from the `targets` we define (in this case our local Alloy collector) and instructs alloy to scrape every 2 seconds and timeout if it cannot within 2 seconds. 
 - forwards the metrics to a `prometheus.remote_write.mimir.receiver` component which we will define shortly.
-- attaches a job name ("alloy") to the metrics. Specifying a job name is useful to identify scraped targets and group metrics so it could be easily queried.
+- attaches a job name ("alloy") to the metrics. Specifying a job name is useful for identifying scraped targets and group metrics so the can be easily queried.
 
 *Postgres DB*
 - We take a similar approach when instructing Alloy to scrape metrics from the Postgres database.  
@@ -192,10 +192,9 @@ prometheus.scrape "postgres" {
 - We will use the `prometheus.relabel` component to relabel metrics data we are scraping from the Postgres database.
 - We instruct Alloy to send (`forward_to`) the transformed data to the `prometheus.remote_write.mimir.receiver` component. 
 - We define two rules to define the relabeling operations we would like to perform. 
-- The first rule adds a new label called `group="infrastructure"` to metrics scraped from the Postgres database. 
+- The first rule adds a new label called `group= "infrastructure"` to metrics scraped from the Postgres database. 
 - The second rule adds a new label called `service="postgres"` to metrics scraped from the Postgres database. 
-
-- Note that the rules are evaluated top down, so the order matters! 
+- Note that the rules are evaluated top-down, so the order matters! 
 ```
 prometheus.relabel "postgres" {
     forward_to = [prometheus.remote_write.mimir.receiver]
@@ -270,7 +269,7 @@ prometheus.scrape "example" {
 ```
 
 **The Loki pipeline**
-1) the logging block takes Alloy's logs in memory from the local Alloy collector and forwards them to the relabel component
+1) The `logging` block takes Alloy's logs in memory from the local Alloy collector and forwards them to the relabel component
 * it instructs Alloy to output logs in the standard log format, allow logs with level "debug" or higher, then send the logs to `loki.relabel` component
 2) adds a new label `"service" = "alloy"` to each log line 
 3) forwards transformed logs to the `loki.write` component that sends logs to a local Loki database. 
@@ -321,7 +320,7 @@ OTel telemetry should be
 **The OTel pipeline**
 1. receives all incoming trace spans from the mythical applications
 2. sends batches of ingested traces to a local Tempo instance
-3. sends the ingested traces to a OTel spanlog connector to generate logs from the traces and sends the generated logs to a local Loki instance
+3. sends the ingested traces to an OTel spanlog connector to generate logs from the traces and sends the generated logs to a local Loki instance
 
 <img width="906" alt="image" src="https://github.com/user-attachments/assets/3010d37d-57f9-4100-a7ba-19bda016186b" />
 
@@ -415,6 +414,8 @@ loki.write "autologging" {
 ```
 
 ### OTel pipeline explained
+
+*Create an `otelcol.receiver.otlp` component*
 ```
 otelcol.receiver.otlp "otlp_receiver" {
     grpc {
@@ -433,9 +434,10 @@ otelcol.receiver.otlp "otlp_receiver" {
 }
 ```
 - The trace spans get sent to the `otelcol.receiver.otlp` component. 
-grpc and http  endpoints are standard ports that are listening for OTLP spans (4317 and 4318 are standarrd default ports). 
-- The traces are then sent to `otelcol.processor.batch` component and the `otelcol.conenctor.spanlogs` component
+grpc and http  endpoints are standard ports that are listening for OTLP spans (4317 and 4318 are standard default ports). 
+- The traces are then sent to `otelcol.processor.batch` component and the `otelcol.connector.spanlogs` component
 
+*Create an `otelcol.processor.batch` component*
 ```
 otelcol.processor.batch "default" {
     send_batch_size = 1000
@@ -449,8 +451,10 @@ otelcol.processor.batch "default" {
 }
 
 ```
-- The `otelcol.processor.batch` components puts incoming trace spans in batches to reduce network connections and increase compression ratios of outgoing data. 
-- Batched data is sent to teh `otelcol.expoerter.otlp` component
+- The `otelcol.processor.batch` components put incoming trace spans in batches to reduce network connections and increase compression ratios of outgoing data. 
+- Batched data is sent to the `otelcol.exporter.otlp` component.
+
+*Create the `otelcol.exporter.otlp` component*
 
 ```otelcol.exporter.otlp "tempo" {
     client {
@@ -464,8 +468,9 @@ otelcol.processor.batch "default" {
 }
 ```
 - The `otelcol.exporter.oltp` component sends traces to the local Tempo instance.
-- The tls block allows us to send traces over a non HTTPS connection as well as omit authentification
+- The tls block allows us to send traces over a non https connection as well as omit authentification.
 
+*Create an `otelcol.connector.spanlogs` component*
 ```
 otelcol.connector.spanlogs "autologging" {
     spans = false
@@ -487,8 +492,9 @@ otelcol.connector.spanlogs "autologging" {
 - It instructs Alloy to only generate a log once we have a full trace (spans = falls, roots = true)
 - It adds the following span attributes ("http.method", "http.target", "http.status_code") to the logs
 - It instructs Alloy to replace the default a field in the log "tid" with "traceId"
-- It sends spanlogs tothe `otelcol.exporter.loki` component we will create in the next step
+- It sends spanlogs to the `otelcol.exporter.loki` component we will create in the next step
 
+*Create an `otelcol.exporter.loki` component*
 ```
 otelcol.exporter.loki "autologging" {
     forward_to = [loki.process.autologging.receiver]
@@ -496,8 +502,9 @@ otelcol.exporter.loki "autologging" {
 
 ```
 - We create the `otelcol.exporter.loki` component to instruct Alloy to convert otlp formatted spanlogs to Loki format.
-* We do this so we can easily convert JSON to logfmt consistent with logs already stored in Loki
+* We do this so we can easily convert JSON to logfmt consistent with logs already stored in Loki.
 
+*Create a `loki.process` component*
 ```
 loki.process "autologging" {
     stage.json {
@@ -512,8 +519,9 @@ loki.process "autologging" {
 }
 ```
 - The `loki.process` component parses the log contents as JSON, specifically the key "body" for use in subsequent stages.
-- It changes the actual log content to be logfmt andn forwards it to the `loki.write` component we will define in the next step. 
+- It changes the actual log content to be logfmt and forwards it to the `loki.write` component we will define in the next step. 
 
+*Create a `loki.write` component*
 ```
 loki.write "autologging" {
    
@@ -531,16 +539,16 @@ loki.write "autologging" {
     }
 }
 ```
-- This component sends spanlogs to the local Loki and adds a label `job = "alloy"` to make spanlogs queryable. 
+- This component sends spanlogs to the local Loki instance and adds a label `job = "alloy"` to make spanlogs queryable. 
 
 # Group exercise 
-Infrastructure O11y
+**Infrastructure O11y**
 - Scrape metrics from the Postgres database
 - Relabel "service" = "group" 
 - Drop an entire metric (enter metric name here)
 - Extract log level and add it as a label
 
-App O11y
+**App O11y**
 - Loki.process parse timestamp of the log
 
 # Debugging
