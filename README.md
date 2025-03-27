@@ -269,44 +269,6 @@ like adding the info value as a label on logs
 
 As far as these logs go, you're right that they're App O11y. I think it should be fine to add them there, pending the message on slack**
 
-**The Loki pipeline**
-1) ingests logs from the mythical application via Loki's HTTP REST API,
-2) parses timestamp data within a logline and uses it as the timestamp for the logline,
-3) writes logs to the local Loki instance.
-```
-//Loki pipeline
-loki.source.api "mythical" {
-    http {
-        listen_address = "0.0.0.0"
-        listen_port = "3100"
-    }
-
-    forward_to = [loki.process.mythical.receiver]
-}
-
-loki.process "mythical" {
-
-    stage.logfmt {
-        mapping = {
-            loggedtime = "",
-        }
-    }
-
-    stage.timestamp {
-        source = "loggedtime"
-        format = "2006-01-02T15:04:05.000Z07:00"
-    }
-
-    forward_to = [loki.write.mythical.receiver]
-}
-
-loki.write "mythical" {
-    endpoint {
-        url = "http://loki:3100/loki/api/v1/push"
-    }
-}
-```
-
 **Alloy Logs**
 
 ```alloy
@@ -424,6 +386,44 @@ otelcol.receiver.otlp "example" {
         metrics = [otelcol.exporter.otlp.default.input]
         logs    = [otelcol.exporter.otlp.default.input]
         traces  = [otelcol.exporter.otlp.default.input]
+    }
+}
+```
+
+**The Loki pipeline**
+1) ingests logs from the mythical application via Loki's HTTP REST API,
+2) parses timestamp data within a logline and uses it as the timestamp for the logline,
+3) writes logs to the local Loki instance.
+```
+//Loki pipeline
+loki.source.api "mythical" {
+    http {
+        listen_address = "0.0.0.0"
+        listen_port = "3100"
+    }
+
+    forward_to = [loki.process.mythical.receiver]
+}
+
+loki.process "mythical" {
+
+    stage.logfmt {
+        mapping = {
+            loggedtime = "",
+        }
+    }
+
+    stage.timestamp {
+        source = "loggedtime"
+        format = "2006-01-02T15:04:05.000Z07:00"
+    }
+
+    forward_to = [loki.write.mythical.receiver]
+}
+
+loki.write "mythical" {
+    endpoint {
+        url = "http://loki:3100/loki/api/v1/push"
     }
 }
 ```
