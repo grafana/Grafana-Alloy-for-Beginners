@@ -27,7 +27,7 @@ config reloaded
 ```
 
 
-### Section 1: Alloy logs and relabeling
+### Section 1: Collect logs from Alloy and relabel logs
 
 #### Objectives
 
@@ -69,7 +69,9 @@ To check that logs are being ingested, navigate to the [Grafana Explore Page](ht
 {service="alloy"}
 ```
 
-### Section 2: Collecting Loki metrics
+<img width="1436" alt="image" src="https://github.com/user-attachments/assets/80aea5e4-d25f-49f6-83ce-38d4911fe97d" />
+
+### Section 2: Collect metrics from Loki
 
 #### Objectives
 
@@ -118,7 +120,10 @@ rate(loki_distributor_bytes_received_total{job="prometheus.scrape.loki"}[$__rate
 
 You should see values coming in for the logs we started ingesting in the previous section!
 
-### Section 3: Alloy metrics and relabeling
+<img width="1438" alt="image" src="https://github.com/user-attachments/assets/5ab051a4-7d06-40f5-ac86-9dcc6fb13dce" />
+
+
+### Section 3: Collect metrics from Alloy and relabel metrics 
 
 #### Objectives
 
@@ -163,6 +168,9 @@ rate(alloy_resources_process_cpu_seconds_total{job="prometheus.scrape.alloy"}[$_
 
 You should see Alloy's CPU usage metrics coming in.
 
+<img width="1437" alt="image" src="https://github.com/user-attachments/assets/73cdefd8-ae2c-4222-9044-6e4f8325df78" />
+
+
 ### Section 4: Postgres metrics
 
 #### Objectives
@@ -205,6 +213,9 @@ To check that the Postgres metrics are being ingested, navigate to the [Dashboar
 you can import it by clicking the `New` button on the top right, select `Import`, enter the dashboard ID `9628`, select the Mimir data source, and click `Import`.
 
 You should see the panels in the Postgres dashboard populated with data.
+
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/03cb88b9-ce15-44c0-a072-58d7609e3203" />
+
 
 
 ### Section 5: Ingesting OTel traces
@@ -262,8 +273,12 @@ To check that traces are being ingested, navigate to the [Grafana Explore Page](
 
 You should see traces coming in for the Mythical services.
 
+<img width="1434" alt="image" src="https://github.com/user-attachments/assets/73080e3d-5dc3-4013-9409-09cd9887d565" />
+
 You can also navigate to the [Dashboards list](http://localhost:3000/dashboards) and select the `MLT Dashboard` dashboard. These dashboards are configured to use the metrics
 from Spanmetrics, so you should see data for the spans we're ingesting.
+
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/a19d7895-c232-49d8-b907-c70924d99a22" />
 
 ### Section 6: Spanlogs
 
