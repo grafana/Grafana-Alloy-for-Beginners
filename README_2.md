@@ -7,6 +7,7 @@
 
 - [Environment set up](https://github.com/grafana/intro-to-mltp)
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
+- - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
 
 ## Hands on sections
 
