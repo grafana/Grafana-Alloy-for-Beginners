@@ -23,7 +23,7 @@ git clone https://github.com/grafana/intro-to-mltp.git
 docker compose up
 ```
 ### Common tasks
-We will be using the `config.alloy` file to build pipelines for Infrastructure O11y and Observability O11y. 
+We will be using the `config.alloy` file to build pipelines for Infrastructure O11y and Applications O11y. 
 Whenever we make changes to the file, we must reload the config. 
 
 #### Reloading the config
