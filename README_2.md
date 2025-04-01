@@ -40,7 +40,7 @@ If the config is valid, you should see a response like the following:
 config reloaded
 ```
 
-## Infrastructure Observability - Collect, process, and export logs and metrics
+## Infrastructure Observability - collect, process, and export logs and metrics
 ### Section 1: Collect logs from Alloy and relabel logs
 
 #### Objectives
@@ -53,7 +53,7 @@ config reloaded
 
 Open `config.alloy` in your editor and copy the following code into it:
 
-```alloy
+```alloy/config.alloy
 logging {
     // TODO: Fill in this block
 }
