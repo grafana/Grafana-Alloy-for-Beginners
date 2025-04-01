@@ -7,6 +7,7 @@
 
 - [Environment set up](https://github.com/grafana/intro-to-mltp)
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
+- [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
 - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
 
 ## Hands on sections
@@ -39,13 +40,14 @@ If the config is valid, you should see a response like the following:
 config reloaded
 ```
 
+## Infrastructure Observability - Collect, process, and export logs and metrics
 ### Section 1: Collect logs from Alloy and relabel logs
 
 #### Objectives
 
-- Collect logs from Alloy using the `logging` block
-- Use `loki.relabel` to add labels to the logs
-- Write the logs to Loki
+- Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
+- Use [`loki.relabel`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.relabel/) to add labels to the logs
+- [Write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) the logs to Loki
 
 #### Instructions
 
