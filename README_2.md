@@ -59,6 +59,8 @@ For the `loki.relabel` component, we want to set the `group` label to "infrastru
 
 For the `loki.write` component, we want to ship logs to `http://loki:3100/loki/api/v1/push`.
 
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/887f206b-683f-4107-aaf3-cb891c2226d1" />
+
 Make sure to [reload the config](#reloading-the-config) after filling in the blocks!
 
 #### Verification
@@ -108,6 +110,8 @@ targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 
 For the `prometheus.remote_write` component, the url we'd like to write metrics to is `http://mimir:9009/api/v1/push`.
 
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/8bca5fee-8dbb-4c01-8f45-9b2015183433" />
+
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
@@ -156,6 +160,8 @@ For this section, we would like to configure `prometheus.scrape.alloy` to scrape
 
 For the `prometheus.relabel` component, we want to add the `group` label with the value "infrastructure" and the `service` label with the value "alloy" to the metrics.
 
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/13f26aa3-0f04-47fd-964f-807661037f6e" />
+
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
@@ -171,7 +177,7 @@ You should see Alloy's CPU usage metrics coming in.
 <img width="1437" alt="image" src="https://github.com/user-attachments/assets/73cdefd8-ae2c-4222-9044-6e4f8325df78" />
 
 
-### Section 4: Postgres metrics
+### Section 4: Collect Postgres metrics
 
 #### Objectives
 
@@ -205,6 +211,8 @@ For the `prometheus.scrape` component, we want to scrape the `prometheus.exporte
 
 For the `prometheus.relabel` component, we want to add the `group="infrastructure"` and `service="postgres"` labels to the metrics.
 
+<img width="917" alt="image" src="https://github.com/user-attachments/assets/9668a67c-5a6a-4676-aa0e-4fb3573a39eb" />
+
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
@@ -215,7 +223,6 @@ you can import it by clicking the `New` button on the top right, select `Import`
 You should see the panels in the Postgres dashboard populated with data.
 
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/03cb88b9-ce15-44c0-a072-58d7609e3203" />
-
 
 
 ### Section 5: Ingesting OTel traces
@@ -262,6 +269,8 @@ The batch processor will batch spans until a batch size or a timeout is met, bef
 Let's configure it to batch minimum 1000 spans, up to 2000 spans, or until 2 seconds have elapsed.
 
 The Tempo url is `http://tempo:4317`.
+
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/1e3dedbe-d69b-47b6-b7e0-ee3a2ae740e7" />
 
 #### Verification
 
@@ -332,6 +341,8 @@ For the `otelcol.connector.spanlogs` component to work, we will need to forward 
 We'd like to make sure to only generate a log for each full trace, not for each span (that would be a lot of logs!).
 
 We should also make sure to include the `http.method`, `http.target`, and `http.status_code` attributes in the logs.
+
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/56125b64-effd-4965-9c41-9b27b9cbb21c" />
 
 ### Exercise: Ingesting application logs
 
