@@ -11,7 +11,19 @@
 
 ## Hands on sections
 
+Before getting started, make sure you:
+- install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
+- clone the [repo](https://github.com/grafana/intro-to-mltp) for the demo environment :
+```
+git clone https://github.com/grafana/intro-to-mltp.git
+```
+- start a new command-line interface in your Operating System and run: 
+```
+docker compose up
+```
 ### Common tasks
+We will be using the `config.alloy` file to build pipelines for Infrastructure O11y and Observability O11y. 
+Whenever we make changes to the file, we must reload the config. 
 
 #### Reloading the config
 
@@ -26,7 +38,6 @@ If the config is valid, you should see a response like the following:
 ```
 config reloaded
 ```
-
 
 ### Section 1: Collect logs from Alloy and relabel logs
 
