@@ -91,8 +91,8 @@ To check that logs are being ingested, navigate to the [Grafana Explore Page](ht
 
 #### Objectives
 
-- Collect metrics from Loki using the `prometheus.scrape` component
-- Use `prometheus.remote_write` to write the metrics to locally running Mimir
+- Collect metrics from Loki using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
+- Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) to write the metrics to locally running Mimir
 
 #### Instructions
 
@@ -145,8 +145,8 @@ You should see values coming in for the logs we started ingesting in the previou
 
 #### Objectives
 
-- Collect Alloy's own metrics using the `prometheus.exporter.self` component
-- Use `prometheus.relabel` to add labels to the metrics
+- Collect Alloy's own metrics using the [`prometheus.exporter.self`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.self/) component
+- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add labels to the metrics
 - Write the metrics to Mimir
 
 #### Instructions
