@@ -296,12 +296,12 @@ To check that traces are being ingested, navigate to the [Grafana Explore Page](
 
 You should see traces coming in for the Mythical services.
 
-<img width="1434" alt="image" src="https://github.com/user-attachments/assets/73080e3d-5dc3-4013-9409-09cd9887d565" />
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/a19d7895-c232-49d8-b907-c70924d99a22" />
 
 You can also navigate to the [Dashboards list](http://localhost:3000/dashboards) and select the `MLT Dashboard` dashboard. These dashboards are configured to use the metrics
 from Spanmetrics, so you should see data for the spans we're ingesting.
 
-<img width="1433" alt="image" src="https://github.com/user-attachments/assets/a19d7895-c232-49d8-b907-c70924d99a22" />
+<img width="1434" alt="image" src="https://github.com/user-attachments/assets/73080e3d-5dc3-4013-9409-09cd9887d565" />
 
 ### Section 6: Spanlogs
 
