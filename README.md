@@ -2,8 +2,7 @@
 
 <img width="916" alt="image" src="https://github.com/user-attachments/assets/8d60bee9-9d0f-4e9f-9d62-74d5f10a4ec5" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/dd978b03-74b9-456e-bedf-d24df79ff069" />
-![Image](https://github.com/user-attachments/assets/542ef6b2-9eac-45c1-9717-800b1ee9d35e)
-
+<img width="1435" alt="image" src="https://github.com/user-attachments/assets/e7fa1023-cb05-4067-80b1-353202057350" />
 
 ## Resources for the workshop
 
@@ -11,6 +10,68 @@
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
 - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
 - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
+
+# Alloy 101 
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/d37cbbce-2526-443c-83e5-9c0a3a6b481d" />
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f35b76-3aa0-48c6-8678-8310ffc29cdc" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/32c14388-b5e6-4fcb-ba62-c491729c5f2e" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/45bf6e1a-e3de-4809-809a-7268a8a6d367" />
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/80f3e603-dea7-48fe-80b5-7807431d85e2" />
+<img width="917" alt="image" src="https://github.com/user-attachments/assets/0f5c80f3-0b18-45fa-8e4a-3c95a939859d" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/3aca8547-5d47-4b05-b624-297a1adda4e9" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/87e09054-937f-429e-a9e2-7167e1bf65ff" />
+
+## Alloy vocabularies 
+
+### Think of Alloy as our trusty pal who can collect, transform, and deliver our telemetry data. 
+
+To instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
+
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
+
+### Imagine that you are writing a set of to do lists for Alloy. 
+<img width="731" alt="image" src="https://github.com/user-attachments/assets/3599a013-7c43-4e01-896d-78e5c9cf363b" />
+
+A single task is known as a `component` in Alloy.
+
+These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
+
+### Each task/component could be further broken down into a detailed set of instructions.
+These subtasks/subcomponents are known as `blocks` in Alloy. 
+
+<img width="729" alt="image" src="https://github.com/user-attachments/assets/ed8aa651-f522-45ea-9556-de943f4908f9" />
+
+For example:
+```
+prometheus.remote_write "default" {
+    endpoint {
+        url = "http://localhost:9009/api/prom/push"
+    }
+}
+```
+The preceding example has two blocks:
+- prometheus.remote_write "default": A labeled block which instantiates a `prometheus.remote_write` component. The label is the string "default".
+- endpoint: An unlabeled `block` inside the component that configures an endpoint to send metrics to.
+- Within `blocks`, you can further use `attributes` and `expressions` to give Alloy more information on what you would like it to do as a key-value pair. 
+- You use `expressions` to compute or denote the value of an `attribute`. The simplest `expressions` are constant values like strings, integers, lists, objects, etc.
+- This block sets the url `attribute`  equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
+
+# Environment overview
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
+
+# Best practices for building pipelines with Alloy
+
+*Whenever possible*
+- We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability.
+- We strongly recommend collecting all the telemetry types of a given monitored component using a single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
+
+* Not every telemetry collection scenario is clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop. 
+
+# Infrastructure Observability
+Prometheus/Promtail telemetry should be
+- collected using Alloy prometheus.* , loki.* , and discovery.* components
+- enriched using the Alloy Prometheus and Promtail/Loki components
+- sent to Grafana Cloud using the Prometheus Remote Write and Loki Endpoints
 
 ## Hands on sections
 
@@ -239,6 +300,8 @@ you can import it by clicking the `New` button on the top right, select `Import`
 You should see the panels in the Postgres dashboard populated with data.
 
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/03cb88b9-ce15-44c0-a072-58d7609e3203" />
+
+![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN2dXRwNXo3dHl1enMyaXRqMjJjbTUxMGZmNnRldDJxcTJmdDB2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UWF3nQFeXR30yjna2Q/giphy.gif)
 
 ## Application Observability - collect, process, and export traces and logs
 ### Section 5: Ingesting OTel traces
