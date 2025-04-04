@@ -73,7 +73,7 @@ Prometheus/Promtail telemetry should be
 - enriched using the Alloy Prometheus and Promtail/Loki components
 - sent to Grafana Cloud using the Prometheus Remote Write and Loki Endpoints
 
-## Hands on sections
+## Hands on lab
 
 Before getting started, make sure you:
 - install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
