@@ -147,7 +147,7 @@ You should see values coming in for the logs we started ingesting in the previou
 
 - Collect Alloy's own metrics using the [`prometheus.exporter.self`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.self/) component
 - Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add labels to the metrics
-- Write the metrics to Mimir
+- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) the metrics to Mimir
 
 #### Instructions
 
@@ -195,9 +195,9 @@ You should see Alloy's CPU usage metrics coming in.
 
 #### Objectives
 
-- Collect metrics from Postgres using the `prometheus.scrape` component
-- Use `prometheus.relabel` to add the `group="infrastructure"` and `service="postgres"` labels
-- Write the metrics to Mimir
+- Collect metrics from Postgres using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
+- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add the `group="infrastructure"` and `service="postgres"` labels
+- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) the metrics to Mimir
 
 #### Instructions
 
@@ -243,9 +243,9 @@ You should see the panels in the Postgres dashboard populated with data.
 
 #### Objectives
 
-- Receive spans from the Mythical services and Beyla
-- Batch spans for efficient processing
-- Write the spans to a local instance of Tempo
+- [Receive](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) spans from the Mythical services and Beyla
+- [Batch spans](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/) for efficient processing
+- [Write](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/) the spans to a local instance of Tempo
 
 #### Instructions
 
@@ -307,16 +307,15 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 
 #### Objectives
 
-- Take the traces we're already ingesting and convert them to logs
-- Convert them to Loki format
-- Use `loki.process` to:
-  - Convert the body from JSON to logfmt using the `stage.json` and `stage.logfmt` stages
-  - Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
-- Write the logs to Loki
+- Take the traces we're already ingesting and [convert them to logs (spanlogs)](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.connector.spanlogs/)
+- [Convert](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.loki/) the logs to Loki-formatted log entries and forward them to the `loki.processor`. 
+- Use [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) to convert the format and add attributes to the logs
+- Forward the processed logs to Loki
 
 #### Instructions
 
 Open `config.alloy` in your editor and copy the following code into it:
+See notes below the code snippets for more detailed instructions.
 
 ```alloy
 otelcol.connector.spanlogs "autologging" {
@@ -327,7 +326,7 @@ otelcol.exporter.loki "autologging" {
     // TODO: Fill this in
 }
 
-// The Loki processor allows us to accept a correctly formatted Loki log and mutate it into
+// The Loki processor allows us to accept a Loki-formatted log entry and mutate it into
 // a set of fields for output.
 loki.process "autologging" {
     stage.json {
@@ -349,12 +348,24 @@ loki.process "autologging" {
     forward_to = [loki.write.mythical.receiver]
 }
 ```
+**`otelcol.connector.spanlogs`**
+For the `otelcol.connector.spanlogs` component to work, we will need to forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in exercise 5 to the `otelcol.connector.spanlogs`'s input.
 
-For the `otelcol.connector.spanlogs` component to work, we will need to forward the spans from the `otelcol.receiver.otlp`'s output > traces to the `otelcol.connector.spanlogs`'s input.
-
-We'd like to make sure to only generate a log for each full trace, not for each span (that would be a lot of logs!).
+We'd like to make sure to only generate a log for each full trace(root), not for each span or process (that would be a lot of logs!).
 
 We should also make sure to include the `http.method`, `http.target`, and `http.status_code` attributes in the logs.
+
+Then send the generated logs to the `otelcol.exporter.loki`'s input. 
+
+**`otelcol.exporter.loki`** 
+This component accepts OTLP-formatted logs from other otelcol components and converts them to Loki-formatted log entries without further configuration. 
+
+Forward the Loki-formatted logs to the `loki.process "autologging"`'s receiver for further processing. 
+
+**loki.process**
+Use this component to:
+  - Convert the body from JSON to logfmt using the `stage.json` and `stage.logfmt` stages
+  - Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/56125b64-effd-4965-9c41-9b27b9cbb21c" />
 
