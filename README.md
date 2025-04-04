@@ -238,7 +238,7 @@ You should see the panels in the Postgres dashboard populated with data.
 
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/03cb88b9-ce15-44c0-a072-58d7609e3203" />
 
-
+## Application Observability - collect, process, and export traces and logs
 ### Section 5: Ingesting OTel traces
 
 #### Objectives
