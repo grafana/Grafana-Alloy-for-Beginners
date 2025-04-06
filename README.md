@@ -420,6 +420,7 @@ loki.process "autologging" {
 }
 ```
 **`otelcol.connector.spanlogs`**
+
 For the `otelcol.connector.spanlogs` component to work, we will need to forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in exercise 5 to the `otelcol.connector.spanlogs`'s input.
 
 We'd like to make sure to only generate a log for each full trace(root), not for each span or process (that would be a lot of logs!).
@@ -429,11 +430,13 @@ We should also make sure to include the `http.method`, `http.target`, and `http.
 Then send the generated logs to the `otelcol.exporter.loki`'s input. 
 
 **`otelcol.exporter.loki`** 
+
 This component accepts OTLP-formatted logs from other otelcol components and converts them to Loki-formatted log entries without further configuration. 
 
 Forward the Loki-formatted logs to the `loki.process "autologging"`'s receiver for further processing. 
 
-**loki.process**
+**`loki.process`**
+
 Use this component to:
   - Convert the body from JSON to logfmt using the `stage.json` and `stage.logfmt` stages
   - Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
@@ -451,3 +454,10 @@ Use this component to:
 
 ### Advanced Exercise: Spanmetrics in Alloy
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/98c809e5-ae52-40b1-9ff2-198b018bf565" />
+
+# Debugging
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/8f97d371-d234-48be-b948-1577cdb0f0e7" />
+
+# Q & A
+![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXU1ZnNwazRmbXdmcGMzZmNueWd3eTk4aWJlNmI0dHd6OXR5azh3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMB2WiOdjpB7K4o/giphy.gif)
+
