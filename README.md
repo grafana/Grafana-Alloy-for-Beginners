@@ -54,14 +54,6 @@ These subtasks/subcomponents are known as `blocks` in Alloy.
 
 <img width="729" alt="image" src="https://github.com/user-attachments/assets/ed8aa651-f522-45ea-9556-de943f4908f9" />
 
-For example:
-```
-prometheus.remote_write "default" {
-    endpoint {
-        url = "http://localhost:9009/api/prom/push"
-    }
-}
-```
 <img width="949" alt="image" src="https://github.com/user-attachments/assets/67179581-8c0b-4ec6-8d9e-96256aeb1828" />
 
 - prometheus.remote_write "default": A labeled block which instantiates a `prometheus.remote_write` component. The label is the string "default".
