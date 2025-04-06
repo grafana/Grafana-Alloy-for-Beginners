@@ -80,26 +80,19 @@ prometheus.remote_write "default" {
 # Environment overview
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
 
-# Best practices for building pipelines with Alloy
-
+# Hands on lab
+## Best practices for building pipelines with Alloy
 *Whenever possible*
 - We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability.
 - We strongly recommend collecting all the telemetry types of a given monitored component using a single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
 
-* Not every telemetry collection scenario is clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop. 
+*Not every telemetry collection scenario is clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop.* 
 
-# Infrastructure Observability
-Prometheus/Promtail telemetry should be
-- collected using Alloy prometheus.* , loki.* , and discovery.* components
-- enriched using the Alloy Prometheus and Promtail/Loki components
-- sent to Grafana Cloud using the Prometheus Remote Write and Loki Endpoints
-
-## Hands on lab
-### Common tasks
+## Common tasks
 We will be using the `config.alloy` file to build pipelines for Infrastructure O11y and Applications O11y. 
 Whenever we make changes to the file, we must reload the config. 
 
-#### Reloading the config
+### Reloading the config
 
 To reload Alloy's config, hit the following endpoint in a browser or with a tool like `curl`:
 
@@ -112,10 +105,13 @@ If the config is valid, you should see a response like the following:
 ```
 config reloaded
 ```
-
 ## Infrastructure Observability - collect, process, and export logs and metrics
-### Section 1: Collect logs from Alloy and relabel logs
+Prometheus/Promtail telemetry should be
+- collected using Alloy prometheus.* , loki.* , and discovery.* components
+- enriched using the Alloy Prometheus and Promtail/Loki components
+- sent to Grafana Cloud using the Prometheus Remote Write and Loki Endpoints
 
+### Section 1: Collect logs from Alloy and relabel logs
 #### Objectives
 
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
