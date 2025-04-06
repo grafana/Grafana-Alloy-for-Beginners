@@ -34,7 +34,7 @@ docker compose up
 <img width="916" alt="image" src="https://github.com/user-attachments/assets/8e8422f6-205b-46e0-b19c-09eb4dbebd31" />
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/87e09054-937f-429e-a9e2-7167e1bf65ff" />
 
-## Alloy vocabularies 
+## Alloy syntax
 
 ### Think of Alloy as our trusty pal who can collect, transform, and deliver our telemetry data. 
 
