@@ -2,8 +2,8 @@
 
 <img width="916" alt="image" src="https://github.com/user-attachments/assets/8d60bee9-9d0f-4e9f-9d62-74d5f10a4ec5" />
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/00f99216-c190-4dd6-b2e6-78b4cfa58b44" />
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/979c9d59-b9a1-47f1-b932-a89cc86d52d6" />
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/fcb26af1-cc49-446d-a364-b0ccf041e6ac" />
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/64beee1d-9b54-4f8a-a84b-f8eb795fe6f9" />
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/d99b36ec-9c1b-48d5-b058-742ad0aff0c8" />
 
 ## Resources for the workshop
 
@@ -14,6 +14,7 @@
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/bc1467ea-b76b-4a8f-97af-91de818b07b6" />
 
+## Environment set up
 Before getting started, make sure you:
 - install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
 - clone the [repo](https://github.com/grafana/intro-to-mltp) for the demo environment :
