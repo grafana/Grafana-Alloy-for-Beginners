@@ -69,16 +69,17 @@ These subtasks/subcomponents are known as `blocks` in Alloy.
 - This is a very common pattern you’ll see for Prometheus and Loki pipelines.
 - You have one component that exposes targets for a scraping component (`source` in the Loki component world) to scrape and forward telemetry to a prometheus.remote_write or loki.write component’s receiver
 
-# Environment overview
-<img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
-
 # Hands on lab
+
 ## Best practices for building pipelines with Alloy
 *Whenever possible*
 - We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability.
 - We strongly recommend collecting all the telemetry types of a given monitored component using a single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
 
 *Not every telemetry collection scenario is clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop.* 
+
+## Lab environment overview
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
 
 ## Common tasks
 We will be using the `config.alloy` file to build pipelines for Infrastructure O11y and Applications O11y. 
