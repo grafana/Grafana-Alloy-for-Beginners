@@ -463,6 +463,10 @@ You should see spanlogs coming in for the Mythical services.
 ### Advanced Exercise: Spanmetrics in Alloy
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/98c809e5-ae52-40b1-9ff2-198b018bf565" />
 
+### Recap
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/54fee4bc-cf61-4d3f-9ac1-4521e98fe0d2" />
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/ea859dc2-e88c-43f9-a9db-302dde2b2bb9" />
+
 # Debugging
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/8f97d371-d234-48be-b948-1577cdb0f0e7" />
 
