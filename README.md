@@ -202,6 +202,7 @@ You should see values coming in for the logs we started ingesting in the previou
 
 <img width="1438" alt="image" src="https://github.com/user-attachments/assets/5ab051a4-7d06-40f5-ac86-9dcc6fb13dce" />
 
+<img width="908" alt="image" src="https://github.com/user-attachments/assets/9e7d81e5-d6f1-4e25-9421-1791d66cc9cb" />
 
 ### Section 3: Collect metrics from Alloy and relabel metrics 
 
