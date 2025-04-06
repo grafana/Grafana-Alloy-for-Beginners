@@ -447,6 +447,7 @@ To check that spanlogs are being ingested, navigate to the [Grafana Explore Page
 ```logql
 {status="200"}
 ```
+You should see spanlogs coming in for the Mythical services.
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f14815-ced1-47ae-8d28-30018b16f9cc" />
 
 ### Exercise: Ingesting application logs
