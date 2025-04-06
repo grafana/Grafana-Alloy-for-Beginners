@@ -99,7 +99,7 @@ If the config is valid, you should see a response like the following:
 ```
 config reloaded
 ```
-## Infrastructure Observability - collect, process, and export logs and metrics
+## Infrastructure O11y - collect, process, and export logs and metrics
 Prometheus/Promtail telemetry should be
 - collected using Alloy prometheus.* , loki.* , and discovery.* components
 - enriched using the Alloy Prometheus and Promtail/Loki components
