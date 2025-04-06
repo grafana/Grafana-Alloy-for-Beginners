@@ -3,6 +3,17 @@
 <img width="916" alt="image" src="https://github.com/user-attachments/assets/8d60bee9-9d0f-4e9f-9d62-74d5f10a4ec5" />
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/00f99216-c190-4dd6-b2e6-78b4cfa58b44" />
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/bc1467ea-b76b-4a8f-97af-91de818b07b6" />
+
+Before getting started, make sure you:
+- install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
+- clone the [repo](https://github.com/grafana/intro-to-mltp) for the demo environment :
+```
+git clone https://github.com/grafana/intro-to-mltp.git
+```
+- start a new command-line interface in your Operating System and run: 
+```
+docker compose up
+```
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/979c9d59-b9a1-47f1-b932-a89cc86d52d6" />
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/fcb26af1-cc49-446d-a364-b0ccf041e6ac" />
 
@@ -32,7 +43,7 @@ To instruct Alloy on how we want that done, we must write these instructions in 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
 ### Imagine that you are writing a set of to do lists for Alloy. 
-<img width="731" alt="image" src="https://github.com/user-attachments/assets/3599a013-7c43-4e01-896d-78e5c9cf363b" />
+<img width="723" alt="image" src="https://github.com/user-attachments/assets/62cb6b85-81c5-4be0-953a-8c4b94132234" />
 
 A single task is known as a `component` in Alloy.
 
@@ -51,12 +62,20 @@ prometheus.remote_write "default" {
     }
 }
 ```
-The preceding example has two blocks:
+<img width="949" alt="image" src="https://github.com/user-attachments/assets/67179581-8c0b-4ec6-8d9e-96256aeb1828" />
+
 - prometheus.remote_write "default": A labeled block which instantiates a `prometheus.remote_write` component. The label is the string "default".
 - endpoint: An unlabeled `block` inside the component that configures an endpoint to send metrics to.
-- Within `blocks`, you can further use `attributes` and `expressions` to give Alloy more information on what you would like it to do as a key-value pair. 
+  
+<img width="950" alt="image" src="https://github.com/user-attachments/assets/17eb8490-6835-442e-ad46-332a0b856e43" />
+
 - You use `expressions` to compute or denote the value of an `attribute`. The simplest `expressions` are constant values like strings, integers, lists, objects, etc.
 - This block sets the url `attribute`  equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
+
+<img width="943" alt="image" src="https://github.com/user-attachments/assets/ef5fc206-f425-4e04-aa83-d6aafd0bdcf0" />
+
+- This is a very common pattern you’ll see for Prometheus and Loki pipelines.
+- You have one component that exposes targets for a scraping component (`source` in the Loki component world) to scrape and forward telemetry to a prometheus.remote_write or loki.write component’s receiver
 
 # Environment overview
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
@@ -76,17 +95,6 @@ Prometheus/Promtail telemetry should be
 - sent to Grafana Cloud using the Prometheus Remote Write and Loki Endpoints
 
 ## Hands on lab
-
-Before getting started, make sure you:
-- install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
-- clone the [repo](https://github.com/grafana/intro-to-mltp) for the demo environment :
-```
-git clone https://github.com/grafana/intro-to-mltp.git
-```
-- start a new command-line interface in your Operating System and run: 
-```
-docker compose up
-```
 ### Common tasks
 We will be using the `config.alloy` file to build pipelines for Infrastructure O11y and Applications O11y. 
 Whenever we make changes to the file, we must reload the config. 
