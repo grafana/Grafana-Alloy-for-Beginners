@@ -10,6 +10,7 @@
 - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/bc1467ea-b76b-4a8f-97af-91de818b07b6" />
+
 Before getting started, make sure you:
 - install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
 - clone the [repo](https://github.com/grafana/intro-to-mltp) for the demo environment :
