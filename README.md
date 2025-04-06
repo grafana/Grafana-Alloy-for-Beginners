@@ -380,7 +380,6 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 #### Instructions
 
 Open `config.alloy` in your editor and copy the following code into it:
-See notes below the code snippets for more detailed instructions.
 
 ```alloy
 otelcol.connector.spanlogs "autologging" {
