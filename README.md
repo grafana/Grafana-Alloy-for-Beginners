@@ -441,7 +441,13 @@ Use this component to:
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/56125b64-effd-4965-9c41-9b27b9cbb21c" />
 
 ### Exercise: Ingesting application logs
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/f5f2384a-35b4-4796-89a5-d3a0f2598327" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/4bbea9f2-28a4-4cb4-9a5b-fabe4e848fc6" />
 
 ### Exercise: Filtering logs
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/e98e7dea-9b55-40a1-9630-0df54c42a2e0" />
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/9c9ca47a-a7a1-4d39-ab50-913968ac0391" />
 
 ### Advanced Exercise: Spanmetrics in Alloy
+<img width="917" alt="image" src="https://github.com/user-attachments/assets/98c809e5-ae52-40b1-9ff2-198b018bf565" />
