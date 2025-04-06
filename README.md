@@ -351,6 +351,8 @@ The Tempo url is `http://tempo:4317`.
 
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/1e3dedbe-d69b-47b6-b7e0-ee3a2ae740e7" />
 
+Don't forget to [reload the config](#reloading-the-config) after finishing.
+
 #### Verification
 
 To check that traces are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Tempo" data source, and run the following query:
@@ -435,6 +437,17 @@ Use this component to:
   - Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/56125b64-effd-4965-9c41-9b27b9cbb21c" />
+
+Don't forget to [reload the config](#reloading-the-config) after finishing.
+
+#### Verification
+
+To check that spanlogs are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Loki" data source, and run the following query:
+
+```logql
+{status="200"}
+```
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f14815-ced1-47ae-8d28-30018b16f9cc" />
 
 ### Exercise: Ingesting application logs
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/f5f2384a-35b4-4796-89a5-d3a0f2598327" />
