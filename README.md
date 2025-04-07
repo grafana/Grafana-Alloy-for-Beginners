@@ -248,7 +248,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 To check that Alloy's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
 
 ```promql
-rate(alloy_resources_process_cpu_seconds_total{job="prometheus.scrape.alloy"}[$__rate_interval])
+rate(alloy_resources_process_cpu_seconds_total[$__rate_interval])
 ```
 
 You should see Alloy's CPU usage metrics coming in.
