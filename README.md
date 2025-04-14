@@ -251,7 +251,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 To check that Loki's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
 
 ```promql
-rate(loki_distributor_bytes_received_total{job="prometheus.scrape.loki"}[$__rate_interval])
+rate(loki_distributor_bytes_received_total[$__rate_interval])
 ```
 
 You should see values coming in for the logs we started ingesting in the previous section!
