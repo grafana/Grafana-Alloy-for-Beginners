@@ -256,9 +256,10 @@ rate(loki_distributor_bytes_received_total{job="prometheus.scrape.loki"}[$__rate
 
 You should see values coming in for the logs we started ingesting in the previous section!
 
-<img width="1438" alt="image" src="https://github.com/user-attachments/assets/5ab051a4-7d06-40f5-ac86-9dcc6fb13dce" />
-
-<img width="916" alt="image" src="https://github.com/user-attachments/assets/49b5123d-85fa-433c-84cf-d84b66671763" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/bf1888de-6b2b-4c98-a1e4-0fa8e21c5e39" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/1be80ba8-1015-4185-b074-426443c5c3eb" />
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/8d8270f6-b0ef-49f1-a92a-d76c2fdda557" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/1fca692b-de54-4342-a4f1-35a0f385048c" />
 
 
 ### Section 4: Collect Postgres metrics
@@ -307,6 +308,8 @@ you can import it by clicking the `New` button on the top right, select `Import`
 You should see the panels in the Postgres dashboard populated with data.
 
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/03cb88b9-ce15-44c0-a072-58d7609e3203" />
+
+<img width="908" alt="image" src="https://github.com/user-attachments/assets/dbdcae6d-97b1-402c-bdfd-53afdc2dfb5b" />
 
 ![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN2dXRwNXo3dHl1enMyaXRqMjJjbTUxMGZmNnRldDJxcTJmdDB2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UWF3nQFeXR30yjna2Q/giphy.gif)
 
