@@ -153,12 +153,68 @@ To check that logs are being ingested, navigate to the [Grafana Explore Page](ht
 
 <img width="1436" alt="image" src="https://github.com/user-attachments/assets/80aea5e4-d25f-49f6-83ce-38d4911fe97d" />
 
-### Section 2: Collect metrics from Loki
+### Section 2: Collect metrics from Alloy and relabel metrics 
+
+#### Objectives
+
+- Collect Alloy's own metrics using the [`prometheus.exporter.self`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.self/) component
+- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add labels to the metrics
+- Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
+
+#### Instructions
+
+Open `config.alloy` in your editor and copy the following code into it:
+
+```alloy
+// This component exposes Alloy's own metrics endpoints in-memory, but it doesn't require a configuration
+// so you are already done!
+prometheus.exporter.self "alloy" {}
+
+prometheus.scrape "alloy" {
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    // TODO: Fill in the rest of this component
+}
+
+prometheus.relabel "alloy" {
+    // TODO: Fill in this component
+}
+
+prometheus.remote_write "mimir" {
+    endpoint {
+        url = "http://mimir:9009/api/v1/push" 
+    }
+}
+```
+
+For this section, we would like to configure `prometheus.scrape.alloy` to scrape the `prometheus.exporter.self.alloy` component's targets and forward the metrics to the `prometheus.relabel.alloy` component's receiver.
+
+For the `prometheus.relabel` component, we want to add the `group` label with the value "infrastructure" and the `service` label with the value "alloy" to the metrics.
+
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/13f26aa3-0f04-47fd-964f-807661037f6e" />
+
+Don't forget to [reload the config](#reloading-the-config) after finishing.
+
+#### Verification
+
+To check that Alloy's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
+
+```promql
+rate(alloy_resources_process_cpu_seconds_total[$__rate_interval])
+```
+
+You should see Alloy's CPU usage metrics coming in.
+
+<img width="1437" alt="image" src="https://github.com/user-attachments/assets/73cdefd8-ae2c-4222-9044-6e4f8325df78" />
+
+
+### Section 3: Collect metrics from Loki
 
 #### Objectives
 
 - Collect metrics from Loki using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) to write the metrics to locally running Mimir
+- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir
 
 #### Instructions
 
@@ -166,7 +222,7 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 prometheus.scrape "loki" {
-    // These scrape intervals are set to 2 seconds for the workshop so we have very fast feedback, but you should use a more reasonable
+    // These scrape intervals are set to 2 seconds for the workshop, so we have very fast feedback, but you should use a more reasonable
     // scrape interval for production
     scrape_interval = "2s"
     scrape_timeout  = "2s"
@@ -207,55 +263,6 @@ You should see values coming in for the logs we started ingesting in the previou
 <img width="1438" alt="image" src="https://github.com/user-attachments/assets/5ab051a4-7d06-40f5-ac86-9dcc6fb13dce" />
 
 <img width="916" alt="image" src="https://github.com/user-attachments/assets/49b5123d-85fa-433c-84cf-d84b66671763" />
-
-### Section 3: Collect metrics from Alloy and relabel metrics 
-
-#### Objectives
-
-- Collect Alloy's own metrics using the [`prometheus.exporter.self`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.self/) component
-- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add labels to the metrics
-- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) the metrics to Mimir
-
-#### Instructions
-
-Open `config.alloy` in your editor and copy the following code into it:
-
-```alloy
-// This component exposes Alloy's own metrics endpoints in-memory, but it doesn't require an configuration
-// so you are already done!
-prometheus.exporter.self "alloy" {}
-
-prometheus.scrape "alloy" {
-    scrape_interval = "2s"
-    scrape_timeout  = "2s"
-
-    // TODO: Fill in the rest of this component
-}
-
-prometheus.relabel "alloy" {
-    // TODO: Fill in this component
-}
-```
-
-For this section, we would like to configure `prometheus.scrape.alloy` to scrape the `prometheus.exporter.self.alloy` component's targets and forward the metrics to the `prometheus.relabel.alloy` component's receiver.
-
-For the `prometheus.relabel` component, we want to add the `group` label with the value "infrastructure" and the `service` label with the value "alloy" to the metrics.
-
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/13f26aa3-0f04-47fd-964f-807661037f6e" />
-
-Don't forget to [reload the config](#reloading-the-config) after finishing.
-
-#### Verification
-
-To check that Alloy's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
-
-```promql
-rate(alloy_resources_process_cpu_seconds_total[$__rate_interval])
-```
-
-You should see Alloy's CPU usage metrics coming in.
-
-<img width="1437" alt="image" src="https://github.com/user-attachments/assets/73cdefd8-ae2c-4222-9044-6e4f8325df78" />
 
 
 ### Section 4: Collect Postgres metrics
