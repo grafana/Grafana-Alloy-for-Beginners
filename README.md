@@ -231,10 +231,6 @@ prometheus.scrape "loki" {
     // TODO: Fill in the rest of this component
 }
 
-// Define the prometheus remote_write endpoint we'd like to write all Prometheus metrics to
-prometheus.remote_write "mimir" {
-    // TODO: Fill in this component
-}
 ```
 
 For the `prometheus.scrape` component, we can define scrape targets for Loki directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. Any non-double-underscore keys are used as labels for the target.
@@ -245,9 +241,9 @@ For example, the following scrape object will scrape Mimir's metrics endpoint an
 targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 ```
 
-For the `prometheus.remote_write` component, the url we'd like to write metrics to is `http://mimir:9009/api/v1/push`.
+Forward the logs to the `prometheus.remote_write` component we defined in the previous section. 
 
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/8bca5fee-8dbb-4c01-8f45-9b2015183433" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/2a739bd6-76d4-4248-b1f7-19f42c5a157a" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
