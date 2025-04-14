@@ -207,8 +207,7 @@ rate(alloy_resources_process_cpu_seconds_total[$__rate_interval])
 
 You should see Alloy's CPU usage metrics coming in.
 
-<img width="1437" alt="image" src="https://github.com/user-attachments/assets/73cdefd8-ae2c-4222-9044-6e4f8325df78" />
-
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/af7f2de7-69dc-4caa-98d9-bcf4d0cdae5c" />
 
 ### Section 3: Collect metrics from Loki
 
@@ -243,7 +242,7 @@ targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 
 Forward the logs to the `prometheus.remote_write` component we defined in the previous section. 
 
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/2a739bd6-76d4-4248-b1f7-19f42c5a157a" />
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/a69bb312-d41c-4556-9ca7-52e23513e86e" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
