@@ -190,7 +190,10 @@ For this section, we would like to configure `prometheus.scrape.alloy` to scrape
 
 For the `prometheus.relabel` component, we want to add the `group` label with the value "infrastructure" and the `service` label with the value "alloy" to the metrics.
 
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/13f26aa3-0f04-47fd-964f-807661037f6e" />
+Configure the 'prometheus.remote_write` component to write the metrics to a local Mimir database. 
+
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/0b1627de-e289-4d8f-8bf0-f836d18afc9e" />
+
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
