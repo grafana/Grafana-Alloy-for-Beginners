@@ -465,12 +465,135 @@ You should see spanlogs coming in for the Mythical services.
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/4bbea9f2-28a4-4cb4-9a5b-fabe4e848fc6" />
 
+#### Objectives
+
+- Ingest application logs sent from the mythical services
+- Process the log and add the `endpoint`, `method`, and `status` labels
+- Print the logs to the console
+- Forward the processed logs to Loki
+
+#### Instructions
+
+For this exercise, you may find the following components useful:
+
+- [loki.source.api](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/)
+- [loki.process](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/)
+- [loki.write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/)
+- [loki.echo](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.echo/)
+
+#### Verification
+
+To check that the logs are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Loki" data source, and run the following query:
+
+```logql
+{status="SUCCESS"}
+```
+
+You should see logs coming in for the Mythical services.
+
 ### Exercise: Filtering logs
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/e98e7dea-9b55-40a1-9630-0df54c42a2e0" />
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/9c9ca47a-a7a1-4d39-ab50-913968ac0391" />
 
+You may have noticed that some of the logs contain a token that we don't want to store in Loki. For this exercise, let's use Alloy to redact
+tokens from the logs.
+
+#### Objectives
+
+This exercise is more open-ended, but the goal is to redact the token from the logs before they are forwarded to Loki.
+
+#### Verification
+
+To check that the logs are being ingested but the token is being redacted, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Loki" data source, and run the following query:
+
+```logql
+{status="SUCCESS"}
+```
+
+You should see logs coming in for the Mythical services, but the token should be redacted.
+
+
 ### Advanced Exercise: Spanmetrics in Alloy
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/98c809e5-ae52-40b1-9ff2-198b018bf565" />
+
+#### Objectives
+
+- Use the `otelcol.processor.spanmetrics` component to generate metrics from the spans we're already ingesting
+- Use the `otelcol.exporter.otlphttp` component to forward the metrics to Mimir, which can ingest OTLP-formatted metrics
+
+#### Instructions
+
+We first will have to `docker compose down` to stop the existing containers, as Tempo needs to be updated to stop generating spanmetrics.
+
+Open `tempo/tempo.yaml` and replace the `metrics_generator` section with the following configuration:
+
+```yaml
+# Configures the metrics generator component of Tempo.
+metrics_generator:
+  # Specifies which processors to use.
+  processor:
+    # Span metrics create metrics based on span type, duration, name and service.
+    span_metrics:
+        # Configure extra dimensions to add as metric labels.
+        dimensions:
+          - http.method
+          - http.target
+          - http.status_code
+          - service.version
+    # Service graph metrics create node and edge metrics for determinng service interactions.
+    service_graphs:
+        # Configure extra dimensions to add as metric labels.
+        dimensions:
+          - http.method
+          - http.target
+          - http.status_code
+          - service.version
+    # Configure the local blocks processor.
+    local_blocks:
+        # Ensure that metrics blocks are flushed to storage so TraceQL metrics queries against historical data.
+        flush_to_storage: true
+  # The registry configuration determines how to process metrics.
+  registry:
+    collection_interval: 5s                 # Create new metrics every 5s.
+    # Configure extra labels to be added to metrics.
+    external_labels:
+      source: tempo                         # Add a `{source="tempo"}` label.
+      group: 'mythical'                     # Add a `{group="mythical"}` label.
+  # Configures where the store for metrics is located.
+  storage:
+    # WAL for metrics generation.
+    path: /tmp/tempo/generator/wal
+    # Where to remote write metrics to.
+    remote_write:
+      - url: http://mimir:9009/api/v1/push  # URL of locally running Mimir instance.
+        send_exemplars: true # Send exemplars along with their metrics.
+  traces_storage:
+    path: /tmp/tempo/generator/traces
+
+# Global override configuration.
+overrides:
+  metrics_generator_processors: ['service-graphs', 'local-blocks'] # The types of metrics generation to enable for each tenant.
+```
+
+Then, restart all of the containers with `docker compose up`.
+
+Finally, open `config.alloy` and add the following code to it:
+
+```alloy
+otelcol.processor.spanmetrics "spanmetrics" {
+    // TODO: Fill this in
+}
+
+otelcol.exporter.otlphttp "mimir" {
+    // TODO: Fill this in
+}
+```
+
+#### Verification
+
+To check that the spanmetrics are being ingested, navigate to the [Grafana Dashboards](http://localhost:3000/dashboards) page and select the `MLT Dashboard` dashboard.
+
+You should see the panels in the MLT Dashboard populated with data.
 
 ### Recap
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/54fee4bc-cf61-4d3f-9ac1-4521e98fe0d2" />
