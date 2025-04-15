@@ -8,10 +8,10 @@
 ## Resources for the workshop
 
 - [Environment set up](https://github.com/grafana/intro-to-mltp)
-- [Endpoints needed for the workshop](https://github.com/grafana/intro-to-mltp/blob/main/alloy/endpoints.json)
+  - [Endpoints needed for the workshop](https://github.com/grafana/intro-to-mltp/blob/main/alloy/endpoints.json)
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
-- [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
-- [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
+  - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
+  - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/bc1467ea-b76b-4a8f-97af-91de818b07b6" />
 
