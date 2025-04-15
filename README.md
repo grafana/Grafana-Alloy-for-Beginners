@@ -18,7 +18,7 @@
 ## Environment set up
 Before getting started, make sure you:
 - install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
-- clone the [repo](https://github.com/grafana/intro-to-mltp) for the demo environment :
+- clone the [repo](https://github.com/grafana/intro-to-mltp) for the lab environment :
 ```
 git clone https://github.com/grafana/intro-to-mltp.git
 ```
