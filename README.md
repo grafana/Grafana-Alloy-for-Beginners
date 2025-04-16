@@ -151,6 +151,7 @@ To check that logs are being ingested, navigate to the [Grafana Explore Page](ht
 #### Objectives
 
 - Collect Alloy's own metrics using the [`prometheus.exporter.self`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.self/) component
+- Scrape the metrics using the  [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add labels to the metrics
 - Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
 
