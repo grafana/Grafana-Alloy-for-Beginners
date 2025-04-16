@@ -602,8 +602,8 @@ Take a look at the `loki` components. Are there any that seem like they could be
 TODO: Add verification instructions
 
 ### Recap
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/54fee4bc-cf61-4d3f-9ac1-4521e98fe0d2" />
-<img width="910" alt="image" src="https://github.com/user-attachments/assets/ea859dc2-e88c-43f9-a9db-302dde2b2bb9" />
+<img width="1425" alt="image" src="https://github.com/user-attachments/assets/605eae50-3414-4e4d-9f62-11b6478c8d01" />
+<img width="1437" alt="image" src="https://github.com/user-attachments/assets/669c122f-8337-4569-b4a5-6138dbb12ca9" />
 
 # Debugging
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/8f97d371-d234-48be-b948-1577cdb0f0e7" />
