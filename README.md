@@ -218,17 +218,38 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 prometheus.scrape "mythical" {
-    // These scrape intervals are set to 2 seconds for the workshop, so we have very fast feedback, but you should use a more reasonable
-    // scrape interval for production
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    // TODO: Fill in the rest of this component
+    // TO DO: Fill in the rest of this component
+}
+
+prometheus.relabel "no_time_to_scale" {
+    forward_to = [prometheus.write.queue.experimental.receiver]
+  //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
+    rule {
+        action        = 
+        target_label  = 
+        source_labels = 
+        regex         = "^(aws|gcp|azure)-.+"
+        replacement   = "$1"
+    }
+// drop the instance_id label.
+    rule {
+        action  = 
+        regex   = 
+    }
+}
+
+prometheus.write.queue "experimental" {
+    endpoint "mimir" {
+        url = "http://mimir:9009/api/v1/push" 
+    }
 }
 
 ```
 
-For the `prometheus.scrape` component, we can define scrape targets for Loki directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. Any non-double-underscore keys are used as labels for the target.
+For the `prometheus.scrape` component, we can define scrape targets for mythical services directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. Any non-double-underscore keys are used as labels for the target.
 
 For example, the following scrape object will scrape Mimir's metrics endpoint and add `env="demo"` and `service="mimir"` labels to the target:
 
