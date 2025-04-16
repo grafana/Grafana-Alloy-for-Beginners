@@ -66,11 +66,6 @@ These subtasks/subcomponents are known as `blocks` in Alloy.
 - You use `expressions` to compute or denote the value of an `attribute`. The simplest `expressions` are constant values like strings, integers, lists, objects, etc.
 - This block sets the url `attribute`  equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
 
-<img width="943" alt="image" src="https://github.com/user-attachments/assets/ef5fc206-f425-4e04-aa83-d6aafd0bdcf0" />
-
-- This is a very common pattern you’ll see for Prometheus and Loki pipelines.
-- You have one component that exposes targets for a scraping component (`source` in the Loki component world) to scrape and forward telemetry to a prometheus.remote_write or loki.write component’s receiver
-
 # Hands on lab
 
 ## Best practices for building pipelines with Alloy
