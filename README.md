@@ -205,11 +205,11 @@ You should see Alloy's CPU usage metrics coming in.
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/af7f2de7-69dc-4caa-98d9-bcf4d0cdae5c" />
 
-### Section 3: Collect metrics from Loki
+### Section 3: Collect metrics from Mythical-Services
 
 #### Objectives
 
-- Collect metrics from Loki using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
+- Collect metrics from the Mythical services using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir
 
 #### Instructions
@@ -217,7 +217,7 @@ You should see Alloy's CPU usage metrics coming in.
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
-prometheus.scrape "loki" {
+prometheus.scrape "mythical" {
     // These scrape intervals are set to 2 seconds for the workshop, so we have very fast feedback, but you should use a more reasonable
     // scrape interval for production
     scrape_interval = "2s"
@@ -235,6 +235,11 @@ For example, the following scrape object will scrape Mimir's metrics endpoint an
 ```alloy
 targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 ```
+
+The addresses of the targets are:
+
+- mythical-server: "mythical-server:4000"
+- mythical-requester: "mythical-requester:4001"
 
 Forward the logs to the `prometheus.remote_write` component we defined in the previous section. 
 
@@ -291,6 +296,8 @@ prometheus.relabel "postgres" {
 For the `prometheus.scrape` component, we want to scrape the `prometheus.exporter.postgres.mythical` component's targets and forward the metrics to the `prometheus.relabel.postgres` component's receiver.
 
 For the `prometheus.relabel` component, we want to add the `group="infrastructure"` and `service="postgres"` labels to the metrics.
+
+We also want to modify the `instance` label to clean it up. The regex `"^postgresql://(.+)"` will extract the value after `postgresql://`.
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9668a67c-5a6a-4676-aa0e-4fb3573a39eb" />
 
@@ -376,7 +383,35 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 
 <img width="1434" alt="image" src="https://github.com/user-attachments/assets/73080e3d-5dc3-4013-9409-09cd9887d565" />
 
-### Section 6: Spanlogs
+### Section 6: Ingesting application logs
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/f5f2384a-35b4-4796-89a5-d3a0f2598327" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/4bbea9f2-28a4-4cb4-9a5b-fabe4e848fc6" />
+
+#### Objectives
+
+- Ingest application logs sent from the mythical services
+- Process the logs to:
+  - add a static `service="mythical" label
+  - extract the timestamp from the log line using `stage.regex` with this regex: `^.*?loggedtime=(?P<loggedtime>\S+)`
+  - set the timestamp of the log to the extracted timestamp
+- Forward the processed logs to Loki
+
+#### Instructions
+
+Open `config.alloy` in your editor and copy the following code into it:
+
+```alloy
+loki.source.api "mythical" {
+    // TODO: Fill this in
+}
+
+loki.process "mythical" {
+    // TODO: Fill this in
+}
+```
+
+### Section 7: Spanlogs
 
 #### Objectives
 
@@ -456,140 +491,72 @@ To check that spanlogs are being ingested, navigate to the [Grafana Explore Page
 You should see spanlogs coming in for the Mythical services.
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f14815-ced1-47ae-8d28-30018b16f9cc" />
 
-### Exercise: Ingesting application logs
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/f5f2384a-35b4-4796-89a5-d3a0f2598327" />
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/4bbea9f2-28a4-4cb4-9a5b-fabe4e848fc6" />
+### Mission 1: No Time to Scale
+
+#### Description
+
+We have been informed that the mythical-server service has been instrumented with a custom metric that
+is very high cardinality. Your PM has asked you to write a relabel rule to extract the cloud provider from the
+instance_id label and add it as a new label called cloud_provider, then drop the instance_id label.
+
+You have been handed a briefcase with a single regular expression that will help you complete this mission:
+`^(aws|gcp|azure)-.+`
 
 #### Objectives
 
-- Ingest application logs sent from the mythical services
-- Process the log and add the `endpoint`, `method`, and `status` labels
-- Print the logs to the console
-- Forward the processed logs to Loki
+- Using `prometheus.relabel`, use the provided regex to replace the `cloud_provider` label with the extracted value from the `instance_id` label.
+- Drop the `instance_id` label.
 
 #### Instructions
 
 For this exercise, you may find the following components useful:
 
-- [loki.source.api](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/)
-- [loki.process](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/)
-- [loki.write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/)
-- [loki.echo](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.echo/)
+- [prometheus.relabel](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/)
 
 #### Verification
 
-To check that the logs are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Loki" data source, and run the following query:
+TODO: Add verification instructions
 
-```logql
-{status="SUCCESS"}
-```
+### Mission 2: The Span-attribute Who Loved Me
 
-You should see logs coming in for the Mythical services.
+You have been handed a self-destructing note with a task from the very top of the chain of command.
+It turns out that MI6 and the CIA have been using different attributes to label the tier of a service,
+and they've finally agreed to use the same attribute.
 
-### Exercise: Filtering logs
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/e98e7dea-9b55-40a1-9630-0df54c42a2e0" />
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/9c9ca47a-a7a1-4d39-ab50-913968ac0391" />
+Tempo's spanmetrics processor has already been configured to use the new service.tier attribute when generating metrics,
+but the span attributes are still using the old attributes.
 
-You may have noticed that some of the logs contain a token that we don't want to store in Loki. For this exercise, let's use Alloy to redact
-tokens from the logs.
-
-#### Objectives
-
-This exercise is more open-ended, but the goal is to redact the token from the logs before they are forwarded to Loki.
-
-#### Verification
-
-To check that the logs are being ingested but the token is being redacted, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Loki" data source, and run the following query:
-
-```logql
-{status="SUCCESS"}
-```
-
-You should see logs coming in for the Mythical services, but the token should be redacted.
-
-
-### Advanced Exercise: Spanmetrics in Alloy
-<img width="917" alt="image" src="https://github.com/user-attachments/assets/98c809e5-ae52-40b1-9ff2-198b018bf565" />
+Your mission is to extract the service.tier attribute from the servicetier or service_tier attributes
+and add it as a new service.tier attribute for all spans.
 
 #### Objectives
 
-- Use the `otelcol.processor.spanmetrics` component to generate metrics from the spans we're already ingesting
-- Use the `otelcol.exporter.otlphttp` component to forward the metrics to Mimir, which can ingest OTLP-formatted metrics
+- Use the `otelcol.processor.attributes` component to set the `service.tier` attribute to the value of
+  the `servicetier` or `service_tier` attributes.
+- Drop the `servicetier` and `service_tier` attributes.
 
 #### Instructions
 
-We first will have to `docker compose down` to stop the existing containers, as Tempo needs to be updated to stop generating spanmetrics.
-
-Open `tempo/tempo.yaml` and replace the `metrics_generator` section with the following configuration:
-
-```yaml
-# Configures the metrics generator component of Tempo.
-metrics_generator:
-  # Specifies which processors to use.
-  processor:
-    # Span metrics create metrics based on span type, duration, name and service.
-    span_metrics:
-        # Configure extra dimensions to add as metric labels.
-        dimensions:
-          - http.method
-          - http.target
-          - http.status_code
-          - service.version
-    # Service graph metrics create node and edge metrics for determinng service interactions.
-    service_graphs:
-        # Configure extra dimensions to add as metric labels.
-        dimensions:
-          - http.method
-          - http.target
-          - http.status_code
-          - service.version
-    # Configure the local blocks processor.
-    local_blocks:
-        # Ensure that metrics blocks are flushed to storage so TraceQL metrics queries against historical data.
-        flush_to_storage: true
-  # The registry configuration determines how to process metrics.
-  registry:
-    collection_interval: 5s                 # Create new metrics every 5s.
-    # Configure extra labels to be added to metrics.
-    external_labels:
-      source: tempo                         # Add a `{source="tempo"}` label.
-      group: 'mythical'                     # Add a `{group="mythical"}` label.
-  # Configures where the store for metrics is located.
-  storage:
-    # WAL for metrics generation.
-    path: /tmp/tempo/generator/wal
-    # Where to remote write metrics to.
-    remote_write:
-      - url: http://mimir:9009/api/v1/push  # URL of locally running Mimir instance.
-        send_exemplars: true # Send exemplars along with their metrics.
-  traces_storage:
-    path: /tmp/tempo/generator/traces
-
-# Global override configuration.
-overrides:
-  metrics_generator_processors: ['service-graphs', 'local-blocks'] # The types of metrics generation to enable for each tenant.
-```
-
-Then, restart all of the containers with `docker compose up`.
-
-Finally, open `config.alloy` and add the following code to it:
-
-```alloy
-otelcol.processor.spanmetrics "spanmetrics" {
-    // TODO: Fill this in
-}
-
-otelcol.exporter.otlphttp "mimir" {
-    // TODO: Fill this in
-}
-```
+The [`otelcol.processor.attributes`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.attributes/) component allows you to add, set, or drop attributes.
 
 #### Verification
 
-To check that the spanmetrics are being ingested, navigate to the [Grafana Dashboards](http://localhost:3000/dashboards) page and select the `MLT Dashboard` dashboard.
+TODO: Add verification instructions
 
-You should see the panels in the MLT Dashboard populated with data.
+
+### Mission 3: Mission: Keympossible -- Secret Redaction Protocol
+
+#### Objectives
+
+- Redact any tokens found in the logs from the mythical services
+
+#### Instructions
+
+Take a look at the `loki` components. Are there any that seem like they could be useful for this mission?
+
+#### Verification
+
+TODO: Add verification instructions
 
 ### Recap
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/54fee4bc-cf61-4d3f-9ac1-4521e98fe0d2" />
