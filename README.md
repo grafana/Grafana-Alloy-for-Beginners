@@ -233,12 +233,12 @@ prometheus.scrape "postgres" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    targets    = prometheus.exporter.postgres.mythical.targets
-    forward_to = [prometheus.relabel.postgres.receiver]
+    targets    =  //To do: fill in
+    forward_to =  //To do: fill in
 }
 
 prometheus.relabel "postgres" {
-    forward_to = [prometheus.remote_write.mimir.receiver]
+    forward_to =  //To do: fill in
 
     rule {
         target_label = //To do: fill in
