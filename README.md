@@ -105,7 +105,7 @@ If the config is valid, you should see a response like the following:
 ```
 config reloaded
 ```
-## Infrastructure O11y - collect, process, and export logs and metrics
+## Infrastructure O11y - collect, transform, and export logs and metrics
 ### Section 1: Collect and transform logs from Alloy
 #### Objectives
 
@@ -285,7 +285,7 @@ You should see the panels in the Postgres dashboard populated with data.
 
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/989e12c8-f3b6-47a6-93fc-645807120e0a" />
 
-## Application Observability - collect, process, and export traces and logs
+## Application Observability - collect, transform, and export traces and logs
 ### Section 4: Collect and transform metrics from Mythical-Services
 
 #### Objectives
