@@ -249,6 +249,9 @@ prometheus.relabel "postgres" {
         target_label = //To do: fill in
         replacement  = //To do: fill in
     }
+
+ // What we have: postgres_table_rows_count{instance="postgresql://mythical-database:5432/postgres"} - raw timeseries
+ //What we want: postgres_table_rows_count{instance="mythical-database:5432/postgres"}
     
     rule {
         // Replace the targeted label.
