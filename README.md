@@ -228,12 +228,37 @@ prometheus.scrape "postgres" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    // TODO: Fill in the rest of this component
+    targets    = prometheus.exporter.postgres.mythical.targets
+    forward_to = [prometheus.relabel.postgres.receiver]
 }
 
-// Relabel the metrics for postgres to include the 
 prometheus.relabel "postgres" {
-    // TODO: Fill in this component
+    forward_to = [prometheus.remote_write.mimir.receiver]
+
+    rule {
+        target_label = //To do: fill in
+        replacement  = //To do: fill in
+    }
+    
+    rule {
+        target_label = //To do: fill in
+        replacement  = //To do: fill in
+    }
+    
+    rule {
+        // Replace the targeted label.
+        action        = //To do: fill in
+
+        // The label we want to replace is 'instance'.
+        target_label  = //To do: fill in
+
+        // Look in the existing 'instance' label for a value that matches the regex.
+        source_labels = //To do: fill in
+        regex         = "^postgresql://(.+)"
+        
+        // Use the first value found in the 'instance' label that matches the regex as the replacement value.
+        replacement   = "$1"
+    }
 }
 ```
 
@@ -243,7 +268,6 @@ For the `prometheus.relabel` component, we want to add the `group="infrastructur
 
 We also want to modify the `instance` label to clean it up. The regex `"^postgresql://(.+)"` will extract the value after `postgresql://`.
 
-<img width="917" alt="image" src="https://github.com/user-attachments/assets/9668a67c-5a6a-4676-aa0e-4fb3573a39eb" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
