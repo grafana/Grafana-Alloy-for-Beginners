@@ -101,11 +101,6 @@ If the config is valid, you should see a response like the following:
 config reloaded
 ```
 ## Infrastructure O11y - collect, process, and export logs and metrics
-Prometheus/Promtail telemetry should be
-- collected using Alloy prometheus.* , loki.* , and discovery.* components
-- enriched using the Alloy Prometheus and Promtail/Loki components
-- sent to Grafana Cloud using the Prometheus Remote Write and Loki Endpoints
-
 ### Section 1: Collect logs from Alloy and relabel logs
 #### Objectives
 
