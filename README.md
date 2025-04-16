@@ -210,7 +210,8 @@ You should see Alloy's CPU usage metrics coming in.
 #### Objectives
 
 - Collect metrics from the Mythical services using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir
+- Replace and drop labels from the metrics using [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) component 
+- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
 
 #### Instructions
 
@@ -228,22 +229,22 @@ prometheus.relabel "no_time_to_scale" {
     forward_to = [prometheus.write.queue.experimental.receiver]
   //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
     rule {
-        action        = 
-        target_label  = 
-        source_labels = 
+        action        = // TO DO: Fill in the argument
+        target_label  = // TO DO: Fill in the argument
+        source_labels = // TO DO: Fill in the argument
         regex         = "^(aws|gcp|azure)-.+"
         replacement   = "$1"
     }
 // drop the instance_id label.
     rule {
-        action  = 
-        regex   = 
+        action  = // TO DO: Fill in the argument
+        regex   = // TO DO: Fill in the argument
     }
 }
 
 prometheus.write.queue "experimental" {
     endpoint "mimir" {
-        url = "http://mimir:9009/api/v1/push" 
+        // TO DO: Fill in the argument
     }
 }
 
