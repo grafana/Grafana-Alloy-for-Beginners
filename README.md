@@ -312,7 +312,7 @@ prometheus.relabel "no_time_to_scale" {
         regex         = "^(aws|gcp|azure)-.+"
         replacement   = "$1"
     }
-// drop the instance_id label.
+// drop the instance_id label from metrics
     rule {
         action  = // TO DO: Fill in the argument
         regex   = // TO DO: Fill in the argument
