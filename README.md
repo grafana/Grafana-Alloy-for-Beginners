@@ -294,9 +294,6 @@ You should see the panels in the Postgres dashboard populated with data.
 #### Objectives
 
 - Collect metrics from the Mythical services using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Using the [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) component, we will:
-  - replace the value of a label
-  - remove labels
 - [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
 
 #### Instructions
@@ -309,23 +306,6 @@ prometheus.scrape "mythical" {
     scrape_timeout  = "2s"
 
     // TO DO: Fill in the rest of this component
-}
-
-prometheus.relabel "no_time_to_scale" {
-    forward_to = [prometheus.write.queue.experimental.receiver]
-  //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
-    rule {
-        action        = // TO DO: Fill in the argument
-        target_label  = // TO DO: Fill in the argument
-        source_labels = // TO DO: Fill in the argument
-        regex         = "^(aws|gcp|azure)-.+"
-        replacement   = "$1"
-    }
-// drop the instance_id label from metrics
-    rule {
-        action  = // TO DO: Fill in the argument
-        regex   = // TO DO: Fill in the argument
-    }
 }
 
 prometheus.write.queue "experimental" {
@@ -353,7 +333,6 @@ Forward the metrics to the `prometheus.write.queue` component we will define nex
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
-
 
 
 ![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN2dXRwNXo3dHl1enMyaXRqMjJjbTUxMGZmNnRldDJxcTJmdDB2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UWF3nQFeXR30yjna2Q/giphy.gif)
@@ -553,6 +532,29 @@ You have been handed a briefcase with a single regular expression that will help
 For this exercise, you may find the following components useful:
 
 - [prometheus.relabel](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/)
+
+Go back to the portion of config from Section 4, where we started scraping metrics from the mythical services. Paste the following in above the `prometheus.write.queue` component (**note**: the order of components does not matter, this is just for organization and readability):
+
+```alloy
+prometheus.relabel "no_time_to_scale" {
+    forward_to = [prometheus.write.queue.experimental.receiver]
+
+  //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
+    rule {
+        action        = // TO DO: Fill in the argument
+        target_label  = // TO DO: Fill in the argument
+        source_labels = // TO DO: Fill in the argument
+        regex         = "^(aws|gcp|azure)-.+"
+        replacement   = "$1"
+    }
+
+    // drop the instance_id label from metrics
+    rule {
+        action  = // TO DO: Fill in the argument
+        regex   = // TO DO: Fill in the argument
+    }
+}
+```
 
 #### Verification
 
