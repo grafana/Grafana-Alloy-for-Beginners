@@ -69,7 +69,7 @@ These subtasks/subcomponents are known as `blocks` in Alloy.
 - prometheus.remote_write "default": A labeled block which instantiates a `prometheus.remote_write` component. The label is the string "default".
 - endpoint: An unlabeled `block` inside the component that configures an endpoint to send metrics to.
   
-<img width="950" alt="image" src="https://github.com/user-attachments/assets/17eb8490-6835-442e-ad46-332a0b856e43" />
+<img width="936" alt="image" src="https://github.com/user-attachments/assets/92a0cf68-6299-4df6-8ed3-9c4e266fde55" />
 
 - You use `expressions` to compute or denote the value of an `attribute`. The simplest `expressions` are constant values like strings, integers, lists, objects, etc.
 - This block sets the url `attribute`  equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
@@ -79,7 +79,9 @@ These subtasks/subcomponents are known as `blocks` in Alloy.
 ## Best practices for building pipelines with Alloy
 *Whenever possible*
 - We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability.
-- We strongly recommend collecting all the telemetry types of a given monitored component using a single ecosystem: either Prometheus/Loki or OTel, but not a mix of both.
+- We strongly recommend avoiding conversion of telemetry between formats. 
+  - Prometheus metrics should not be converted into OTLP and vice versa
+
 
 *Not every telemetry collection scenario is clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop.* 
 
@@ -104,7 +106,7 @@ If the config is valid, you should see a response like the following:
 config reloaded
 ```
 ## Infrastructure O11y - collect, process, and export logs and metrics
-### Section 1: Collect logs from Alloy and relabel logs
+### Section 1: Collect and transform logs from Alloy
 #### Objectives
 
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
@@ -149,7 +151,7 @@ To check that logs are being ingested, navigate to the [Grafana Explore Page](ht
 
 <img width="1436" alt="image" src="https://github.com/user-attachments/assets/80aea5e4-d25f-49f6-83ce-38d4911fe97d" />
 
-### Section 2: Collect metrics from Alloy and relabel metrics 
+### Section 2: Collect and transform metrics from Alloy
 
 #### Objectives
 
@@ -208,7 +210,7 @@ You should see Alloy's CPU usage metrics coming in.
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/af7f2de7-69dc-4caa-98d9-bcf4d0cdae5c" />
 
-### Section 3: Collect Postgres metrics
+### Section 3: Collect and transfrom metrics from Postgres DB
 
 #### Objectives
 
@@ -281,9 +283,10 @@ you can import it by clicking the `New` button on the top right, select `Import`
 
 You should see the panels in the Postgres dashboard populated with data.
 
-<img width="1433" alt="image" src="https://github.com/user-attachments/assets/03cb88b9-ce15-44c0-a072-58d7609e3203" />
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/989e12c8-f3b6-47a6-93fc-645807120e0a" />
 
-### Section 4: Collect metrics from Mythical-Services and relabel metrics
+## Application Observability - collect, process, and export traces and logs
+### Section 4: Collect and transform metrics from Mythical-Services
 
 #### Objectives
 
@@ -348,19 +351,10 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-To check that Loki's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
 
-```promql
-rate(loki_distributor_bytes_received_total[$__rate_interval])
-```
-
-You should see values coming in for the logs we started ingesting in the previous section!
-
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/bf1888de-6b2b-4c98-a1e4-0fa8e21c5e39" />
 
 ![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN2dXRwNXo3dHl1enMyaXRqMjJjbTUxMGZmNnRldDJxcTJmdDB2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UWF3nQFeXR30yjna2Q/giphy.gif)
 
-## Application Observability - collect, process, and export traces and logs
 ### Section 5: Ingesting OTel traces
 
 #### Objectives
