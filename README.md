@@ -205,81 +205,7 @@ You should see Alloy's CPU usage metrics coming in.
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/af7f2de7-69dc-4caa-98d9-bcf4d0cdae5c" />
 
-### Section 3: Collect metrics from Mythical-Services and relabel metrics
-
-#### Objectives
-
-- Collect metrics from the Mythical services using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Replace and drop labels from the metrics using [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) component 
-- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
-
-#### Instructions
-
-Open `config.alloy` in your editor and copy the following code into it:
-
-```alloy
-prometheus.scrape "mythical" {
-    scrape_interval = "2s"
-    scrape_timeout  = "2s"
-
-    // TO DO: Fill in the rest of this component
-}
-
-prometheus.relabel "no_time_to_scale" {
-    forward_to = [prometheus.write.queue.experimental.receiver]
-  //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
-    rule {
-        action        = // TO DO: Fill in the argument
-        target_label  = // TO DO: Fill in the argument
-        source_labels = // TO DO: Fill in the argument
-        regex         = "^(aws|gcp|azure)-.+"
-        replacement   = "$1"
-    }
-// drop the instance_id label.
-    rule {
-        action  = // TO DO: Fill in the argument
-        regex   = // TO DO: Fill in the argument
-    }
-}
-
-prometheus.write.queue "experimental" {
-    endpoint "mimir" {
-        // TO DO: Fill in the argument
-    }
-}
-
-```
-
-For the `prometheus.scrape` component, we can define scrape targets for mythical services directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. Any non-double-underscore keys are used as labels for the target.
-
-For example, the following scrape object will scrape Mimir's metrics endpoint and add `env="demo"` and `service="mimir"` labels to the target:
-
-```alloy
-targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
-```
-
-The addresses of the targets are:
-
-- mythical-server: "mythical-server:4000"
-- mythical-requester: "mythical-requester:4001"
-
-Forward the metrics to the `prometheus.write.queue` component we will define next. 
-
-Don't forget to [reload the config](#reloading-the-config) after finishing.
-
-#### Verification
-
-To check that Loki's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
-
-```promql
-rate(loki_distributor_bytes_received_total[$__rate_interval])
-```
-
-You should see values coming in for the logs we started ingesting in the previous section!
-
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/bf1888de-6b2b-4c98-a1e4-0fa8e21c5e39" />
-
-### Section 4: Collect Postgres metrics
+### Section 3: Collect Postgres metrics
 
 #### Objectives
 
@@ -327,6 +253,79 @@ you can import it by clicking the `New` button on the top right, select `Import`
 You should see the panels in the Postgres dashboard populated with data.
 
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/03cb88b9-ce15-44c0-a072-58d7609e3203" />
+
+### Section 4: Collect metrics from Mythical-Services and relabel metrics
+
+#### Objectives
+
+- Collect metrics from the Mythical services using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
+- Replace and drop labels from the metrics using [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) component 
+- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
+
+#### Instructions
+
+Open `config.alloy` in your editor and copy the following code into it:
+
+```alloy
+prometheus.scrape "mythical" {
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    // TO DO: Fill in the rest of this component
+}
+
+prometheus.relabel "no_time_to_scale" {
+    forward_to = [prometheus.write.queue.experimental.receiver]
+  //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
+    rule {
+        action        = // TO DO: Fill in the argument
+        target_label  = // TO DO: Fill in the argument
+        source_labels = // TO DO: Fill in the argument
+        regex         = "^(aws|gcp|azure)-.+"
+        replacement   = "$1"
+    }
+// drop the instance_id label.
+    rule {
+        action  = // TO DO: Fill in the argument
+        regex   = // TO DO: Fill in the argument
+    }
+}
+
+prometheus.write.queue "experimental" {
+    endpoint "mimir" {
+        // TO DO: Fill in the argument
+    }
+}
+
+```
+For the `prometheus.scrape` component, we can define scrape targets for mythical services directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. Any non-double-underscore keys are used as labels for the target.
+
+For example, the following scrape object will scrape Mimir's metrics endpoint and add `env="demo"` and `service="mimir"` labels to the target:
+
+```alloy
+targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
+```
+
+The addresses of the targets are:
+
+- mythical-server: "mythical-server:4000"
+- mythical-requester: "mythical-requester:4001"
+
+Forward the metrics to the `prometheus.write.queue` component we will define next. 
+
+Don't forget to [reload the config](#reloading-the-config) after finishing.
+
+#### Verification
+
+To check that Loki's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
+
+```promql
+rate(loki_distributor_bytes_received_total[$__rate_interval])
+```
+
+You should see values coming in for the logs we started ingesting in the previous section!
+
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/bf1888de-6b2b-4c98-a1e4-0fa8e21c5e39" />
 
 ![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN2dXRwNXo3dHl1enMyaXRqMjJjbTUxMGZmNnRldDJxcTJmdDB2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UWF3nQFeXR30yjna2Q/giphy.gif)
 
