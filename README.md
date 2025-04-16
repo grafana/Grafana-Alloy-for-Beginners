@@ -49,6 +49,14 @@ To instruct Alloy on how we want that done, we must write these instructions in 
 
 A single task is known as a `component` in Alloy.
 
+<img width="946" alt="image" src="https://github.com/user-attachments/assets/f89dfcdd-4455-4065-9845-88c9dde48bfc" />
+
+Components perform different functions.
+<img width="944" alt="image" src="https://github.com/user-attachments/assets/f9e5d02d-3558-4022-a289-062d4a93dceb" />
+<img width="947" alt="image" src="https://github.com/user-attachments/assets/5271fb3d-d5ae-4af0-9fee-7ffba4988293" />
+<img width="948" alt="image" src="https://github.com/user-attachments/assets/c70b445b-c9a2-4a6f-96d3-dd3953877042" />
+<img width="474" alt="image" src="https://github.com/user-attachments/assets/1a78778c-4583-4ed6-9e5c-4e5272dd26fb" />
+
 These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
