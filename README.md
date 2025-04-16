@@ -210,7 +210,9 @@ You should see Alloy's CPU usage metrics coming in.
 #### Objectives
 
 - Collect metrics from Postgres using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add the `group="infrastructure"` and `service="postgres"` labels
+- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to 
+  - add the `group="infrastructure"` and `service="postgres"` labels
+  - replace the value of 'instance' label for a value that matches the regex ("^postgresql://([^/]+)")
 - [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) the metrics to Mimir
 
 #### Instructions
