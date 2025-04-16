@@ -205,7 +205,7 @@ You should see Alloy's CPU usage metrics coming in.
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/af7f2de7-69dc-4caa-98d9-bcf4d0cdae5c" />
 
-### Section 3: Collect metrics from Mythical-Services
+### Section 3: Collect metrics from Mythical-Services and relabel metrics
 
 #### Objectives
 
@@ -263,9 +263,7 @@ The addresses of the targets are:
 - mythical-server: "mythical-server:4000"
 - mythical-requester: "mythical-requester:4001"
 
-Forward the logs to the `prometheus.remote_write` component we defined in the previous section. 
-
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/a69bb312-d41c-4556-9ca7-52e23513e86e" />
+Forward the metrics to the `prometheus.write.queue` component we will define next. 
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
