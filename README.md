@@ -12,6 +12,9 @@
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
   - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
   - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
+  - [Collect and forward data with Grafana Alloy](https://grafana.com/docs/alloy/latest/collect/)
+  - [Grafana Alloy Tutorials](https://grafana.com/docs/alloy/latest/tutorials/)
+
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/bc1467ea-b76b-4a8f-97af-91de818b07b6" />
 
