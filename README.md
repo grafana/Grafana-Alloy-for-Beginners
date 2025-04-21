@@ -154,12 +154,12 @@ To check that logs are being ingested, navigate to the [Grafana Explore Page](ht
 
 <img width="1436" alt="image" src="https://github.com/user-attachments/assets/80aea5e4-d25f-49f6-83ce-38d4911fe97d" />
 
-### Section 2: Collect and transform metrics from Alloy
+### Section 2: Collect and transform infrastructure metrics
 
 #### Objectives
 
-- Collect Alloy's own metrics using the [`prometheus.exporter.self`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.self/) component
-- Scrape the metrics using the  [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
+- Use [discovery.http](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) to discover the targets to scrape
+- Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add labels to the metrics
 - Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
 
@@ -168,33 +168,46 @@ To check that logs are being ingested, navigate to the [Grafana Explore Page](ht
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
-// This component exposes Alloy's own metrics endpoints in-memory, but it doesn't require a configuration
-// so you are already done!
-prometheus.exporter.self "alloy" {}
+discovery.http "service_discovery" {
+    // TODO: Fill in this component
+}
 
-prometheus.scrape "alloy" {
+prometheus.scrape "infrastructure" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    // TODO: Fill in the rest of this component
+    // TODO: Fill in this component
 }
 
-prometheus.relabel "alloy" {
+prometheus.relabel "infrastructure" {
     // TODO: Fill in this component
 }
 
 prometheus.remote_write "mimir" {
-    endpoint {
-        url = "http://mimir:9009/api/v1/push" 
-    }
+    // TODO: Fill in this component
 }
 ```
 
-For this section, we would like to configure `prometheus.scrape.alloy` to scrape the `prometheus.exporter.self.alloy` component's targets and forward the metrics to the `prometheus.relabel.alloy` component's receiver.
+For this section, we want to discover the targets to scrape using the `discovery.http` component and scrape the targets' metrics using the `prometheus.scrape` component.
 
-For the `prometheus.relabel` component, we want to add the `group` label with the value "infrastructure" and the `service` label with the value "alloy" to the metrics.
+`discovery.http` is a component that polls a given URL for targets to scrape in JSON format. These targets are then exported for other components to use. In our demo environment,
+we have a service that exposes the targets to scrape in the `http://service-discovery/targets.json` endpoint. These targets look something like:
 
-Configure the 'prometheus.remote_write` component to write the metrics to a local Mimir database. 
+```json
+[
+    {
+        "targets": ["loki:3100"],
+        "labels": {
+            "service": "loki"
+        }
+    }
+]
+```
+
+In the `prometheus.relabel` component, we want to add the `group` label with the value of "infrastructure". The service discovery service already exposes targets with the `service` label set
+to the right value, so we don't have to add any more labels.
+
+Configure the `prometheus.remote_write` component to write the metrics to a local Mimir database. 
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/0b1627de-e289-4d8f-8bf0-f836d18afc9e" />
 
@@ -514,7 +527,31 @@ To check that spanlogs are being ingested, navigate to the [Grafana Explore Page
 You should see spanlogs coming in for the Mythical services.
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f14815-ced1-47ae-8d28-30018b16f9cc" />
 
-### Mission 1: No Time to Scale
+### Mission 1: This message will self-destruct
+
+#### Description
+
+One of our agents has sent us a secret message, but it's been encrypted! They've hidden the key in a base-64 encoded string in an internal
+label on one of the targets exposed by the `service-discovery` service. These internal labels will be dropped before the metrics are written to Mimir,
+which is why our agent hid the key there.
+
+We can use the Alloy UI to look at the targets and find the one with the key.
+
+#### Objectives
+
+- Use the Alloy UI to find the target with the key
+- Decode the key and decrypt the secret message
+
+#### Instructions
+
+First, navigate to the [Alloy UI](http://localhost:12347) and find the target with the key. 
+
+The following may be helpful:
+
+- To decode a base-64 encoded string, use `echo '<base64 encoded string>' | base64 -d`
+- To decrypt and print the AES-256-CBC encrypted secret message, use `openssl enc -aes-256-cbc -d -salt -pbkdf2 -in secret_message.txt.enc -k '<key>'`
+
+### Mission 2: No Time to Scale
 
 #### Description
 
@@ -563,7 +600,7 @@ prometheus.relabel "no_time_to_scale" {
 
 TODO: Add verification instructions
 
-### Mission 2: The Span-attribute Who Loved Me
+### Mission 3: The Span-attribute Who Loved Me
 
 You have been handed a self-destructing note with a task from the very top of the chain of command.
 It turns out that MI6 and the CIA have been using different attributes to label the tier of a service,
@@ -589,8 +626,7 @@ The [`otelcol.processor.attributes`](https://grafana.com/docs/alloy/latest/refer
 
 TODO: Add verification instructions
 
-
-### Mission 3: Mission: Keympossible -- Secret Redaction Protocol
+### Mission 4: Mission: Keympossible -- Secret Redaction Protocol
 
 #### Objectives
 
