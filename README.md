@@ -7,7 +7,7 @@
 
 ## Resources for the workshop
 
-- [Lab environment repo](https://github.com/spartan0x117/intro-to-mltp/blob/main/alloy/config.alloy)
+- [Lab environment repo](https://github.com/spartan0x117/intro-to-mltp/tree/main)
   - [Endpoints used in the workshop](https://github.com/spartan0x117/intro-to-mltp/blob/main/alloy/endpoints.json)
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
   - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
