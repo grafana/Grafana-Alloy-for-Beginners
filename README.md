@@ -260,7 +260,7 @@ prometheus.relabel "postgres" {
         replacement  = //To do: fill in
     }
 
- // What we have: postgres_table_rows_count{instance="postgresql://mythical-database:5432/postgres"} - raw timeseries
+ //What we have: postgres_table_rows_count{instance="postgresql://mythical-database:5432/postgres"}
  //What we want: postgres_table_rows_count{instance="mythical-database:5432/postgres"}
     
     rule {
@@ -285,7 +285,6 @@ For the `prometheus.scrape` component, we want to scrape the `prometheus.exporte
 For the `prometheus.relabel` component, we want to add the `group="infrastructure"` and `service="postgres"` labels to the metrics.
 
 We also want to modify the `instance` label to clean it up. The regex `"^postgresql://(.+)"` will extract the value after `postgresql://`.
-
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
