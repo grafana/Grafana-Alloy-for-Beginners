@@ -20,7 +20,7 @@
 
 ## Environment set up
 Before getting started, make sure you:
-- install [Docker](https://www.docker.com/products/docker-desktop/) and [DockerCompose](https://docs.docker.com/compose/install/) 
+- install [Docker](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
 - clone the [repo](https://github.com/spartan0x117/intro-to-mltp) for the lab environment :
 ```
 git clone https://github.com/spartan0x117/intro-to-mltp.git
@@ -146,13 +146,11 @@ Make sure to [reload the config](#reloading-the-config) after filling in the blo
 
 #### Verification
 
-To check that logs are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Loki" data source, and run the following query:
+Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select the `Section 1 Verification` dashboard.
 
-```logql
-{service="alloy"}
-```
+You should see the panels populated with data, showing the number of logs being sent by Alloy as well as the logs themselves.
 
-<img width="1436" alt="image" src="https://github.com/user-attachments/assets/80aea5e4-d25f-49f6-83ce-38d4911fe97d" />
+**TODO: Add screenshot**
 
 ### Section 2: Collect and transform infrastructure metrics
 
@@ -216,15 +214,11 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-To check that Alloy's metrics are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Mimir" data source, and run the following query:
+Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select the `Section 2 Verification` dashboard.
 
-```promql
-rate(alloy_resources_process_cpu_seconds_total[$__rate_interval])
-```
+You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope services.
 
-You should see Alloy's CPU usage metrics coming in.
-
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/af7f2de7-69dc-4caa-98d9-bcf4d0cdae5c" />
+**TODO: Add screenshot**
 
 ### Section 3: Collect and transfrom metrics from Postgres DB
 
@@ -297,14 +291,13 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-To check that the Postgres metrics are being ingested, navigate to the [Dashboards](http://localhost:3000/dashboards) page and select the `PostgreSQL` dashboard. If you don't see the dashboard,
-you can import it by clicking the `New` button on the top right, select `Import`, enter the dashboard ID `9628`, select the Mimir data source, and click `Import`.
+Navigate to Dashboards > `Section 3 Verification` and you should see a dashboard populating with Postgres metrics. 
+You should also see an instance value of `mythical-database:5432/postgres` instead of `postgresql://mythical-database:5432/postgres`.
 
-You should see the panels in the Postgres dashboard populated with data.
-
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/989e12c8-f3b6-47a6-93fc-645807120e0a" />
+**TODO: Add screenshot**
 
 ## Application Observability - collect, transform, and export traces and logs
+
 ### Section 4: Collect and transform metrics from Mythical-Services
 
 #### Objectives
@@ -350,6 +343,9 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
+Navigate to Dashboards > `Section 4 Verification` and you should see a panel with the request rate per beast flowing!
+
+**TODO: Add screenshot**
 
 ![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN2dXRwNXo3dHl1enMyaXRqMjJjbTUxMGZmNnRldDJxcTJmdDB2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UWF3nQFeXR30yjna2Q/giphy.gif)
 
@@ -404,22 +400,17 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-To check that traces are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Tempo" data source, and run the following query:
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 5 Verification` and you should see a dashboard with a populated service graph, table of traces coming from the mythical-requester, and the rate of span ingestion by Tempo
 
-```traceql
-{span.beast="owlbear"}
-```
+**TODO: Add screenshot**
 
-You should see traces coming in for the Mythical services.
-
-<img width="1433" alt="image" src="https://github.com/user-attachments/assets/a19d7895-c232-49d8-b907-c70924d99a22" />
-
-You can also navigate to the [Dashboards list](http://localhost:3000/dashboards) and select the `MLT Dashboard` dashboard. These dashboards are configured to use the metrics
+You can also navigate to [Dashboards](http://localhost:3000/dashboards) > `MLT Dashboard`. These dashboards are configured to use the metrics
 from Spanmetrics, so you should see data for the spans we're ingesting.
 
 <img width="1434" alt="image" src="https://github.com/user-attachments/assets/73080e3d-5dc3-4013-9409-09cd9887d565" />
 
 ### Section 6: Ingesting application logs
+
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/f5f2384a-35b4-4796-89a5-d3a0f2598327" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/4bbea9f2-28a4-4cb4-9a5b-fabe4e848fc6" />
@@ -446,6 +437,12 @@ loki.process "mythical" {
     // TODO: Fill this in
 }
 ```
+
+#### Verification
+
+Navigate to Dashboards > `Section 6 Verification` and you should see a dashboard with the rate of logs coming from the mythical apps as well as panels showing the logs themselves for the server and requester
+
+**TODO: Add screenshot**
 
 ### Section 7: Spanlogs
 
@@ -519,48 +516,51 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-To check that spanlogs are being ingested, navigate to the [Grafana Explore Page](http://localhost:3000/explore), select the "Loki" data source, and run the following query:
+Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard with panels containing the rate of spanlog ingestion as well as the spanlogs themselves.
 
-```logql
-{status="200"}
-```
-You should see spanlogs coming in for the Mythical services.
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f14815-ced1-47ae-8d28-30018b16f9cc" />
+**TODO: Add screenshot**
 
-### Mission 1: This message will self-destruct
+### Mission 1
 
 #### Description
 
-One of our agents has sent us a secret message, but it's been encrypted! They've hidden the key in a base-64 encoded string in an internal
-label on one of the targets exposed by the `service-discovery` service. These internal labels will be dropped before the metrics are written to Mimir,
-which is why our agent hid the key there.
+One of our trusted informants has stashed an encrypted file—`secret_message.txt.enc`—on a remote dead-drop.
 
-We can use the Alloy UI to look at the targets and find the one with the key.
+The decryption key? Hidden in plain sight, embedded in an internal label on the service discovery targets.
+Since internal labels are stripped before metrics make it to Mimir, this covert tactic kept the key out of enemy hands.
+
+Your mission: use Alloy to uncover the hidden key, decrypt the message, and reveal the intel within.
 
 #### Objectives
 
-- Use the Alloy UI to find the target with the key
+- Use the Alloy UI to find the key hidden in the internal label on the service discovery targets
 - Decode the key and decrypt the secret message
 
 #### Instructions
 
-First, navigate to the [Alloy UI](http://localhost:12347) and find the target with the key. 
+Access the [Alloy UI](http://localhost:12347) and look for the hidden key on one of the service discovery targets.
 
-The following may be helpful:
+To decrypt and print the AES-256-CBC encrypted secret message, use `openssl enc -aes-256-cbc -d -salt -pbkdf2 -in secret_message.txt.enc -k '<key>'`,
+using the key you just found.
 
-- To decode a base-64 encoded string, use `echo '<base64 encoded string>' | base64 -d`
-- To decrypt and print the AES-256-CBC encrypted secret message, use `openssl enc -aes-256-cbc -d -salt -pbkdf2 -in secret_message.txt.enc -k '<key>'`
+#### Verification
 
-### Mission 2: No Time to Scale
+You should see the secret message in the console!
+
+### Mission 2
 
 #### Description
 
-We have been informed that the mythical-server service has been instrumented with a custom metric that
-is very high cardinality. Your PM has asked you to write a relabel rule to extract the cloud provider from the
-instance_id label and add it as a new label called cloud_provider, then drop the instance_id label.
+A rogue actor has tampered with IMF's monitoring systems, slipping a high-cardinality instance_id label into a metric that counts database calls.
+This unexpected spike in cardinality is putting Mimir under serious pressure -- and it's up to us to defuse the situation before it blows.
 
-You have been handed a briefcase with a single regular expression that will help you complete this mission:
+But it's not all bad news. Hidden within the instance_id is valuable intel: the name of the cloud provider.
+IMF wants us to extract that information and promote it to a dedicated cloud_provider label—transforming this mess into a mission success.
+
+IMF has equipped you with the following regex to help you complete this mission:
 `^(aws|gcp|azure)-.+`
+
+You can see the dashboard that informed the IMF that this was happening by navigating to [Dashboards](http://localhost:3000/dashboards) > `Mission 2`.
 
 #### Objectives
 
@@ -576,7 +576,7 @@ For this exercise, you may find the following components useful:
 Go back to the portion of config from Section 4, where we started scraping metrics from the mythical services. Paste the following in above the `prometheus.write.queue` component (**note**: the order of components does not matter, this is just for organization and readability):
 
 ```alloy
-prometheus.relabel "no_time_to_scale" {
+prometheus.relabel "mission_2" {
     forward_to = [prometheus.write.queue.experimental.receiver]
 
   //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
@@ -598,19 +598,20 @@ prometheus.relabel "no_time_to_scale" {
 
 #### Verification
 
-TODO: Add verification instructions
+Navigate to the [Explore](http://localhost:3000/explore) page and look at the metrics.
+Query for `count(mythical_db_requests_count_total{cloud_provider!=""})` and you should see a non-zero value.
 
-### Mission 3: The Span-attribute Who Loved Me
+**TODO: Add screenshot**
 
-You have been handed a self-destructing note with a task from the very top of the chain of command.
-It turns out that MI6 and the CIA have been using different attributes to label the tier of a service,
-and they've finally agreed to use the same attribute.
+### Mission 3
 
-Tempo's spanmetrics processor has already been configured to use the new service.tier attribute when generating metrics,
-but the span attributes are still using the old attributes.
+After much debate, the various departments within IMF have reached a rare consensus: it's time to standardize the attribute name for service tiers.
+Until now, teams have been using conflicting keys like servicetier and service_tier, creating chaos in spanmetrics and cross-department dashboards.
 
-Your mission is to extract the service.tier attribute from the servicetier or service_tier attributes
-and add it as a new service.tier attribute for all spans.
+Headquarters has spoken—service.tier is the new standard.
+
+Your mission: use Alloy to bring order to the data.
+Normalize the attribute across the board so that spanmetrics flow smoothly and dashboards speak a common language.
 
 #### Objectives
 
@@ -624,9 +625,22 @@ The [`otelcol.processor.attributes`](https://grafana.com/docs/alloy/latest/refer
 
 #### Verification
 
-TODO: Add verification instructions
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you should see a dashboard with data including the new `service_tier` attribute,
+which came from spanmetrics generation using the `service.tier` attribute we just consolidated.
 
-### Mission 4: Mission: Keympossible -- Secret Redaction Protocol
+**TODO: Add screenshot**
+
+### Mission 4
+
+#### Description
+
+The IMF needs your expertise for one final mission.
+An opposing state actor exploited a Zero-Day vulnerability in one of our servers, causing sensitive tokens to be logged by the mythical-requester.
+
+The security team is standing by, but before they can act, we need to make sure no tokens are being written to Loki.
+Your task: use Alloy to identify and redact any sensitive tokens from the mythical-service logs—effectively, clean up the trail and keep things secure.
+
+You can see the logs by navigating to [Dashboards](http://localhost:3000/dashboards) > `Mission 4`.
 
 #### Objectives
 
@@ -638,7 +652,10 @@ Take a look at the `loki` components. Are there any that seem like they could be
 
 #### Verification
 
-TODO: Add verification instructions
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 4` and you should see a dashboard with a
+panel showing the rate of logs with tokens coming from the mythical services as well as the logs themselves.
+
+**TODO: Add screenshot**    
 
 ### Recap
 <img width="1425" alt="image" src="https://github.com/user-attachments/assets/605eae50-3414-4e4d-9f62-11b6478c8d01" />
