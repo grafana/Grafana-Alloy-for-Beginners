@@ -232,8 +232,9 @@ You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope serv
 
 #### Objectives
 
+- Expose metrics from the Postgres DB using the [`prometheus.exporter.postgres](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.postgres/) component
 - Collect metrics from Postgres using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to 
+- Use the [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to 
   - add the `group="infrastructure"` and `service="postgres"` labels
   - replace the value of 'instance' label for a value that matches the regex ("^postgresql://([^/]+)")
 - [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) the metrics to Mimir
@@ -251,21 +252,21 @@ prometheus.scrape "postgres" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    targets    =  //To do: fill in
-    forward_to =  //To do: fill in
+    targets    =  //TODO: Fill in
+    forward_to =  [//TODO: Fill in]
 }
 
 prometheus.relabel "postgres" {
-    forward_to =  //To do: fill in
+    forward_to =  [//TODO: Fill in]
 
     rule {
-        target_label = //To do: fill in
-        replacement  = //To do: fill in
+        target_label = "//TODO: Fill in"
+        replacement  = "//TODO: Fill in"
     }
     
     rule {
-        target_label = //To do: fill in
-        replacement  = //To do: fill in
+        target_label = "//TODO: Fill in"
+        replacement  = "//TODO: Fill in"
     }
 
  //What we have: postgres_table_rows_count{instance="postgresql://mythical-database:5432/postgres"}
@@ -273,13 +274,13 @@ prometheus.relabel "postgres" {
     
     rule {
         // Replace the targeted label.
-        action        = //To do: fill in
+        action        = "//TODO: Fill in"
 
         // The label we want to replace is 'instance'.
-        target_label  = //To do: fill in
+        target_label  = "//TODO: Fill in"
 
         // Look in the existing 'instance' label for a value that matches the regex.
-        source_labels = //To do: fill in
+        source_labels = ["//TODO: Fill in"]
         regex         = "^postgresql://(.+)"
         
         // Use the first value found in the 'instance' label that matches the regex as the replacement value.
