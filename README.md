@@ -164,7 +164,7 @@ Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select t
 
 You should see the panels populated with data, showing the number of logs being sent by Alloy as well as the logs themselves.
 
-**TODO: Add screenshot**
+<img width="1436" alt="image" src="https://github.com/user-attachments/assets/063b6845-5214-444b-ab56-a9cd756d55af" />
 
 ### Section 2: Collect and transform infrastructure metrics
 
