@@ -322,8 +322,10 @@ prometheus.scrape "mythical" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    targets    =  [{"__address__"= "//TODO: Fill in", group = "//TODO: Fill in", service = "//TODO: Fill in"}]
-    targets    =  [{"//TODO: Fill in"}]
+    targets    =  [
+        {"__address__"= "//TODO: Fill in", group = "//TODO: Fill in", service = "//TODO: Fill in"},
+        {"//TODO: Fill in"}, 
+        ]
     forward_to =  [//TODO: Fill in]
 }
 
