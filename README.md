@@ -322,28 +322,37 @@ prometheus.scrape "mythical" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    // TO DO: Fill in the rest of this component
+    targets    =  [{"__address__"= "//TODO: Fill in", group = "//TODO: Fill in", service = "//TODO: Fill in"}]
+    targets    =  [{"//TODO: Fill in"}]
+    forward_to =  [//TODO: Fill in]
 }
 
 prometheus.write.queue "experimental" {
     endpoint "mimir" {
-        // TO DO: Fill in the argument
+        "//TODO: Fill in"
     }
 }
 
 ```
-For the `prometheus.scrape` component, we can define scrape targets for mythical services directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. Any non-double-underscore keys are used as labels for the target.
+For the `prometheus.scrape` component, we can define scrape targets for mythical services directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. 
 
+Any non-double-underscore keys are used as labels for the target.
 For example, the following scrape object will scrape Mimir's metrics endpoint and add `env="demo"` and `service="mimir"` labels to the target:
 
 ```alloy
 targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 ```
 
-The addresses of the targets are:
+For this exercise, create two targets using the following addresses. 
 
 - mythical-server: "mythical-server:4000"
 - mythical-requester: "mythical-requester:4001"
+
+Add the following labels for each target. 
+- mythical-server:
+  - group = "mythical", service = "mythical-server"
+- mythical-requester:
+  - group = "mythical", service = "mythical-requester"
 
 Forward the metrics to the `prometheus.write.queue` component we will define next. 
 
