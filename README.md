@@ -172,7 +172,6 @@ You should see the panels populated with data, showing the number of logs being 
 
 - Use [discovery.http](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) to discover the targets to scrape
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Use [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add labels to the metrics
 - Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
 
 #### Instructions
@@ -181,22 +180,21 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 discovery.http "service_discovery" {
-    // TODO: Fill in this component
+    url = "http://service-discovery/targets.json" 
 }
 
 prometheus.scrape "infrastructure" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    // TODO: Fill in this component
-}
-
-prometheus.relabel "infrastructure" {
-    // TODO: Fill in this component
+    targets    = discovery.http.service_discovery.targets
+    forward_to = [prometheus.remote_write.mimir.receiver]
 }
 
 prometheus.remote_write "mimir" {
-    // TODO: Fill in this component
+   endpoint {
+    url = "http://mimir:9009/api/v1/push"
+   }
 }
 ```
 
@@ -215,14 +213,9 @@ we have a service that exposes the targets to scrape in the `http://service-disc
     }
 ]
 ```
-
-In the `prometheus.relabel` component, we want to add the `group` label with the value of "infrastructure". The service discovery service already exposes targets with the `service` label set
-to the right value, so we don't have to add any more labels.
-
-Configure the `prometheus.remote_write` component to write the metrics to a local Mimir database. 
+Configure the `prometheus.remote_write` component to write the metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/0b1627de-e289-4d8f-8bf0-f836d18afc9e" />
-
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
