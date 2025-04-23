@@ -180,28 +180,29 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 discovery.http "service_discovery" {
-    url = "http://service-discovery/targets.json" 
+    url = "TODO: Fill in" 
 }
 
 prometheus.scrape "infrastructure" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    targets    = discovery.http.service_discovery.targets
-    forward_to = [prometheus.remote_write.mimir.receiver]
+    targets    = //TODO: Fill in
+    forward_to = [//TODO: Fill in]
 }
 
 prometheus.remote_write "mimir" {
    endpoint {
-    url = "http://mimir:9009/api/v1/push"
+    //TODO: Fill in
    }
 }
 ```
 
 For this section, we want to discover the targets to scrape using the `discovery.http` component and scrape the targets' metrics using the `prometheus.scrape` component.
 
-`discovery.http` is a component that polls a given URL for targets to scrape in JSON format. These targets are then exported for other components to use. In our demo environment,
-we have a service that exposes the targets to scrape in the `http://service-discovery/targets.json` endpoint. These targets look something like:
+`discovery.http` is a component that polls a given URL for targets to scrape in JSON format. These targets are then exported for other components to use. In our demo environment, we have a service that exposes the targets to scrape in the `http://service-discovery/targets.json` endpoint. 
+
+These targets look something like:
 
 ```json
 [
