@@ -122,15 +122,29 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy/config.alloy
 logging {
-    // TODO: Fill in this block
+  format = "TODO: Fill in"
+  level  = "TODO: Fill in"
+  write_to = [TODO: Fill in]
 }
 
 loki.relabel "alloy_logs" {
-    // TODO: Fill in this component
+   forward_to = [TODO: Fill in]
+
+    rule {
+        target_label = "TODO: Fill in"
+        replacement = "TODO: Fill in"
+    }
+
+    rule {
+        target_label = "TODO: Fill in"
+        replacement = "TODO: Fill in" 
+    }
 }
 
 loki.write "mythical" {
-    // TODO: Fill in this component
+    endpoint {
+       TODO: Fill in = "TODO: Fill in"
+    } 
 }
 ```
 
