@@ -382,22 +382,35 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 otelcol.receiver.otlp "otlp_receiver" {
-    // TODO: Fill this component in
+    grpc {
+        endpoint = "//TODO: Fill in default value shown in the doc"
+    }
+    http {
+        endpoint = "//TODO: Fill in default value shown in the doc"
+    }
     output {
         traces = [
-            // TODO: Fill this in
+            //TODO: Fill in,
         ]
     }
 }
 
 otelcol.processor.batch "default" {
-    // TODO: Fill this in
+    output {
+        traces = [
+            //TODO: Fill in ,
+            ]
+    }
+
+    send_batch_size = //TODO: Fill in 
+	  send_batch_max_size = //TODO: Fill in 
+
+	  timeout = "//TODO: Fill in"
 }
 
 otelcol.exporter.otlp "tempo" {
-    // TODO: Fill this in
     client {
-        // TODO: Fill this in
+        endpoint = "//TODO: Fill in "
 
         // This is a local instance of Tempo, so we can skip TLS verification
         tls {
@@ -406,6 +419,8 @@ otelcol.exporter.otlp "tempo" {
         }
     }
 }
+
+
 ```
 
 The batch processor will batch spans until a batch size or a timeout is met, before sending those batches on to another component. 
