@@ -451,12 +451,12 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 
 #### Objectives
 
-- Ingest application logs sent from the mythical services
-- Process the logs to:
+- Ingest application logs sent from the mythical services using the [`loki.source.api`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) component
+- Use the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component to:
   - add a static `service="mythical" label
   - extract the timestamp from the log line using `stage.regex` with this regex: `^.*?loggedtime=(?P<loggedtime>\S+)`
   - set the timestamp of the log to the extracted timestamp
-- Forward the processed logs to Loki
+  - Forward the processed logs to Loki
 
 #### Instructions
 
@@ -464,13 +464,30 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 loki.source.api "mythical" {
-    // TODO: Fill this in
+     http {
+        listen_address = "0.0.0.0"
+        listen_port    = "3100"
+    }
+    forward_to = [//TODO: Fill in]
 }
 
 loki.process "mythical" {
-    // TODO: Fill this in
+    stage.labels {
+        values = {
+           //TODO: Fill in = "//TODO: Fill in",        
+        }
+    }
+   stage.regex {
+        expression=`^.*?loggedtime=(?P<loggedtime>\S+)`
+   }
+
+   stage.timestamp {
+        source = "//TODO: Fill in"
+        format = "2006-01-02T15:04:05.000Z07:00"
+    }
+
+    forward_to = [loki.write.mythical.receiver]
 }
-```
 
 #### Verification
 
@@ -524,7 +541,7 @@ loki.process "autologging" {
 ```
 **`otelcol.connector.spanlogs`**
 
-For the `otelcol.connector.spanlogs` component to work, we will need to forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in exercise 5 to the `otelcol.connector.spanlogs`'s input.
+For the `otelcol.connector.spanlogs` component to work, we will need to forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in section 5 to the `otelcol.connector.spanlogs`'s input.
 
 We'd like to make sure to only generate a log for each full trace(root), not for each span or process (that would be a lot of logs!).
 
@@ -574,8 +591,8 @@ Your mission: use Alloy to uncover the hidden key, decrypt the message, and reve
 
 Access the [Alloy UI](http://localhost:12347) and look for the hidden key on one of the service discovery targets.
 
-To decrypt and print the AES-256-CBC encrypted secret message, use `openssl enc -aes-256-cbc -d -salt -pbkdf2 -in secret_message.txt.enc -k '<key>'`,
-using the key you just found.
+To decrypt and print the AES-256-CBC encrypted secret message, run the following command in the terminal at the root of the lab repo directory, using the key you just found:
+`openssl enc -aes-256-cbc -d -salt -pbkdf2 -in secret_message.txt.enc -k '<key>'`
 
 #### Verification
 
@@ -586,15 +603,16 @@ You should see the secret message in the console!
 #### Description
 
 A rogue actor has tampered with IMF's monitoring systems, slipping a high-cardinality instance_id label into a metric that counts database calls.
+
 This unexpected spike in cardinality is putting Mimir under serious pressure -- and it's up to us to defuse the situation before it blows.
+
+You can see the dashboard that informed the IMF that this was happening by navigating to [Dashboards](http://localhost:3000/dashboards) > `Mission 2`.
 
 But it's not all bad news. Hidden within the instance_id is valuable intel: the name of the cloud provider.
 IMF wants us to extract that information and promote it to a dedicated cloud_provider label—transforming this mess into a mission success.
 
 IMF has equipped you with the following regex to help you complete this mission:
 `^(aws|gcp|azure)-.+`
-
-You can see the dashboard that informed the IMF that this was happening by navigating to [Dashboards](http://localhost:3000/dashboards) > `Mission 2`.
 
 #### Objectives
 
@@ -649,7 +667,7 @@ Normalize the attribute across the board so that spanmetrics flow smoothly and d
 
 #### Objectives
 
-- Use the `otelcol.processor.attributes` component to set the `service.tier` attribute to the value of
+- Use the [`otelcol.processor.attributes`](https://grafana.com/docs/agent/latest/flow/reference/components/otelcol.processor.attributes/) component to set the `service.tier` attribute to the value of
   the `servicetier` or `service_tier` attributes.
 - Drop the `servicetier` and `service_tier` attributes.
 
@@ -657,10 +675,45 @@ Normalize the attribute across the board so that spanmetrics flow smoothly and d
 
 The [`otelcol.processor.attributes`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.attributes/) component allows you to add, set, or drop attributes.
 
+Go back to the portion of config from Section 5, where we received traces from the mythical services. Paste the following  above the `otelcol.processor.batch.default` component (**note**: the order of components does not matter, this is just for organization and readability):
+
+```alloy
+otelcol.processor.attributes "mission_3" {
+    // These two actions are used to add the service.tier attribute to spans from
+    // either the servicetier or service_tier attributes.
+    action {
+        action         = "//TODO: Fill in the argument"
+        key            = "//TODO: Fill in the argument"
+        from_attribute = "//TODO: Fill in the argument"
+    }
+    action {
+        action         = "//TODO: Fill in the argument"
+        key            = "//TODO: Fill in the argument"
+        from_attribute = "//TODO: Fill in the argument"
+    }
+
+    // This isn't required, but shows how to exclude the attributes we just copied.
+    exclude {
+        match_type = "strict"
+
+        attribute {
+            key = "//TODO: Fill in the argument"
+        }
+
+        attribute {
+            key = "//TODO: Fill in the argument"
+        }
+    }
+
+    output {
+        traces = [otelcol.processor.batch.default.input]
+    }
+}
+```
+
 #### Verification
 
-Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you should see a dashboard with data including the new `service_tier` attribute,
-which came from spanmetrics generation using the `service.tier` attribute we just consolidated.
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you should see a dashboard with data including the new `service_tier` attribute, which came from spanmetrics generation using the `service.tier` attribute we just consolidated.
 
 **TODO: Add screenshot**
 
@@ -674,7 +727,7 @@ An opposing state actor exploited a Zero-Day vulnerability in one of our servers
 The security team is standing by, but before they can act, we need to make sure no tokens are being written to Loki.
 Your task: use Alloy to identify and redact any sensitive tokens from the mythical-service logs—effectively, clean up the trail and keep things secure.
 
-You can see the logs by navigating to [Dashboards](http://localhost:3000/dashboards) > `Mission 4`.
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 4`. You will see logs coming in with sensitive token information. 
 
 #### Objectives
 
@@ -682,12 +735,14 @@ You can see the logs by navigating to [Dashboards](http://localhost:3000/dashboa
 
 #### Instructions
 
-Take a look at the `loki` components. Are there any that seem like they could be useful for this mission?
+Take a look at the [`loki` components](https://grafana.com/docs/alloy/latest/reference/components/loki/). Are there any that seem like they could be useful for this mission?
+
+Which section would you add this component to and how would you have to change the previous configuration? 
 
 #### Verification
 
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 4` and you should see a dashboard with a
-panel showing the rate of logs with tokens coming from the mythical services as well as the logs themselves.
+panel showing the rate of logs with tokens coming from the mythical services as well as the logs themselves with the secret token redacted. 
 
 **TODO: Add screenshot**    
 
