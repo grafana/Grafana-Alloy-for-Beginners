@@ -3,7 +3,7 @@
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/6cc578a3-2531-41e2-aecc-bd505fd39b49" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/560bb25a-2c00-483d-a346-130a1e1a7805" />
-<img width="910" alt="image" src="https://github.com/user-attachments/assets/4d9fa250-9dd2-44a8-a68a-32fa2a9f5842" />
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/ce517e52-2414-4ca5-9c9d-3b9b1ef26e71" />
 
 ## Resources for the workshop
 
