@@ -2,8 +2,8 @@
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/6cc578a3-2531-41e2-aecc-bd505fd39b49" />
-<img width="908" alt="image" src="https://github.com/user-attachments/assets/7e6d7aa0-4af3-4e40-8bea-3753ad021227" />
-<img width="908" alt="image" src="https://github.com/user-attachments/assets/72a0a2a4-02d8-422d-b634-d71645ac840f" />
+<img width="908" alt="image" src="https://github.com/user-attachments/assets/193ef0b5-58df-4f3c-a69d-93c503a02b95" />
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/6b993bbd-3198-4b5d-90b4-832b2f5c6bf8" />
 
 ## Resources for the workshop
 
@@ -56,26 +56,16 @@ A single task is known as a `component` in Alloy.
 
 Components perform different functions.
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/f9e5d02d-3558-4022-a289-062d4a93dceb" />
-<img width="947" alt="image" src="https://github.com/user-attachments/assets/5271fb3d-d5ae-4af0-9fee-7ffba4988293" />
-<img width="948" alt="image" src="https://github.com/user-attachments/assets/c70b445b-c9a2-4a6f-96d3-dd3953877042" />
-<img width="474" alt="image" src="https://github.com/user-attachments/assets/1a78778c-4583-4ed6-9e5c-4e5272dd26fb" />
+<img width="933" alt="image" src="https://github.com/user-attachments/assets/d3cdbf2f-73ee-44d7-aba1-86414ec64f30" />
+<img width="924" alt="image" src="https://github.com/user-attachments/assets/6b5cf65b-63d4-4a59-ab57-24b367760d9d" />
+<img width="933" alt="image" src="https://github.com/user-attachments/assets/ea3161a6-ffc6-4e1f-b75d-6544dbcdb330" />
 
 These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
-These subtasks/subcomponents are known as `blocks` in Alloy. 
-
-<img width="729" alt="image" src="https://github.com/user-attachments/assets/ed8aa651-f522-45ea-9556-de943f4908f9" />
-
-<img width="949" alt="image" src="https://github.com/user-attachments/assets/67179581-8c0b-4ec6-8d9e-96256aeb1828" />
-
-- prometheus.remote_write "default": A labeled block which instantiates a `prometheus.remote_write` component. The label is the string "default".
-- endpoint: An unlabeled `block` inside the component that configures an endpoint to send metrics to.
-  
-<img width="936" alt="image" src="https://github.com/user-attachments/assets/92a0cf68-6299-4df6-8ed3-9c4e266fde55" />
-
-- You use `expressions` to compute or denote the value of an `attribute`. The simplest `expressions` are constant values like strings, integers, lists, objects, etc.
-- This block sets the url `attribute`  equal to the value (`expression`) of the url ("http://localhost:9009/api/prom/push").
+<img width="723" alt="image" src="https://github.com/user-attachments/assets/72511e64-415e-45d4-91b0-6139f14a1ba8" />
+<img width="938" alt="image" src="https://github.com/user-attachments/assets/75a1ad37-924c-4cc3-9544-b78513bcd055" />
+<img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
 
 # Hands on lab
 
@@ -749,9 +739,6 @@ panel showing the rate of logs with tokens coming from the mythical services as 
 ### Recap
 <img width="1425" alt="image" src="https://github.com/user-attachments/assets/605eae50-3414-4e4d-9f62-11b6478c8d01" />
 <img width="1437" alt="image" src="https://github.com/user-attachments/assets/669c122f-8337-4569-b4a5-6138dbb12ca9" />
-
-# Debugging
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/8f97d371-d234-48be-b948-1577cdb0f0e7" />
 
 # Q & A
 ![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXU1ZnNwazRmbXdmcGMzZmNueWd3eTk4aWJlNmI0dHd6OXR5azh3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMB2WiOdjpB7K4o/giphy.gif)
