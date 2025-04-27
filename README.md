@@ -2,8 +2,8 @@
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/6cc578a3-2531-41e2-aecc-bd505fd39b49" />
-<img width="908" alt="image" src="https://github.com/user-attachments/assets/193ef0b5-58df-4f3c-a69d-93c503a02b95" />
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/6b993bbd-3198-4b5d-90b4-832b2f5c6bf8" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/560bb25a-2c00-483d-a346-130a1e1a7805" />
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/4d9fa250-9dd2-44a8-a68a-32fa2a9f5842" />
 
 ## Resources for the workshop
 
