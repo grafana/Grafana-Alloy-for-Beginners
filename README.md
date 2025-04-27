@@ -56,6 +56,10 @@ A single task is known as a `component` in Alloy.
 Components perform different functions.
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/f9e5d02d-3558-4022-a289-062d4a93dceb" />
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/d3cdbf2f-73ee-44d7-aba1-86414ec64f30" />
+
+When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
+
+Let's take Prometheus components as an example: 
 <img width="924" alt="image" src="https://github.com/user-attachments/assets/6b5cf65b-63d4-4a59-ab57-24b367760d9d" />
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/ea3161a6-ffc6-4e1f-b75d-6544dbcdb330" />
 
