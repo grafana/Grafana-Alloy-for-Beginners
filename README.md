@@ -61,13 +61,14 @@ When figuring out which components to use, focus your attention to what comes af
 
 Let's take Prometheus components as an example: 
 <img width="924" alt="image" src="https://github.com/user-attachments/assets/6b5cf65b-63d4-4a59-ab57-24b367760d9d" />
-<img width="933" alt="image" src="https://github.com/user-attachments/assets/ea3161a6-ffc6-4e1f-b75d-6544dbcdb330" />
+
+<img width="933" alt="image" src="https://github.com/user-attachments/assets/ed57c093-72be-4e24-9d23-ed96e4d541cf" />
 
 These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
 <img width="723" alt="image" src="https://github.com/user-attachments/assets/72511e64-415e-45d4-91b0-6139f14a1ba8" />
-<img width="938" alt="image" src="https://github.com/user-attachments/assets/75a1ad37-924c-4cc3-9544-b78513bcd055" />
+<img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
 
 # Hands on lab
