@@ -499,12 +499,12 @@ loki.process "mythical" {
 
     forward_to = [loki.write.mythical.receiver]
 }
-
+```
 #### Verification
 
 Navigate to Dashboards > `Section 6 Verification` and you should see a dashboard with the rate of logs coming from the mythical apps as well as panels showing the logs themselves for the server and requester
 
-**TODO: Add screenshot**
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/01b5718b-aa1c-47d6-92a1-206aca81066c" />
 
 ### Section 7: Spanlogs
 
@@ -580,7 +580,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard with panels containing the rate of spanlog ingestion as well as the spanlogs themselves.
 
-<img width="907" alt="image" src="https://github.com/user-attachments/assets/560e1ee1-6485-4013-a36e-c30f7227a753" />
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/07cea252-4ba4-489b-957f-eaaeccb07418" />
 
 ### Mission 1
 
@@ -664,7 +664,7 @@ prometheus.relabel "mission_2" {
 Navigate to the [Explore](http://localhost:3000/explore) page and look at the metrics.
 Query for `count(mythical_db_requests_count_total{cloud_provider!=""})` and you should see a non-zero value.
 
-**TODO: Add screenshot**
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/53a5e41c-9716-4294-a3fb-d946cc07acf9" />
 
 ### Mission 3
 
@@ -726,7 +726,8 @@ otelcol.processor.attributes "mission_3" {
 
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you should see a dashboard with data including the new `service_tier` attribute, which came from spanmetrics generation using the `service.tier` attribute we just consolidated.
 
-**TODO: Add screenshot**
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/db5b980b-83b1-4c92-9d19-b33e50a52530" />
+
 
 ### Mission 4
 
@@ -755,7 +756,7 @@ Which section would you add this component to and how would you have to change t
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 4` and you should see a dashboard with a
 panel showing the rate of logs with tokens coming from the mythical services as well as the logs themselves with the secret token redacted. 
 
-**TODO: Add screenshot**    
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/02151116-d8c5-4aa1-844a-6c6d9a32285a" />
 
 ### Recap
 <img width="1425" alt="image" src="https://github.com/user-attachments/assets/605eae50-3414-4e4d-9f62-11b6478c8d01" />
