@@ -132,28 +132,28 @@ Open `config.alloy` in your editor and copy the following starter code into it:
 //Section 1
 
 logging {
-  format = "TODO: Fill this in"
-  level  = "TODO: Fill this in"
-  write_to = [TODO: Fill this in]
+  format = "//TODO: Fill this in"
+  level  = "//TODO: Fill this in"
+  write_to = [//TODO: Fill this in]
 }
 
 loki.relabel "alloy_logs" {
-   forward_to = [TODO: Fill this in]
+   forward_to = [//TODO: Fill this in]
 
     rule {
-        target_label = "TODO: Fill this in"
-        replacement = "TODO: Fill this in"
+        target_label = "//TODO: Fill this in"
+        replacement = "//TODO: Fill this in"
     }
 
     rule {
-        target_label = "TODO: Fill this in"
-        replacement = "TODO: Fill this in" 
+        target_label = "//TODO: Fill this in"
+        replacement = "//TODO: Fill this in" 
     }
 }
 
 loki.write "mythical" {
     endpoint {
-       url = "TODO: Fill this in"
+       url = "//TODO: Fill this in"
     } 
 }
 ```
@@ -203,7 +203,7 @@ prometheus.scrape "infrastructure" {
 
 prometheus.remote_write "mimir" {
    endpoint {
-    //TODO: Fill this in
+    url = "//TODO: Fill this in"
    }
 }
 ```
