@@ -70,7 +70,6 @@ These components could be put together in any way to form a complete set of inst
 <img width="723" alt="image" src="https://github.com/user-attachments/assets/72511e64-415e-45d4-91b0-6139f14a1ba8" />
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/21afb262-41e9-43c4-956f-3866788ccc46" />
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/47390611-2110-4609-b639-08d15d13ddcd" />
 
 While reading up on components within the Alloy docs, pay special attention to the following sections:
@@ -78,10 +77,10 @@ While reading up on components within the Alloy docs, pay special attention to t
 - arguments
 - blocks
 
-The usage section give you an example of how this particular component could be configured. 
+The usage section gives you an example of how this particular component could be configured. 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/add64bd4-0831-46eb-9041-0757eaae8d67" />
 
-The arguments and blocks section lists the ways in which you could use 
+The arguments and blocks sections list what you could do with the data. 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/53b1ecea-5818-420e-bc10-151309afd9d8" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/a4ae1137-1ff6-423d-8977-28246e1bbe0e" />
 
