@@ -113,7 +113,7 @@ config reloaded
 
 #### Instructions
 
-Open `config.alloy` in your editor and copy the following code into it:
+Open `config.alloy` in your editor and copy the following starter code into it:
 
 ```alloy/config.alloy
 logging {
