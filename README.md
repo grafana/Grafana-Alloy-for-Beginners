@@ -70,6 +70,21 @@ These components could be put together in any way to form a complete set of inst
 <img width="723" alt="image" src="https://github.com/user-attachments/assets/72511e64-415e-45d4-91b0-6139f14a1ba8" />
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/21afb262-41e9-43c4-956f-3866788ccc46" />
+<img width="908" alt="image" src="https://github.com/user-attachments/assets/47390611-2110-4609-b639-08d15d13ddcd" />
+
+While reading up on components within the Alloy docs, pay special attention to the following sections:
+- usage
+- arguments
+- blocks
+
+The usage section give you an example of how this particular component could be configured. 
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/add64bd4-0831-46eb-9041-0757eaae8d67" />
+
+The arguments and blocks section lists the ways in which you could use 
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/53b1ecea-5818-420e-bc10-151309afd9d8" />
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/a4ae1137-1ff6-423d-8977-28246e1bbe0e" />
+
 
 # Hands on lab
 
@@ -109,13 +124,15 @@ config reloaded
 
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
 - Use [`loki.relabel`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.relabel/) to add labels to the logs
-- [Write](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) the logs to Loki
+- Use [`loki.write`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) to write the logs to Loki
 
 #### Instructions
 
 Open `config.alloy` in your editor and copy the following starter code into it:
 
 ```alloy/config.alloy
+//Section 1
+
 logging {
   format = "TODO: Fill this in"
   level  = "TODO: Fill this in"
@@ -138,7 +155,7 @@ loki.relabel "alloy_logs" {
 
 loki.write "mythical" {
     endpoint {
-       TODO: Fill this in = "TODO: Fill this in"
+       url = "TODO: Fill this in"
     } 
 }
 ```
@@ -147,7 +164,7 @@ For the `logging` block, we want to set the log format to "logfmt" and the log l
 
 For the `loki.relabel` component, we want to set the `group` label to "infrastructure" and the `service` label to "alloy" and forward the logs to the `loki.write.mythical` component's receiver.
 
-For the `loki.write` component, we want to ship logs to `http://loki:3100/loki/api/v1/push`.
+For the `loki.write` component, we want to ship the logs to `http://loki:3100/loki/api/v1/push`.
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/887f206b-683f-4107-aaf3-cb891c2226d1" />
 
@@ -159,7 +176,7 @@ Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select t
 
 You should see the panels populated with data, showing the number of logs being sent by Alloy as well as the logs themselves.
 
-<img width="1436" alt="image" src="https://github.com/user-attachments/assets/063b6845-5214-444b-ab56-a9cd756d55af" />
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/07d04e94-caa5-4316-92dc-a50ebfdb333a" />
 
 ### Section 2: Collect and transform infrastructure metrics
 
