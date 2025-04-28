@@ -492,7 +492,7 @@ loki.source.api "mythical" {
 }
 
 loki.process "mythical" {
-    stage.labels {
+    stage.static_labels {
         values = {
            //TODO: Fill this in = "//TODO: Fill this in",        
         }
