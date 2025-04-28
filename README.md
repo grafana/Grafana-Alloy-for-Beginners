@@ -786,8 +786,9 @@ panel showing the rate of logs with tokens coming from the mythical services as 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/02151116-d8c5-4aa1-844a-6c6d9a32285a" />
 
 ### Recap
-<img width="1425" alt="image" src="https://github.com/user-attachments/assets/605eae50-3414-4e4d-9f62-11b6478c8d01" />
-<img width="1437" alt="image" src="https://github.com/user-attachments/assets/669c122f-8337-4569-b4a5-6138dbb12ca9" />
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/e460c24b-44f1-4db7-b965-e9753174304c" />
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/23a73a88-49f5-4a05-b71a-7352a8ecc048" />
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/8b217a14-4b3a-4a54-a108-389d2676bffa" />
 
 # Q & A
 ![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXU1ZnNwazRmbXdmcGMzZmNueWd3eTk4aWJlNmI0dHd6OXR5azh3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMB2WiOdjpB7K4o/giphy.gif)
