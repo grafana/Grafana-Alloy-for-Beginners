@@ -60,7 +60,7 @@ Components perform different functions.
 When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
 
 Let's take Prometheus components as an example: 
-<img width="924" alt="image" src="https://github.com/user-attachments/assets/6b5cf65b-63d4-4a59-ab57-24b367760d9d" />
+<img width="944" alt="image" src="https://github.com/user-attachments/assets/28d46b11-664a-43fb-ae96-095d3c9c5173" />
 
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/ed57c093-72be-4e24-9d23-ed96e4d541cf" />
 
