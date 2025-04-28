@@ -190,7 +190,7 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 discovery.http "service_discovery" {
-    url = "TODO: Fill this in" 
+    url = "//TODO: Fill this in" 
 }
 
 prometheus.scrape "infrastructure" {
