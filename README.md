@@ -208,7 +208,7 @@ prometheus.remote_write "mimir" {
 }
 ```
 
-For this section, we want to discover the targets to scrape using the `discovery.http` component and scrape the targets' metrics using the `prometheus.scrape` component.
+For this section, we would like to use `discovery.http` to find our infrastructure targets to scrape. 
 
 `discovery.http` is a component that polls a given URL for targets to scrape in JSON format. These targets are then exported for other components to use. In our demo environment, we have a service that exposes the targets to scrape in the `http://service-discovery/targets.json` endpoint. 
 
@@ -224,9 +224,12 @@ These targets look something like:
     }
 ]
 ```
-Configure the `prometheus.remote_write` component to write the metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
 
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/0b1627de-e289-4d8f-8bf0-f836d18afc9e" />
+We will use a `prometheus.scrape` component to scrape metrics from the discovered targets.
+
+As a last step, we will configure the `prometheus.remote_write` component to write the metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
+
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/0abd1cd4-5a2d-4507-9e18-a1dc7d709779" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
@@ -237,6 +240,13 @@ Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select t
 You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope services.
 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/a7f7d7f8-e0d8-4cc2-b76a-c0d03e55d8d5" />
+
+#### Alloy UI
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/2f6ac758-465f-4149-8c61-893267b4c1b1" />
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/9da73817-c746-413b-a155-82d3b571c045" />
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/a6087f12-c453-42ed-b333-cf8ff9fd29d7" />
+<img width="916" alt="image" src="https://github.com/user-attachments/assets/f39f322c-d0dc-420e-b3d3-4e2777c8c326" />
+
 
 ### Section 3: Collect and transfrom metrics from Postgres DB
 
