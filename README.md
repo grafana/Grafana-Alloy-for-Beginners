@@ -80,7 +80,7 @@ While reading up on components within the Alloy docs, pay special attention to t
 The usage section gives you an example of how this particular component could be configured. 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/add64bd4-0831-46eb-9041-0757eaae8d67" />
 
-The arguments and blocks sections list what you could do with the data. 
+The arguments and blocks sections list what you could do with the data. Pay close attention to the name, type, description, default, and required columns so Alloy could understand what you want it to do! 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/53b1ecea-5818-420e-bc10-151309afd9d8" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/a4ae1137-1ff6-423d-8977-28246e1bbe0e" />
 
@@ -237,7 +237,7 @@ Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select t
 
 You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope services.
 
-**TODO: Add screenshot**
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/a7f7d7f8-e0d8-4cc2-b76a-c0d03e55d8d5" />
 
 ### Section 3: Collect and transfrom metrics from Postgres DB
 
@@ -313,7 +313,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 Navigate to Dashboards > `Section 3 Verification` and you should see a dashboard populating with Postgres metrics. 
 You should also see an instance value of `mythical-database:5432/postgres` instead of `postgresql://mythical-database:5432/postgres`.
 
-**TODO: Add screenshot**
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/5907b198-b732-4b7d-a0a5-65dcf47f7e4c" />
 
 ## Application Observability - collect, transform, and export traces and logs
 
@@ -375,7 +375,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 Navigate to Dashboards > `Section 4 Verification` and you should see a panel with the request rate per beast flowing!
 
-**TODO: Add screenshot**
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/e3271544-b277-4114-a969-733ce4da064b" />
 
 ![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN2dXRwNXo3dHl1enMyaXRqMjJjbTUxMGZmNnRldDJxcTJmdDB2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UWF3nQFeXR30yjna2Q/giphy.gif)
 
@@ -447,12 +447,12 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 5 Verification` and you should see a dashboard with a populated service graph, table of traces coming from the mythical-requester, and the rate of span ingestion by Tempo
 
-**TODO: Add screenshot**
+<img width="917" alt="image" src="https://github.com/user-attachments/assets/564236f6-e3b5-430c-a963-2f7509960e5c" />
 
 You can also navigate to [Dashboards](http://localhost:3000/dashboards) > `MLT Dashboard`. These dashboards are configured to use the metrics
 from Spanmetrics, so you should see data for the spans we're ingesting.
 
-<img width="1434" alt="image" src="https://github.com/user-attachments/assets/73080e3d-5dc3-4013-9409-09cd9887d565" />
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/d0822e32-0af2-4f13-b6de-2c037d2e8a93" />
 
 ### Section 6: Ingesting application logs
 
@@ -580,7 +580,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard with panels containing the rate of spanlog ingestion as well as the spanlogs themselves.
 
-**TODO: Add screenshot**
+<img width="907" alt="image" src="https://github.com/user-attachments/assets/560e1ee1-6485-4013-a36e-c30f7227a753" />
 
 ### Mission 1
 
