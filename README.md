@@ -599,7 +599,7 @@ Use this component to:
   - Convert the body from JSON to logfmt using the `stage.json` and `stage.logfmt` stages
   - Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
 
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/56125b64-effd-4965-9c41-9b27b9cbb21c" />
+<img width="917" alt="image" src="https://github.com/user-attachments/assets/10aaff15-6561-4c6a-b21b-9d1f2a2d5be5" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
