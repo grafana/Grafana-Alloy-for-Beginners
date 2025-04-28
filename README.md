@@ -530,33 +530,51 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 otelcol.connector.spanlogs "autologging" {
-    // TODO: Fill this in
+    roots = // TODO: Fill this in
+    spans = // TODO: Fill this in
+    processes = // TODO: Fill this in
+
+    span_attributes = ["// TODO: Fill this in", "// TODO: Fill this in", "// TODO: Fill this in"]
+    //these are the span attributes that I would like to include in the logs
+
+    output {
+    logs = [// TODO: Fill this in]
+  }
 }
 
 otelcol.exporter.loki "autologging" {
-    // TODO: Fill this in
+    forward_to = [// TODO: Fill this in]
 }
 
 // The Loki processor allows us to accept a Loki-formatted log entry and mutate it into
 // a set of fields for output.
 loki.process "autologging" {
     stage.json {
-        // TODO: Fill this in
+       expressions = {"body" = ""}
     }
 
     stage.output {
-        // TODO: Fill this in
+       source = "body"
     }
 
     stage.logfmt {
-        // TODO: Fill this in
+        mapping = {
+            http_method_extracted = "// TODO: Fill this in",
+            http_status_code_extracted = "// TODO: Fill this in", 
+            http_target_extracted = "// TODO: Fill this in", 
+
+        }
     }
 
     stage.labels {
-        // TODO: Fill this in
+        values = {
+            method = "// TODO: Fill this in", 
+            status = "// TODO: Fill this in",
+            target = "// TODO: Fill this in", 
+        }
     }
 
-    forward_to = [loki.write.mythical.receiver]
+    forward_to = [// TODO: Fill this in]
 }
 ```
 **`otelcol.connector.spanlogs`**
