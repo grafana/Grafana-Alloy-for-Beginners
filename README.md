@@ -57,14 +57,14 @@ Components perform different functions.
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/f9e5d02d-3558-4022-a289-062d4a93dceb" />
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/d3cdbf2f-73ee-44d7-aba1-86414ec64f30" />
 
-When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
+### When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
 
-Let's take Prometheus components as an example: 
+For example, let's take a look at Prometheus components: 
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/28d46b11-664a-43fb-ae96-095d3c9c5173" />
 
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/ed57c093-72be-4e24-9d23-ed96e4d541cf" />
 
-These components could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
+These `components` could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
 
 ### Each task/component could be further broken down into a detailed set of instructions.
 <img width="723" alt="image" src="https://github.com/user-attachments/assets/72511e64-415e-45d4-91b0-6139f14a1ba8" />
@@ -72,15 +72,15 @@ These components could be put together in any way to form a complete set of inst
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/47390611-2110-4609-b639-08d15d13ddcd" />
 
-While reading up on components within the Alloy docs, pay special attention to the following sections:
+### While reading up on components within the Alloy docs, pay special attention to the following sections:
 - usage
 - arguments
 - blocks
 
-The usage section gives you an example of how this particular component could be configured. 
+The `usage` section gives you an example of how this particular component could be configured. 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/add64bd4-0831-46eb-9041-0757eaae8d67" />
 
-The arguments and blocks sections list what you could do with the data. Pay close attention to the name, type, description, default, and required columns so Alloy could understand what you want it to do! 
+The `arguments` and `blocks` sections list what you could do with the data. Pay close attention to the name, type, description, default, and required columns so Alloy could understand what you want it to do! 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/53b1ecea-5818-420e-bc10-151309afd9d8" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/a4ae1137-1ff6-423d-8977-28246e1bbe0e" />
 
