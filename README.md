@@ -86,7 +86,8 @@ These components could be put together in any way to form a complete set of inst
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
 
 ## Common tasks
-We will be using the `config.alloy` file to build pipelines for Infrastructure O11y and Applications O11y. 
+We will be using the `config.alloy` file to build pipelines for Infrastructure Observability and Applications Observability. 
+
 Whenever we make changes to the file, we must reload the config. 
 
 ### Reloading the config
@@ -102,7 +103,7 @@ If the config is valid, you should see a response like the following:
 ```
 config reloaded
 ```
-## Infrastructure O11y - collect, transform, and export logs and metrics
+## Infrastructure Observability - collect, transform, and export logs and metrics
 ### Section 1: Collect and transform logs from Alloy
 #### Objectives
 
@@ -116,28 +117,28 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy/config.alloy
 logging {
-  format = "TODO: Fill in"
-  level  = "TODO: Fill in"
-  write_to = [TODO: Fill in]
+  format = "TODO: Fill this in"
+  level  = "TODO: Fill this in"
+  write_to = [TODO: Fill this in]
 }
 
 loki.relabel "alloy_logs" {
-   forward_to = [TODO: Fill in]
+   forward_to = [TODO: Fill this in]
 
     rule {
-        target_label = "TODO: Fill in"
-        replacement = "TODO: Fill in"
+        target_label = "TODO: Fill this in"
+        replacement = "TODO: Fill this in"
     }
 
     rule {
-        target_label = "TODO: Fill in"
-        replacement = "TODO: Fill in" 
+        target_label = "TODO: Fill this in"
+        replacement = "TODO: Fill this in" 
     }
 }
 
 loki.write "mythical" {
     endpoint {
-       TODO: Fill in = "TODO: Fill in"
+       TODO: Fill this in = "TODO: Fill this in"
     } 
 }
 ```
@@ -174,20 +175,20 @@ Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
 discovery.http "service_discovery" {
-    url = "TODO: Fill in" 
+    url = "TODO: Fill this in" 
 }
 
 prometheus.scrape "infrastructure" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    targets    = //TODO: Fill in
-    forward_to = [//TODO: Fill in]
+    targets    = //TODO: Fill this in
+    forward_to = [//TODO: Fill this in]
 }
 
 prometheus.remote_write "mimir" {
    endpoint {
-    //TODO: Fill in
+    //TODO: Fill this in
    }
 }
 ```
@@ -246,21 +247,21 @@ prometheus.scrape "postgres" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    targets    =  //TODO: Fill in
-    forward_to =  [//TODO: Fill in]
+    targets    =  TODO: Fill this in
+    forward_to =  [//TODO: Fill this in]
 }
 
 prometheus.relabel "postgres" {
-    forward_to =  [//TODO: Fill in]
+    forward_to =  [//TODO: Fill this in]
 
     rule {
-        target_label = "//TODO: Fill in"
-        replacement  = "//TODO: Fill in"
+        target_label = "//TODO: Fill this in"
+        replacement  = "//TODO: Fill this in"
     }
     
     rule {
-        target_label = "//TODO: Fill in"
-        replacement  = "//TODO: Fill in"
+        target_label = "//TODO: Fill this in"
+        replacement  = "//TODO: Fill this in"
     }
 
  //What we have: postgres_table_rows_count{instance="postgresql://mythical-database:5432/postgres"}
@@ -268,13 +269,13 @@ prometheus.relabel "postgres" {
     
     rule {
         // Replace the targeted label.
-        action        = "//TODO: Fill in"
+        action        = "//TODO: Fill this in"
 
         // The label we want to replace is 'instance'.
-        target_label  = "//TODO: Fill in"
+        target_label  = "//TODO: Fill this in"
 
         // Look in the existing 'instance' label for a value that matches the regex.
-        source_labels = ["//TODO: Fill in"]
+        source_labels = ["//TODO: Fill this in"]
         regex         = "^postgresql://(.+)"
         
         // Use the first value found in the 'instance' label that matches the regex as the replacement value.
@@ -317,15 +318,15 @@ prometheus.scrape "mythical" {
     scrape_timeout  = "2s"
 
     targets    =  [
-        {"__address__"= "//TODO: Fill in", group = "//TODO: Fill in", service = "//TODO: Fill in"},
-        {"//TODO: Fill in"}, 
+        {"__address__"= "//TODO: Fill this in", group = "//TODO: Fill this in", service = "//TODO: Fill this in"},
+        {"//TODO: Fill this in"}, 
         ]
-    forward_to =  [//TODO: Fill in]
+    forward_to =  [//TODO: Fill this in]
 }
 
 prometheus.write.queue "experimental" {
     endpoint "mimir" {
-        "//TODO: Fill in"
+        "//TODO: Fill this in"
     }
 }
 
@@ -377,14 +378,14 @@ Open `config.alloy` in your editor and copy the following code into it:
 ```alloy
 otelcol.receiver.otlp "otlp_receiver" {
     grpc {
-        endpoint = "//TODO: Fill in default value shown in the doc"
+        endpoint = "//TODO: Fill in the default value shown in the doc"
     }
     http {
-        endpoint = "//TODO: Fill in default value shown in the doc"
+        endpoint = "//TODO: Fill in the default value shown in the doc"
     }
     output {
         traces = [
-            //TODO: Fill in,
+            //TODO: Fill this in,
         ]
     }
 }
@@ -392,19 +393,19 @@ otelcol.receiver.otlp "otlp_receiver" {
 otelcol.processor.batch "default" {
     output {
         traces = [
-            //TODO: Fill in ,
+            //TODO: Fill this in,
             ]
     }
 
-    send_batch_size = //TODO: Fill in 
-	  send_batch_max_size = //TODO: Fill in 
+    send_batch_size = //TODO: Fill this in 
+	  send_batch_max_size = //TODO: Fill this in
 
-	  timeout = "//TODO: Fill in"
+	  timeout = "//TODO: Fill this in"
 }
 
 otelcol.exporter.otlp "tempo" {
     client {
-        endpoint = "//TODO: Fill in "
+        endpoint = "//TODO: Fill this in"
 
         // This is a local instance of Tempo, so we can skip TLS verification
         tls {
@@ -462,13 +463,13 @@ loki.source.api "mythical" {
         listen_address = "0.0.0.0"
         listen_port    = "3100"
     }
-    forward_to = [//TODO: Fill in]
+    forward_to = [//TODO: Fill this in]
 }
 
 loki.process "mythical" {
     stage.labels {
         values = {
-           //TODO: Fill in = "//TODO: Fill in",        
+           //TODO: Fill this in = "//TODO: Fill this in",        
         }
     }
    stage.regex {
@@ -476,7 +477,7 @@ loki.process "mythical" {
    }
 
    stage.timestamp {
-        source = "//TODO: Fill in"
+        source = "//TODO: Fill this in"
         format = "2006-01-02T15:04:05.000Z07:00"
     }
 
@@ -627,17 +628,17 @@ prometheus.relabel "mission_2" {
 
   //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
     rule {
-        action        = // TO DO: Fill in the argument
-        target_label  = // TO DO: Fill in the argument
-        source_labels = // TO DO: Fill in the argument
+        action        = // TODO: Fill this in
+        target_label  = // TODO: Fill this in
+        source_labels = // TODO: Fill this in
         regex         = "^(aws|gcp|azure)-.+"
         replacement   = "$1"
     }
 
     // drop the instance_id label from metrics
     rule {
-        action  = // TO DO: Fill in the argument
-        regex   = // TO DO: Fill in the argument
+        action  = // TODO: Fill this in
+        regex   = // TODO: Fill this in
     }
 }
 ```
@@ -676,14 +677,14 @@ otelcol.processor.attributes "mission_3" {
     // These two actions are used to add the service.tier attribute to spans from
     // either the servicetier or service_tier attributes.
     action {
-        action         = "//TODO: Fill in the argument"
-        key            = "//TODO: Fill in the argument"
-        from_attribute = "//TODO: Fill in the argument"
+        action         = "//TODO: Fill this in"
+        key            = "//TODO: Fill this in"
+        from_attribute = "//TODO: Fill this in"
     }
     action {
-        action         = "//TODO: Fill in the argument"
-        key            = "//TODO: Fill in the argument"
-        from_attribute = "//TODO: Fill in the argument"
+        action         = "//TODO: Fill this in"
+        key            = "//TODO: Fill this in"
+        from_attribute = "//TODO: Fill this in"
     }
 
     // This isn't required, but shows how to exclude the attributes we just copied.
@@ -691,11 +692,11 @@ otelcol.processor.attributes "mission_3" {
         match_type = "strict"
 
         attribute {
-            key = "//TODO: Fill in the argument"
+            key = "//TODO: Fill this in"
         }
 
         attribute {
-            key = "//TODO: Fill in the argument"
+            key = "//TODO: Fill this in"
         }
     }
 
