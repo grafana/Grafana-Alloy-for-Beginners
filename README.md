@@ -67,7 +67,6 @@ For example, let's take a look at Prometheus components:
 These `components` could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
 
 <img width="922" alt="image" src="https://github.com/user-attachments/assets/0a1f9983-271f-4928-a70c-038da9985d44" />
-<img width="723" alt="image" src="https://github.com/user-attachments/assets/72511e64-415e-45d4-91b0-6139f14a1ba8" />
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/47390611-2110-4609-b639-08d15d13ddcd" />
