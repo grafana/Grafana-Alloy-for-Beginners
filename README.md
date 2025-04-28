@@ -180,7 +180,7 @@ You should see the panels populated with data, showing the number of logs being 
 
 #### Objectives
 
-- Use [discovery.http](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) to discover the targets to scrape
+- Use the [discovery.http](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) component to discover the targets to scrape
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
 
