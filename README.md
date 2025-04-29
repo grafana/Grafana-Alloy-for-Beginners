@@ -684,17 +684,17 @@ prometheus.relabel "mission_2" {
 
   //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
     rule {
-        action        = // TODO: Fill this in
-        target_label  = // TODO: Fill this in
-        source_labels = // TODO: Fill this in
+        action        = "// TODO: Fill this in"
+        target_label  = "// TODO: Fill this in"
+        source_labels = ["// TODO: Fill this in"]
         regex         = "^(aws|gcp|azure)-.+"
         replacement   = "$1"
     }
 
     // drop the instance_id label from metrics
     rule {
-        action  = // TODO: Fill this in
-        regex   = // TODO: Fill this in
+        action  = "// TODO: Fill this in"
+        regex   = "// TODO: Fill this in"
     }
 }
 ```
