@@ -177,6 +177,7 @@ You should see the panels populated with data, showing the number of logs being 
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
+//Section 2
 discovery.http "service_discovery" {
     url = "//TODO: Fill this in" 
 }
@@ -272,6 +273,7 @@ If you’re curious, the [documentation](https://grafana.com/docs/alloy/latest/g
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
+//Section 3
 prometheus.exporter.postgres "mythical" {
     data_source_names = ["postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable"]
 }
@@ -346,6 +348,7 @@ You should also see an instance value of `mythical-database:5432/postgres` inste
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
+//Section 4
 prometheus.scrape "mythical" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
@@ -407,6 +410,7 @@ Navigate to Dashboards > `Section 4 Verification` and you should see a panel wit
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
+//Section 5
 otelcol.receiver.otlp "otlp_receiver" {
     grpc {
         endpoint = "//TODO: Fill in the default value shown in the doc"
@@ -489,6 +493,7 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
+//Section 6
 loki.source.api "mythical" {
      http {
         listen_address = "0.0.0.0"
@@ -535,6 +540,7 @@ Navigate to Dashboards > `Section 6 Verification` and you should see a dashboard
 Open `config.alloy` in your editor and copy the following code into it:
 
 ```alloy
+//Section 7
 otelcol.connector.spanlogs "autologging" {
     roots = // TODO: Fill this in
     spans = // TODO: Fill this in
