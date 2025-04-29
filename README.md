@@ -50,10 +50,10 @@ To instruct Alloy on how we want that done, we must write these instructions in 
 
 A single task is known as a `component` in Alloy.
 
-<img width="946" alt="image" src="https://github.com/user-attachments/assets/f89dfcdd-4455-4065-9845-88c9dde48bfc" />
+<img width="939" alt="image" src="https://github.com/user-attachments/assets/27aca3ab-97c2-4661-9d12-70db4bed7cd6" />
 
 `Components` perform different functions.
-<img width="944" alt="image" src="https://github.com/user-attachments/assets/f9e5d02d-3558-4022-a289-062d4a93dceb" />
+<img width="947" alt="image" src="https://github.com/user-attachments/assets/8c9240b0-ed7f-45b3-b790-bafed586b178" />
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/d3cdbf2f-73ee-44d7-aba1-86414ec64f30" />
 
 ### When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
@@ -61,9 +61,7 @@ A single task is known as a `component` in Alloy.
 For example, let's take a look at Prometheus components: 
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/28d46b11-664a-43fb-ae96-095d3c9c5173" />
 
-<img width="933" alt="image" src="https://github.com/user-attachments/assets/ed57c093-72be-4e24-9d23-ed96e4d541cf" />
-
-The `components` are a set of instructions on how to collect, transform, and deliver telemetry data. These components couuld be put together in any way to form a `pipeline` in Alloy. 
+<img width="943" alt="image" src="https://github.com/user-attachments/assets/4d36ad51-d640-4992-8b3c-b376b69a5030" />
 
 <img width="922" alt="image" src="https://github.com/user-attachments/assets/0a1f9983-271f-4928-a70c-038da9985d44" />
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
