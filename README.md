@@ -595,7 +595,7 @@ For the `otelcol.connector.spanlogs` component to work, we will need to forward 
 
 We'd like to make sure to only generate a log for each full trace(root), not for each span or process (that would be a lot of logs!).
 
-We should also make sure to include the `http.method`, `http.target`, and `http.status_code` attributes in the logs.
+We should also make sure to include the `http.method`,`http.status_code`, `http.target` attributes in the logs.
 
 Then send the generated logs to the `otelcol.exporter.loki`'s input. 
 
