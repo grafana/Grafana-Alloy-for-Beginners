@@ -46,14 +46,13 @@ To instruct Alloy on how we want that done, we must write these instructions in 
 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
-### Imagine that you are writing a set of to do lists for Alloy. 
-<img width="723" alt="image" src="https://github.com/user-attachments/assets/62cb6b85-81c5-4be0-953a-8c4b94132234" />
+<img width="953" alt="image" src="https://github.com/user-attachments/assets/60be6c58-9cb1-44b2-9f26-c2446ae8e5a7" />
 
 A single task is known as a `component` in Alloy.
 
 <img width="946" alt="image" src="https://github.com/user-attachments/assets/f89dfcdd-4455-4065-9845-88c9dde48bfc" />
 
-Components perform different functions.
+`Components` perform different functions.
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/f9e5d02d-3558-4022-a289-062d4a93dceb" />
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/d3cdbf2f-73ee-44d7-aba1-86414ec64f30" />
 
@@ -64,7 +63,7 @@ For example, let's take a look at Prometheus components:
 
 <img width="933" alt="image" src="https://github.com/user-attachments/assets/ed57c093-72be-4e24-9d23-ed96e4d541cf" />
 
-These `components` could be put together in any way to form a complete set of instructions on how to collect, transform, and deliver telemetry data. This set of instructions is known as a `pipeline` in Alloy. 
+The `components` are a set of instructions on how to collect, transform, and deliver telemetry data. These components couuld be put together in any way to form a `pipeline` in Alloy. 
 
 <img width="922" alt="image" src="https://github.com/user-attachments/assets/0a1f9983-271f-4928-a70c-038da9985d44" />
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
