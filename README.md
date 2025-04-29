@@ -179,7 +179,8 @@ Open `config.alloy` in your editor and copy the following code into it:
 ```alloy
 //Section 2
 discovery.http "service_discovery" {
-    url = "//TODO: Fill this in" 
+    url = "//TODO: Fill this in"
+    refresh_interval = "2s"
 }
 
 prometheus.scrape "infrastructure" {
