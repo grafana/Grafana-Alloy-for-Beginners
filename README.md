@@ -46,19 +46,14 @@ To instruct Alloy on how we want that done, we must write these instructions in 
 
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
-<img width="953" alt="image" src="https://github.com/user-attachments/assets/60be6c58-9cb1-44b2-9f26-c2446ae8e5a7" />
-
-A single task is known as a `component` in Alloy.
-
+<img width="939" alt="image" src="https://github.com/user-attachments/assets/c5237311-e9f7-4eb6-8825-1f5db7d7e4c4" />
 <img width="937" alt="image" src="https://github.com/user-attachments/assets/1ecaad57-caea-4e5c-b462-22eb14e7a6cd" />
 <img width="943" alt="image" src="https://github.com/user-attachments/assets/46bb6241-a41f-4975-a700-6f35eff20286" />
 <img width="942" alt="image" src="https://github.com/user-attachments/assets/5230684e-e7c6-40d1-8148-40a02e0219f5" />
 
 ### When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
 
-For example, let's take a look at Prometheus components: 
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/28d46b11-664a-43fb-ae96-095d3c9c5173" />
-
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/31bda298-1b8a-474f-8a05-b291e406c758" />
 <img width="948" alt="image" src="https://github.com/user-attachments/assets/e9a9d603-9a30-4116-9cde-346ee8051a9f" />
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
