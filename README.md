@@ -50,20 +50,17 @@ To instruct Alloy on how we want that done, we must write these instructions in 
 
 A single task is known as a `component` in Alloy.
 
-<img width="939" alt="image" src="https://github.com/user-attachments/assets/27aca3ab-97c2-4661-9d12-70db4bed7cd6" />
-
-`Components` perform different functions.
-<img width="947" alt="image" src="https://github.com/user-attachments/assets/8c9240b0-ed7f-45b3-b790-bafed586b178" />
-<img width="933" alt="image" src="https://github.com/user-attachments/assets/d3cdbf2f-73ee-44d7-aba1-86414ec64f30" />
+<img width="937" alt="image" src="https://github.com/user-attachments/assets/1ecaad57-caea-4e5c-b462-22eb14e7a6cd" />
+<img width="943" alt="image" src="https://github.com/user-attachments/assets/46bb6241-a41f-4975-a700-6f35eff20286" />
+<img width="942" alt="image" src="https://github.com/user-attachments/assets/5230684e-e7c6-40d1-8148-40a02e0219f5" />
 
 ### When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
 
 For example, let's take a look at Prometheus components: 
 <img width="944" alt="image" src="https://github.com/user-attachments/assets/28d46b11-664a-43fb-ae96-095d3c9c5173" />
 
-<img width="943" alt="image" src="https://github.com/user-attachments/assets/4d36ad51-d640-4992-8b3c-b376b69a5030" />
-
-<img width="922" alt="image" src="https://github.com/user-attachments/assets/0a1f9983-271f-4928-a70c-038da9985d44" />
+<img width="944" alt="image" src="https://github.com/user-attachments/assets/31bda298-1b8a-474f-8a05-b291e406c758" />
+<img width="948" alt="image" src="https://github.com/user-attachments/assets/e9a9d603-9a30-4116-9cde-346ee8051a9f" />
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/47390611-2110-4609-b639-08d15d13ddcd" />
@@ -79,7 +76,6 @@ The `usage` section gives you an example of how this particular component could 
 The `arguments` and `blocks` sections list what you could do with the data. Pay close attention to the name, type, description, default, and required columns so Alloy could understand what you want it to do! 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/53b1ecea-5818-420e-bc10-151309afd9d8" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/a4ae1137-1ff6-423d-8977-28246e1bbe0e" />
-
 
 # Hands on lab
 
