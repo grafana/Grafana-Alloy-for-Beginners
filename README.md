@@ -232,7 +232,7 @@ You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope serv
 
 #### Alloy UI
 
-Alloy UI is a useful tool that helps you visualize how Alloy is configured and how it is performing so you are able to debug efficiently. 
+Alloy UI is a useful tool that helps you visualize how Alloy is configured and what it is doing so you are able to debug efficiently. 
 
 Navigate to localhost:12347 to see the list of components (orange box) that alloy is currently configured with.
 Click on the blue ‘view’ button on the right side (red arrow).
