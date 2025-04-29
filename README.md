@@ -242,9 +242,29 @@ You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope serv
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/a7f7d7f8-e0d8-4cc2-b76a-c0d03e55d8d5" />
 
 #### Alloy UI
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/2f6ac758-465f-4149-8c61-893267b4c1b1" />
-<img width="910" alt="image" src="https://github.com/user-attachments/assets/9da73817-c746-413b-a155-82d3b571c045" />
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/a6087f12-c453-42ed-b333-cf8ff9fd29d7" />
+
+Alloy UI is a useful tool that helps you visualize how Alloy is configured and how it is performing so you are able to debug efficiently. 
+
+Navigate to localhost:12347 to see the list of components (orange box) that alloy is currently configured with.
+Click on the blue ‘view’ button on the right side (red arrow).
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/5f4ac3f7-ab05-43f2-9840-0bac97a59fdd" />
+
+You will see details (green box) about what this component is configured with and what it is exporting.
+You can also access the links to view the documentation (orange arrow) for the component and the live debugging feature (yellow arrow). 
+<img width="907" alt="image" src="https://github.com/user-attachments/assets/84934f68-4964-4203-9dd5-47693d1a7505" />
+
+Navigate to the ‘Graph’ tab (blue arrow) to access the graph of components and how they are connected.
+
+The number (red box) shown on the dotted lines shows the rate of transfer between components. The window at the top (orange box) configures the interval over which alloy should calculate the per-second rate, so a window of ‘10’ means that alloy should look over the last 10 seconds to compute the rate.
+
+The color of the dotted line signifies what type of data are beign transferred between components. See the color key (purple box) for clarification. 
+
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/95b20759-971f-410d-9598-d5db3213eef7" />
+
+The Clustering tab (green box) shows the nodes in the Alloy cluster. Clustering is used to distribute scrape targets among one or more Alloy instances that you have configured to operate in the same cluster. Clustering is only available for some components, and to keep things simple we will not be covering it in this workshop.
+
+If you’re curious, the [documentation](https://grafana.com/docs/alloy/latest/get-started/clustering/) covers more about clustering.
+
 <img width="916" alt="image" src="https://github.com/user-attachments/assets/f39f322c-d0dc-420e-b3d3-4e2777c8c326" />
 
 
