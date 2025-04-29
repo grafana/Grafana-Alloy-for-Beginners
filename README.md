@@ -709,18 +709,18 @@ Query for `count by (cloud_provider) (rate(mythical_db_request_count_total [$__r
 ### Mission 3
 
 After much debate, the various departments within IMF have reached a rare consensus: it's time to standardize the attribute name for service tiers.
-Until now, teams have been using conflicting keys like servicetier and service_tier, creating chaos in spanmetrics and cross-department dashboards.
+Until now, teams have been using conflicting keys like `servicetier` and `tier`, creating chaos in spanmetrics and cross-department dashboards.
 
-Headquarters has spoken—service.tier is the new standard.
+Headquarters has spoken: `service.tier` is the new standard.
 
 Your mission: use Alloy to bring order to the data.
-Normalize the attribute across the board so that spanmetrics flow smoothly and dashboards speak a common language.
+Standardize the attribute across the board so that spanmetrics flow smoothly and dashboards speak a common language.
 
 #### Objectives
 
 - Use the [`otelcol.processor.attributes`](https://grafana.com/docs/agent/latest/flow/reference/components/otelcol.processor.attributes/) component to set the `service.tier` attribute to the value of
-  the `servicetier` or `service_tier` attributes.
-- Drop the `servicetier` and `service_tier` attributes.
+  the `servicetier` or `tier` attributes.
+- Drop the `servicetier` and `tier` attributes.
 
 #### Instructions
 
@@ -731,7 +731,7 @@ Go back to the portion of config from Section 5, where we received traces from t
 ```alloy
 otelcol.processor.attributes "mission_3" {
     // These two actions are used to add the service.tier attribute to spans from
-    // either the servicetier or service_tier attributes.
+    // either the servicetier or tier attributes.
     action {
         action         = "//TODO: Fill this in"
         key            = "//TODO: Fill this in"
@@ -764,7 +764,7 @@ otelcol.processor.attributes "mission_3" {
 
 #### Verification
 
-Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you should see a dashboard with data including the new `service_tier` attribute, which came from spanmetrics generation using the `service.tier` attribute we just consolidated.
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you should see a dashboard with data including the new `service_tier` label, which came from spanmetrics generation using the `service.tier` attribute we just consolidated.
 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/db5b980b-83b1-4c92-9d19-b33e50a52530" />
 
