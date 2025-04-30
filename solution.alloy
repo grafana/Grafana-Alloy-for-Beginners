@@ -94,3 +94,23 @@ prometheus.relabel "postgres" {
         replacement   = "$1"
     }
 }
+
+// Section 4
+
+prometheus.scrape "mythical" {
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    targets = [
+        {"__address__" = "mythical-server:4000", group = "mythical", service = "mythical-server"},
+        {"__address__" = "mythical-requester:4001", group = "mythical", service = "mythical-requester"}, 
+    ]
+
+    forward_to = [prometheus.write.queue.experimental.receiver]
+}
+
+prometheus.write.queue "experimental" {
+    endpoint "mimir" {
+        url = "http://mimir:9009/api/v1/push"
+    }
+}
