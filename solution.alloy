@@ -155,3 +155,31 @@ otelcol.exporter.otlp "tempo" {
         }
     }
 }
+
+// Section 6
+
+loki.source.api "mythical" {
+    http {
+        listen_address = "0.0.0.0"
+        listen_port    = "3100"
+    }
+    forward_to = [loki.process.mythical.receiver]
+}
+
+loki.process "mythical" {
+    stage.static_labels {
+        values = {
+           service = "mythical",
+        }
+    }
+    stage.regex {
+            expression=`^.*?loggedtime=(?P<loggedtime>\S+)`
+    }
+
+    stage.timestamp {
+        source = "loggedtime"
+        format = "2006-01-02T15:04:05.000Z07:00"
+    }
+
+    forward_to = [loki.write.mythical.receiver]
+}
