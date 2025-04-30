@@ -621,6 +621,9 @@ Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/07cea252-4ba4-489b-957f-eaaeccb07418" />
 
+<img width="911" alt="image" src="https://github.com/user-attachments/assets/fa6b332e-9f32-4844-8213-263f68427ba3" />
+
+
 ### Mission 1
 
 #### Description
@@ -797,11 +800,11 @@ panel showing the rate of logs with tokens coming from the mythical services as 
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/02151116-d8c5-4aa1-844a-6c6d9a32285a" />
 
-### Recap
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/e460c24b-44f1-4db7-b965-e9753174304c" />
-<img width="910" alt="image" src="https://github.com/user-attachments/assets/23a73a88-49f5-4a05-b71a-7352a8ecc048" />
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/8b217a14-4b3a-4a54-a108-389d2676bffa" />
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/4f066278-ba62-4a0e-b905-75d1c4f25a34" />
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/ae9e8f4a-9fcc-435d-bbf6-7b482b01c87a" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/ed565c8c-31e8-47f6-bc20-893e73b70eb6" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/15e5a2cb-0e8f-46f0-b93e-4e32e27b992d" />
+
 
 # Q & A
-![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXU1ZnNwazRmbXdmcGMzZmNueWd3eTk4aWJlNmI0dHd6OXR5azh3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMB2WiOdjpB7K4o/giphy.gif)
 
