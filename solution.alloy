@@ -106,7 +106,24 @@ prometheus.scrape "mythical" {
         {"__address__" = "mythical-requester:4001", group = "mythical", service = "mythical-requester"}, 
     ]
 
+    forward_to = [prometheus.relabel.mission_2.receiver]
+}
+
+prometheus.relabel "mission_2" {
     forward_to = [prometheus.write.queue.experimental.receiver]
+
+    rule {
+        action        = "replace"
+        target_label  = "cloud_provider"
+        source_labels = ["instance_id"]
+        regex         = "^(aws|gcp|azure)-.+"
+        replacement   = "$1"
+    }
+
+    rule {
+        action  = "labeldrop"
+        regex   = "instance_id"
+    }
 }
 
 prometheus.write.queue "experimental" {
