@@ -141,11 +141,40 @@ otelcol.receiver.otlp "otlp_receiver" {
     http {
         endpoint = "0.0.0.0:4318"
     }
-    output {
+   output {
         traces = [
-            otelcol.processor.batch.default.input,
+            otelcol.processor.attributes.mission_3.input,
             otelcol.connector.spanlogs.autologging.input,
         ]
+    }
+}
+
+otelcol.processor.attributes "mission_3" {
+    action {
+        action         = "insert"
+        key            = "service.tier"
+        from_attribute = "servicetier"
+    }
+    action {
+        action         = "insert"
+        key            = "service.tier"
+        from_attribute = "tier"
+    }
+
+    exclude {
+        match_type = "strict"
+
+        attribute {
+            key = "tier"
+        }
+
+        attribute {
+            key = "servicetier"
+        }
+    }
+
+    output {
+        traces = [otelcol.processor.batch.default.input]
     }
 }
 
