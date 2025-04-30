@@ -30,3 +30,24 @@ loki.write "mythical" {
         url = "http://loki:3100/loki/api/v1/push"
     } 
 }
+
+// Section 2
+
+discovery.http "service_discovery" {
+    url              = "http://service-discovery/targets.json" 
+    refresh_interval = "2s"
+}
+
+prometheus.scrape "infrastructure" {
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    targets    = discovery.http.service_discovery.targets
+    forward_to = [prometheus.remote_write.mimir.receiver]
+}
+
+prometheus.remote_write "mimir" {
+    endpoint {
+        url = "http://mimir:9009/api/v1/push"
+    }
+}
