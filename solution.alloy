@@ -127,6 +127,7 @@ otelcol.receiver.otlp "otlp_receiver" {
     output {
         traces = [
             otelcol.processor.batch.default.input,
+            otelcol.connector.spanlogs.autologging.input,
         ]
     }
 }
@@ -179,6 +180,53 @@ loki.process "mythical" {
     stage.timestamp {
         source = "loggedtime"
         format = "2006-01-02T15:04:05.000Z07:00"
+    }
+
+    forward_to = [loki.write.mythical.receiver]
+}
+
+// Section 7
+
+otelcol.connector.spanlogs "autologging" {
+    roots = true
+    spans = false
+    processes = false
+
+    span_attributes = ["http.method", "http.target", "http.status_code"]
+
+    output {
+        logs = [otelcol.exporter.loki.autologging.input]
+    }
+}
+
+otelcol.exporter.loki "autologging" {
+    forward_to = [loki.process.autologging.receiver]
+}
+
+loki.process "autologging" {
+    stage.json {
+       expressions = {"body" = ""}
+    }
+
+    stage.output {
+       source = "body"
+    }
+
+    stage.logfmt {
+        mapping = {
+            http_method_extracted      = "http.method",
+            http_status_code_extracted = "http.target",
+            http_target_extracted      = "http.status_code",
+
+        }
+    }
+
+    stage.labels {
+        values = {
+            method = "http_method_extracted",
+            status = "http_status_code_extracted",
+            target = "http_target_extracted",
+        }
     }
 
     forward_to = [loki.write.mythical.receiver]
