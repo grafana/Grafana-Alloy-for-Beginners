@@ -210,6 +210,10 @@ loki.source.api "mythical" {
         listen_address = "0.0.0.0"
         listen_port    = "3100"
     }
+    forward_to = [loki.secretfilter.mission_4.receiver]
+}
+
+loki.secretfilter "mission_4" {
     forward_to = [loki.process.mythical.receiver]
 }
 
