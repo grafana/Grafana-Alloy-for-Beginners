@@ -114,3 +114,44 @@ prometheus.write.queue "experimental" {
         url = "http://mimir:9009/api/v1/push"
     }
 }
+
+// Section 5
+
+otelcol.receiver.otlp "otlp_receiver" {
+    grpc {
+        endpoint = "0.0.0.0:4317"
+    }
+    http {
+        endpoint = "0.0.0.0:4318"
+    }
+    output {
+        traces = [
+            otelcol.processor.batch.default.input,
+        ]
+    }
+}
+
+otelcol.processor.batch "default" {
+    output {
+        traces = [
+            otelcol.exporter.otlp.tempo.input,
+        ]
+    }
+
+    send_batch_size     = 1000
+    send_batch_max_size = 2000
+
+    timeout = "2s"
+}
+
+otelcol.exporter.otlp "tempo" {
+    client {
+        endpoint = "http://tempo:4317"
+
+        // This is a local instance of Tempo, so we can skip TLS verification
+        tls {
+            insecure             = true
+            insecure_skip_verify = true
+        }
+    }
+}
