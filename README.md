@@ -153,7 +153,19 @@ For the `loki.write` component, we want to ship the logs to `http://loki:3100/lo
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/887f206b-683f-4107-aaf3-cb891c2226d1" />
 
-Make sure to [reload the config](#reloading-the-config) after filling in the blocks!
+### Reloading the config
+
+To reload Alloy's config, hit the following endpoint in a browser or with a tool like `curl`:
+
+```bash
+curl -X POST http://localhost:12347/-/reload
+```
+
+If the config is valid, you should see a response like the following:
+
+```
+config reloaded
+```
 
 #### Verification
 
