@@ -183,6 +183,10 @@ You should see the panels populated with data, showing the number of logs being 
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
 
+<img width="907" alt="image" src="https://github.com/user-attachments/assets/f420f7c3-87c6-40c6-9be4-d594aa498338" />
+<img width="908" alt="image" src="https://github.com/user-attachments/assets/fe1aae3a-4552-4c1a-8c34-6d05e18b1be6" />
+
+
 #### Instructions
 
 Open `config.alloy` in your editor and copy the following code into it:
@@ -258,7 +262,7 @@ Navigate to the ‘Graph’ tab (blue arrow) to access the graph of components a
 
 The number (red box) shown on the dotted lines shows the rate of transfer between components. The window at the top (orange box) configures the interval over which alloy should calculate the per-second rate, so a window of ‘10’ means that alloy should look over the last 10 seconds to compute the rate.
 
-The color of the dotted line signifies what type of data are beign transferred between components. See the color key (purple box) for clarification. 
+The color of the dotted line signifies what type of data are being transferred between components. See the color key (purple box) for clarification. 
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/95b20759-971f-410d-9598-d5db3213eef7" />
 
