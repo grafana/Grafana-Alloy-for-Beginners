@@ -183,8 +183,19 @@ You should see the panels populated with data, showing the number of logs being 
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
 
+We are going to introduce a new component called service discovery (`discovery.http`). 
+
+When you are observing your infrastructure/applications, it's likely that you are working with a dynamic environment.
 <img width="907" alt="image" src="https://github.com/user-attachments/assets/f420f7c3-87c6-40c6-9be4-d594aa498338" />
+
+
+There could be 1000 servers going up and down whose names and addresses you don't know.
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/fe1aae3a-4552-4c1a-8c34-6d05e18b1be6" />
+
+You want to avoid having to manage this ever-changing list of things to scrape and get metrics from yourself.
+
+So let's say you are working with Amazon instances. Instead of hard coding all the names and addresses, you could reach out to an Amazon endpoint and have it find all of the instances for you and expose those as targets so alloy could scrape it.
+
 
 
 #### Instructions
@@ -213,22 +224,9 @@ prometheus.remote_write "mimir" {
 }
 ```
 
-For this section, we would like to use `discovery.http` to find our infrastructure targets to scrape. 
+In this section, we will be using the `discovery.http` component to ping an HTTP within our lab envirohment in charge of finding targets: "http://service-discovery/targets.json"
+In our case, this http endpoints are aware of all instances of loki, tempo, mimir, and pyroscope databases that are currently running within our environment
 
-`discovery.http` is a component that polls a given URL for targets to scrape in JSON format. These targets are then exported for other components to use. In our demo environment, we have a service that exposes the targets to scrape in the `http://service-discovery/targets.json` endpoint. 
-
-These targets look something like:
-
-```json
-[
-    {
-        "targets": ["loki:3100"],
-        "labels": {
-            "service": "loki"
-        }
-    }
-]
-```
 
 We will use a `prometheus.scrape` component to scrape metrics from the discovered targets.
 
