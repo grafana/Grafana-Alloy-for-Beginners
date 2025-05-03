@@ -194,7 +194,7 @@ There could be 1000 servers going up and down whose names and addresses you don'
 
 You want to avoid having to manage this ever-changing list of things to scrape and get metrics from yourself.
 
-So let's say you are working with Amazon instances. Instead of hard coding all the names and addresses, you could reach out to an Amazon endpoint and have it find all of the instances for you and expose those as targets so alloy could scrape it.
+For example, let's say you are working with Amazon instances. Instead of hard coding all the names and addresses, you could reach out to an Amazon endpoint and have it find all of the instances for you and expose those as targets so alloy could scrape it.
 
 
 
@@ -225,8 +225,8 @@ prometheus.remote_write "mimir" {
 ```
 
 In this section, we will be using the `discovery.http` component to ping an HTTP within our lab envirohment in charge of finding targets: "http://service-discovery/targets.json"
-In our case, this http endpoints are aware of all instances of loki, tempo, mimir, and pyroscope databases that are currently running within our environment
 
+This http endpoints are aware of all instances of loki, tempo, mimir, and pyroscope databases that are currently running within our environment
 
 We will use a `prometheus.scrape` component to scrape metrics from the discovered targets.
 
