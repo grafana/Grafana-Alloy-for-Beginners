@@ -43,7 +43,7 @@ docker compose up --build -d
 
 To instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
 
-![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWZnenp4bThzNzU1cW9oYTkzcW84am9keDRzem1kc2IzZTNlYTRoZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
+![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExemZxYWc0MzNuczMyYXNmcjkxdDg4Njg2amw0MmJ5anIxbzNjczdlZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Mb9dQnfZXSBYMhU2Nv/giphy.gif)
 
 <img width="939" alt="image" src="https://github.com/user-attachments/assets/c5237311-e9f7-4eb6-8825-1f5db7d7e4c4" />
 <img width="937" alt="image" src="https://github.com/user-attachments/assets/1ecaad57-caea-4e5c-b462-22eb14e7a6cd" />
