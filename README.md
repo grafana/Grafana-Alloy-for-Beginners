@@ -744,7 +744,7 @@ prometheus.relabel "mission_2" {
 Navigate to the [Explore](http://localhost:3000/explore) page and look at the metrics.
 Query for `count by (cloud_provider) (rate(mythical_db_request_count_total [$__rate_interval]))` and you should see a non-zero value.
 
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/53a5e41c-9716-4294-a3fb-d946cc07acf9" />
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/7a2fc73e-03ea-4e5c-be12-e4053027172c" />
 
 ### Mission 3
 
