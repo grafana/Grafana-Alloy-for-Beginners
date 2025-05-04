@@ -410,6 +410,7 @@ Forward the metrics to the `prometheus.write.queue` component we will define nex
 Similar to `prometheus.remote_write` component, we use the `endpoint` block we label as "mimir". 
 We set the `url` equal the address of the locally running Mimir: "http://mimir:9009/api/v1/push"
 
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/6c7ebcef-c963-41d6-ba6d-a5805c8104d6" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
