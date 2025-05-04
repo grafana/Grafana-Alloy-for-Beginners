@@ -394,8 +394,8 @@ targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 
 For this exercise, create two targets using the following addresses. 
 
-- mythical-server: "mythical-server:4000"
-- mythical-requester: "mythical-requester:4001"
+- "mythical-server:4000"
+- "mythical-requester:4001"
 
 Add the following labels for each target. 
 - mythical-server:
@@ -405,7 +405,7 @@ Add the following labels for each target.
 
 Forward the metrics to the `prometheus.write.queue` component we will define next. 
 
-`prometheus.write.queue` component can write metrics to the url of the database we specify. 
+`prometheus.write.queue` component writes metrics to the url of the database we specify. 
 
 Similar to `prometheus.remote_write` component, we use the `endpoint` block we label as "mimir". 
 We set the `url` equal the address of the locally running Mimir: "http://mimir:9009/api/v1/push"
