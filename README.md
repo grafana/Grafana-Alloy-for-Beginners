@@ -378,7 +378,7 @@ prometheus.scrape "mythical" {
 
 prometheus.write.queue "experimental" {
     endpoint "mimir" {
-        "//TODO: Fill this in"
+        url = "//TODO: Fill this in"
     }
 }
 
@@ -404,6 +404,12 @@ Add the following labels for each target.
   - group = "mythical", service = "mythical-requester"
 
 Forward the metrics to the `prometheus.write.queue` component we will define next. 
+
+`prometheus.write.queue` component can write metrics to the url of the database we specify. 
+
+Similar to `prometheus.remote_write` component, we use the `endpoint` block we label as "mimir". 
+We set the `url` equal the address of the locally running Mimir: "http://mimir:9009/api/v1/push"
+
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
