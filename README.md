@@ -475,11 +475,23 @@ otelcol.exporter.otlp "tempo" {
 
 
 ```
+`otelcol.receiver.otlp`
+To configure the `otelcol.receiver.otlp` component, open the doc for the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
 
+Find the default port for grpc and set its endpoint equal to it.
+Find the default port for http and  set its endpoint equal to it. 
+
+Using the `output` block, send the traces to the input of the `otelcol.processor.batch` component we will define next. 
+
+`otecol.processor.batch`
 The batch processor will batch spans until a batch size or a timeout is met, before sending those batches on to another component. 
 Let's configure it to batch minimum 1000 spans, up to 2000 spans, or until 2 seconds have elapsed.
 
-The Tempo url is `http://tempo:4317`.
+Using the `output` block, send the batched traces to the input of the `otelcol.exporter.otlp` component we will define next.
+
+`otelcol.exporter.otlp`
+Using the `client` block, write batches of spans to a local instance of Tempo
+The Tempo url is http://tempo:4317.
 
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/1e3dedbe-d69b-47b6-b7e0-ee3a2ae740e7" />
 
