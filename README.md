@@ -39,7 +39,7 @@ docker compose up --build -d
 
 ## Alloy syntax
 
-### Think of Alloy as our trusty pal who can collect, transform, and deliver our telemetry data. 
+### Think of Alloy as our secret weapon that can collect, transform, and deliver our telemetry data. 
 
 To instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
 
