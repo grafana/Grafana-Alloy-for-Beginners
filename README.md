@@ -45,7 +45,7 @@ To instruct Alloy on how we want that done, we must write these instructions in 
 
 ![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExemZxYWc0MzNuczMyYXNmcjkxdDg4Njg2amw0MmJ5anIxbzNjczdlZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Mb9dQnfZXSBYMhU2Nv/giphy.gif)
 
-<img width="939" alt="image" src="https://github.com/user-attachments/assets/c5237311-e9f7-4eb6-8825-1f5db7d7e4c4" />
+<img width="953" alt="image" src="https://github.com/user-attachments/assets/1d69eaf5-9508-4de1-990d-432d7668ec50" />
 <img width="937" alt="image" src="https://github.com/user-attachments/assets/1ecaad57-caea-4e5c-b462-22eb14e7a6cd" />
 <img width="943" alt="image" src="https://github.com/user-attachments/assets/46bb6241-a41f-4975-a700-6f35eff20286" />
 <img width="942" alt="image" src="https://github.com/user-attachments/assets/5230684e-e7c6-40d1-8148-40a02e0219f5" />
