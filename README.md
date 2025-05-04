@@ -232,7 +232,7 @@ We will use a `prometheus.scrape` component to scrape metrics from the discovere
 
 As a last step, we will configure the `prometheus.remote_write` component to write the metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
 
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/0abd1cd4-5a2d-4507-9e18-a1dc7d709779" />
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/845a4274-65e4-46da-868b-0fb71a8f92be" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
@@ -338,6 +338,8 @@ For the `prometheus.scrape` component, we want to scrape the `prometheus.exporte
 For the `prometheus.relabel` component, we want to add the `group="infrastructure"` and `service="postgres"` labels to the metrics.
 
 We also want to modify the `instance` label to clean it up. The regex `"^postgresql://(.+)"` will extract the value after `postgresql://`.
+
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/41d4f468-62c3-46cd-8694-efa2424049c2" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
