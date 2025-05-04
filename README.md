@@ -30,7 +30,7 @@ docker compose up --build -d
 # Alloy 101 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/d37cbbce-2526-443c-83e5-9c0a3a6b481d" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f35b76-3aa0-48c6-8678-8310ffc29cdc" />
-<img width="908" alt="image" src="https://github.com/user-attachments/assets/d2497157-e1ae-466a-8206-3fcf5dbb1616" />
+<img width="908" alt="image" src="https://github.com/user-attachments/assets/daf627f6-f743-4eda-b821-1794aabac1a9" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/f2aca8c7-a63c-4735-aceb-c5f64155cefc" />
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/85f2ea42-93d3-4477-be06-edaf84af1800" />
 <img width="907" alt="image" src="https://github.com/user-attachments/assets/d669cbc0-dad6-4997-99dc-fed755b3c295" />
