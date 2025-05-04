@@ -510,18 +510,14 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 
 ### Section 6: Ingesting application logs
 
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/d9c8dbc0-29ed-460b-b487-8440075cec59" />
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
-
-
 #### Objectives
 
-- Ingest application logs sent from the mythical services using the [`loki.source.api`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) component
-- Use the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component to:
-  - add a static `service="mythical" label
-  - extract the timestamp from the log line using `stage.regex` with this regex: `^.*?loggedtime=(?P<loggedtime>\S+)`
-  - set the timestamp of the log to the extracted timestamp
-  - Forward the processed logs to Loki
+- Ingest the logs that are being sent by the mythical services to port 3100
+- Add a `service=”mythical”` label to logs
+- Use stage.regex and stage.timestamp to extract the timestamp from the log lines and set the log’s timestamp
+
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/d9c8dbc0-29ed-460b-b487-8440075cec59" />
+<img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
 
 #### Instructions
 
@@ -555,6 +551,13 @@ loki.process "mythical" {
     forward_to = [loki.write.mythical.receiver]
 }
 ```
+
+- Ingest application logs sent from the mythical services using the [`loki.source.api`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) component
+- Use the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component to:
+  - add a static `service="mythical" label
+  - extract the timestamp from the log line using `stage.regex` with this regex: `^.*?loggedtime=(?P<loggedtime>\S+)`
+  - set the timestamp of the log to the extracted timestamp
+  - Forward the processed logs to Loki
 #### Verification
 
 Navigate to Dashboards > `Section 6 Verification` and you should see a dashboard with the rate of logs coming from the mythical apps as well as panels showing the logs themselves for the server and requester
