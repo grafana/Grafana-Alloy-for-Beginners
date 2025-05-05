@@ -71,16 +71,7 @@ The `arguments` and `blocks` sections list what you could do with the data. Pay 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/53b1ecea-5818-420e-bc10-151309afd9d8" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/a4ae1137-1ff6-423d-8977-28246e1bbe0e" />
 
-# Hands on lab
-
-## Best practices for building pipelines with Alloy
-*Whenever possible*
-- We recommend Prometheus instrumentation for Infrastructure Observability and OTel instrumentation for Application Observability.
-- We strongly recommend avoiding conversion of telemetry between formats. 
-  - Prometheus metrics should not be converted into OTLP and vice versa
-
-
-*Not every telemetry collection scenario is clear cut where you can perfectly follow these recommendations. In those cases, you will have to get telemetry however you can and connect the signals while mixing ecosystems. You will see an example of this in this workshop.* 
+# Tactical training 
 
 ## Lab environment overview
 <img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
