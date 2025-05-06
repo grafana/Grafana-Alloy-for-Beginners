@@ -498,8 +498,8 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 #### Objectives
 
 - [Ingest](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) the logs that are being sent by the mythical services to port 3100
-- [Add]((https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) a `service=”mythical”` label to logs
-- [Use]((https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) `stage.regex` and `stage.timestamp` to extract the timestamp from the log lines and set the log’s timestamp
+- [Add](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) a `service=”mythical”` label to logs
+- [Use](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) `stage.regex` and `stage.timestamp` to extract the timestamp from the log lines and set the log’s timestamp
 
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/d9c8dbc0-29ed-460b-b487-8440075cec59" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
