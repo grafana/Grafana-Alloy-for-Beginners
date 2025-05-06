@@ -73,8 +73,8 @@ The `arguments` and `blocks` sections list what you could do with the data. Pay 
 
 # Tactical training 
 
-## Lab environment overview
-<img width="1433" alt="image" src="https://github.com/user-attachments/assets/6fd37912-58ab-4620-a246-6babc04d8f5d" />
+## Mission environment overview
+<img width="1432" alt="image" src="https://github.com/user-attachments/assets/62196479-36e3-43e5-b9b5-6cd64b4c5885" />
 
 ## Common tasks
 We will be using the `config.alloy` file to build pipelines for Infrastructure Observability and Applications Observability. 
