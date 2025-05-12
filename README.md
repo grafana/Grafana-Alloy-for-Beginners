@@ -1,7 +1,8 @@
 # Building OpenTelemetry and Prometheus native telemetry pipelines with Grafana Alloy
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/c74aef87-1586-4dbc-ba88-562ce96f4c2a" />
+<img width="1910" alt="image" src="https://github.com/user-attachments/assets/eb8b8aea-6136-4c0d-9ab2-e0354f433771" />
+<img width="1915" alt="image" src="https://github.com/user-attachments/assets/5bf67580-d09f-45bd-9a9e-29be5e9ef93f" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/2c49f7f1-fff2-44a3-b271-4f2f82e1be07" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/002d5e98-863d-48e8-9fc2-1aa99e3716df" />
 
@@ -281,7 +282,7 @@ prometheus.scrape "postgres" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
 
-    targets    =  TODO: Fill this in
+    targets    =  //TODO: Fill this in
     forward_to =  [//TODO: Fill this in]
 }
 
@@ -545,7 +546,7 @@ loki.process "mythical" {
   - Forward the processed logs to Loki
 #### Verification
 
-Navigate to Dashboards > `Section 6 Verification` and you should see a dashboard with the rate of logs coming from the mythical apps as well as panels showing the logs themselves for the server and requester
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 6 Verification` and you should see a dashboard with the rate of logs coming from the mythical apps as well as panels showing the logs themselves for the server and requester
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/01b5718b-aa1c-47d6-92a1-206aca81066c" />
 
@@ -640,7 +641,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 7 Verification` and you should see a dashboard with panels containing the rate of spanlog ingestion as well as the spanlogs themselves.
+Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard with panels containing the rate of spanlog ingestion as well as the spanlogs themselves.
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/07cea252-4ba4-489b-957f-eaaeccb07418" />
 
@@ -831,4 +832,3 @@ panel showing the rate of logs with tokens coming from the mythical services as 
 
 
 # Q & A
-
