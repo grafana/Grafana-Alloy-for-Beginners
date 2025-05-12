@@ -1,8 +1,8 @@
 # Building OpenTelemetry and Prometheus native telemetry pipelines with Grafana Alloy
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
-<img width="1910" alt="image" src="https://github.com/user-attachments/assets/eb8b8aea-6136-4c0d-9ab2-e0354f433771" />
-<img width="1436" alt="image" src="https://github.com/user-attachments/assets/241c3d61-a592-47e2-90c6-cc9eb283fa22" />
+<img width="950" alt="image" src="https://github.com/user-attachments/assets/d3814057-f7c7-4109-8861-6189badd815c" />
+<img width="955" alt="image" src="https://github.com/user-attachments/assets/8ab3dc4b-0b38-4600-aa3b-4676b1bed88e" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/2c49f7f1-fff2-44a3-b271-4f2f82e1be07" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/002d5e98-863d-48e8-9fc2-1aa99e3716df" />
 
