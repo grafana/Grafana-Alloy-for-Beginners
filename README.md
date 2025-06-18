@@ -1,8 +1,7 @@
 # Building OpenTelemetry and Prometheus native telemetry pipelines with Grafana Alloy
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
-<img width="921" alt="image" src="https://github.com/user-attachments/assets/2a66ea3d-9651-47c3-b6f0-5ebd4346e194" />
-<img width="919" alt="image" src="https://github.com/user-attachments/assets/bfa88562-9e90-48c7-b7db-d62319e79619" />
+<img width="909" alt="image" src="https://github.com/user-attachments/assets/c74aef87-1586-4dbc-ba88-562ce96f4c2a" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/2c49f7f1-fff2-44a3-b271-4f2f82e1be07" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/002d5e98-863d-48e8-9fc2-1aa99e3716df" />
 
@@ -87,7 +86,7 @@ Whenever we make changes to the file, we must reload the config.
 To reload Alloy's config, hit the following endpoint in a browser or with a tool like `curl`:
 
 ```bash
-curl -X POST http://localhost:12347/-/reload
+curl -X POST http://localhost:12345/-/reload
 ```
 
 If the config is valid, you should see a response like the following:
@@ -150,7 +149,7 @@ For the `loki.write` component, we want to ship the logs to `http://loki:3100/lo
 To reload Alloy's config, hit the following endpoint in a browser or with a tool like `curl`:
 
 ```bash
-curl -X POST http://localhost:12347/-/reload
+curl -X POST http://localhost:12345/-/reload
 ```
 
 If the config is valid, you should see a response like the following:
@@ -240,7 +239,7 @@ You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope serv
 
 Alloy UI is a useful tool that helps you visualize how Alloy is configured and what it is doing so you are able to debug efficiently. 
 
-Navigate to localhost:12347 to see the list of components (orange box) that alloy is currently configured with.
+Navigate to `localhost:12345` to see the list of components (orange box) that alloy is currently configured with.
 Click on the blue ‘view’ button on the right side (red arrow).
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/5f4ac3f7-ab05-43f2-9840-0bac97a59fdd" />
 
