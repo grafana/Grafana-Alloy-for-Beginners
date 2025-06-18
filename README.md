@@ -25,8 +25,13 @@ git clone https://github.com/spartan0x117/intro-to-mltp.git
 ```
 - start a new command-line interface in your Operating System and run: 
 ```
-docker compose up --build -d
+make run
 ```
+- stop the environment with:
+```
+make stop
+```
+
 # Alloy 101 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/d37cbbce-2526-443c-83e5-9c0a3a6b481d" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f35b76-3aa0-48c6-8678-8310ffc29cdc" />
