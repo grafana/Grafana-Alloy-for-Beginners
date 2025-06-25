@@ -1,7 +1,8 @@
 # Building OpenTelemetry and Prometheus native telemetry pipelines with Grafana Alloy
 
-This workshop was based off of [intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource
-for learning about the Grafana stack end to end.
+**NOTE**:
+This workshop was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource
+for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/c74aef87-1586-4dbc-ba88-562ce96f4c2a" />
