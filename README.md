@@ -1,22 +1,20 @@
 # Building OpenTelemetry and Prometheus native telemetry pipelines with Grafana Alloy
 
-**NOTE**:
-This workshop was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource
-for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
-
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/c74aef87-1586-4dbc-ba88-562ce96f4c2a" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/2c49f7f1-fff2-44a3-b271-4f2f82e1be07" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/002d5e98-863d-48e8-9fc2-1aa99e3716df" />
 
 ## Resources for the workshop
-
-- [Mission repo](https://github.com/spartan0x117/intro-to-mltp/tree/main)
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
   - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
   - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
   - [Collect and forward data with Grafana Alloy](https://grafana.com/docs/alloy/latest/collect/)
   - [Grafana Alloy Tutorials](https://grafana.com/docs/alloy/latest/tutorials/)
+
+**NOTE**:
+This workshop was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource
+for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
 
 <img width="912" alt="image" src="https://github.com/user-attachments/assets/bc1467ea-b76b-4a8f-97af-91de818b07b6" />
 
