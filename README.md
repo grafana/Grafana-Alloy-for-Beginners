@@ -23,7 +23,7 @@ Before getting started, make sure you:
 - install [Docker](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
 - clone the [repo](https://github.com/spartan0x117/intro-to-mltp) for the lab environment :
 ```
-git clone https://github.com/spartan0x117/intro-to-mltp.git
+git clone https://github.com/grafana/Building-OpenTelemetry-and-Prometheus-native-telemetry-pipelines-with-Grafana-Alloy.git
 ```
 - start a new command-line interface in your Operating System and run: 
 ```
