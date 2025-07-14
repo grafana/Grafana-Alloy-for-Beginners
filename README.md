@@ -5,7 +5,8 @@
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/2c49f7f1-fff2-44a3-b271-4f2f82e1be07" />
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/002d5e98-863d-48e8-9fc2-1aa99e3716df" />
 
-## Resources for the workshop
+## Resources 
+- [Add Grafana Alloy for Beginners YouTube Playlist here]
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
   - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
   - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
@@ -13,27 +14,24 @@
   - [Grafana Alloy Tutorials](https://grafana.com/docs/alloy/latest/tutorials/)
 
 **NOTE**:
-This workshop was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource
+This series was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource
 for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
 
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/bc1467ea-b76b-4a8f-97af-91de818b07b6" />
-
-## Environment set up
+## Learning environment set up
 Before getting started, make sure you:
 - install [Docker desktop](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
-- clone the [repo](https://github.com/spartan0x117/intro-to-mltp) for the lab environment :
+- clone the repo for the learning environment :
 ```
-git clone https://github.com/grafana/Building-OpenTelemetry-and-Prometheus-native-telemetry-pipelines-with-Grafana-Alloy.git
+git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
 ```
-- start a new command-line interface in your Operating System and run: 
+- cd into the project, start a new command-line interface in your Operating System and run: 
 ```
 make run
 ```
-- stop the environment with:
+- To stop the environment, use the following command:
 ```
 make stop
 ```
-
 # Alloy 101 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/d37cbbce-2526-443c-83e5-9c0a3a6b481d" />
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f35b76-3aa0-48c6-8678-8310ffc29cdc" />
