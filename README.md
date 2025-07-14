@@ -1,4 +1,4 @@
-# Building OpenTelemetry and Prometheus native telemetry pipelines with Grafana Alloy
+# Grafana Alloy for Beginners
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/c74aef87-1586-4dbc-ba88-562ce96f4c2a" />
@@ -20,7 +20,7 @@ for learning about the Grafana stack end to end, so check it out if you'd like a
 
 ## Environment set up
 Before getting started, make sure you:
-- install [Docker](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
+- install [Docker desktop](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
 - clone the [repo](https://github.com/spartan0x117/intro-to-mltp) for the lab environment :
 ```
 git clone https://github.com/grafana/Building-OpenTelemetry-and-Prometheus-native-telemetry-pipelines-with-Grafana-Alloy.git
