@@ -100,7 +100,7 @@ If the config is valid, you should see a response like the following:
 config reloaded
 ```
 ## Infrastructure Observability - collect, transform, and export logs and metrics
-### Section 1: Collect and transform logs from Alloy
+### Section 1: Build a pipeline for infrastructure logs with Grafana Alloy
 #### Objectives
 
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
