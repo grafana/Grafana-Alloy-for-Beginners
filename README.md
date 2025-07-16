@@ -5,7 +5,7 @@
 <img width="1868" height="1051" alt="image" src="https://github.com/user-attachments/assets/3a6153b9-a909-4ba1-b812-0e27c1774faf" />
 <img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/722500e5-d485-411f-841e-32d729dd0d0b" />
 
-## Resources 
+# Resources 
 - [Add Grafana Alloy for Beginners YouTube Playlist here]
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
   - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
@@ -16,7 +16,7 @@
 - The learning environment was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). 
   - This repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
 
-## Learning environment set up
+# Learning environment setup
 Before getting started, make sure you:
 - install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
 - clone the repo for the learning environment :
@@ -48,33 +48,30 @@ make stop
 
 To instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
 
-![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExemZxYWc0MzNuczMyYXNmcjkxdDg4Njg2amw0MmJ5anIxbzNjczdlZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Mb9dQnfZXSBYMhU2Nv/giphy.gif)
+![Alt Text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2kweW0xMzU5bzQ3ZHUxZDdnbHFid3I0NGoyd3I2am11eHRoYnRsNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTnuhyBF54B852nK/giphy.gif)
 
-<img width="953" alt="image" src="https://github.com/user-attachments/assets/1d69eaf5-9508-4de1-990d-432d7668ec50" />
-<img width="937" alt="image" src="https://github.com/user-attachments/assets/1ecaad57-caea-4e5c-b462-22eb14e7a6cd" />
-<img width="943" alt="image" src="https://github.com/user-attachments/assets/46bb6241-a41f-4975-a700-6f35eff20286" />
-<img width="942" alt="image" src="https://github.com/user-attachments/assets/5230684e-e7c6-40d1-8148-40a02e0219f5" />
-
-### When figuring out which components to use, focus your attention to what comes after the name of the ecosystem to figure out what that component does. 
-
-<img width="944" alt="image" src="https://github.com/user-attachments/assets/28d46b11-664a-43fb-ae96-095d3c9c5173" />
-<img width="944" alt="image" src="https://github.com/user-attachments/assets/31bda298-1b8a-474f-8a05-b291e406c758" />
-<img width="948" alt="image" src="https://github.com/user-attachments/assets/e9a9d603-9a30-4116-9cde-346ee8051a9f" />
-<img width="938" alt="image" src="https://github.com/user-attachments/assets/1250387f-7e0e-4577-8ecb-332af321730c" />
-<img width="940" alt="image" src="https://github.com/user-attachments/assets/56e5dbdf-57d1-43bb-87b7-6e1cf6efb13e" />
-<img width="908" alt="image" src="https://github.com/user-attachments/assets/47390611-2110-4609-b639-08d15d13ddcd" />
-
-### While reading up on components within the Alloy docs, pay special attention to the following sections:
-- usage
-- arguments
-- blocks
+<img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/87eb530a-eb3b-40d3-90d4-6434609ed067" />
+<img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/19e40a8d-7a07-4564-9de2-5dbf2d3570b2" />
+<img width="1872" height="1049" alt="image" src="https://github.com/user-attachments/assets/bf15e800-5dbf-4fe8-a467-3446365243c4" />
+<img width="1873" height="1053" alt="image" src="https://github.com/user-attachments/assets/44e33cfd-09ff-4363-b972-7a4c4778ec49" />
+<img width="1871" height="1050" alt="image" src="https://github.com/user-attachments/assets/33615290-7852-41b9-b12f-6530fab77556" />
+<img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/fe66d09c-1f24-4902-ba6d-066679f5c0c4" />
+<img width="1871" height="1051" alt="image" src="https://github.com/user-attachments/assets/bd9f447e-58e7-4e67-b2ae-8d8267339745" />
+<img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/29fdef87-2f43-49dc-879e-f299ea710c09" />
+<img width="1871" height="1051" alt="image" src="https://github.com/user-attachments/assets/b0bbe20b-5ea4-4080-ab99-9a9ac962d8ca" />
+<img width="1871" height="1054" alt="image" src="https://github.com/user-attachments/assets/fe1dd8f8-807f-4b94-9364-14eda5ed1d9a" />
+<img width="1874" height="1052" alt="image" src="https://github.com/user-attachments/assets/c72f8819-68c5-46a2-866c-687489e75e2c" />
+<img width="1874" height="1052" alt="image" src="https://github.com/user-attachments/assets/dc9519b3-d54d-4fae-bf7b-c7d9c2f63e36" />
 
 The `usage` section gives you an example of how this particular component could be configured. 
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/add64bd4-0831-46eb-9041-0757eaae8d67" />
+
+<img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/2df884bc-ae97-4d65-975b-95e2904013b9" />
 
 The `arguments` and `blocks` sections list what you could do with the data. Pay close attention to the name, type, description, default, and required columns so Alloy could understand what you want it to do! 
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/53b1ecea-5818-420e-bc10-151309afd9d8" />
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/a4ae1137-1ff6-423d-8977-28246e1bbe0e" />
+
+<img width="1873" height="1053" alt="image" src="https://github.com/user-attachments/assets/08888cf8-68cb-48d3-a51b-ed4ca89b1430" />
+<img width="1874" height="1052" alt="image" src="https://github.com/user-attachments/assets/2593ceff-7b48-400b-8968-d7c1ee60594d" />
+<img width="1875" height="1052" alt="image" src="https://github.com/user-attachments/assets/46edeeee-502c-4002-8a3b-b69b74979de6" />
 
 # Tactical training 
 
