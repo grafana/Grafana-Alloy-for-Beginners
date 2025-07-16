@@ -15,26 +15,8 @@
 - For **solutions to sections and hands on exercises**, check out the branches of this repo
 - The learning environment was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). 
   - This repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
-
-# Learning environment setup
-Before getting started, make sure you:
-- install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
-- clone the repo for the learning environment :
-```
-git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
-```
-- cd into the project, start a new command-line interface in your Operating System and run: 
-```
-make run
-```
-- To stop the environment, use the following command:
-```
-make stop
-```
-- in a separate terminal, open the project using a text editor of your choice
-  - open `config.alloy` file under the alloy folder
     
-# Alloy 101 
+# What is Alloy and when does it make sense to use it? 
 <img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/2c5b4c90-e4cb-492f-814d-9a797cd710dd" />
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/f0f919f3-b68b-4847-902d-b3b9c1f48a02" />
 <img width="1871" height="1050" alt="image" src="https://github.com/user-attachments/assets/57e43ff8-5f3e-4dae-aaa0-5cef3b49645d" />
@@ -42,7 +24,7 @@ make stop
 <img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/b8a046b7-ce48-4837-acd4-ee4149e493c6" />
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/fb39f801-a990-4924-b0e6-1f11572ffa29" />
 
-## Alloy configuration language 101
+# Alloy configuration language 101
 
 ### Think of Alloy as our trusty pal who can collect, process, and export our telemetry data. 
 
@@ -73,36 +55,36 @@ The `arguments` and `blocks` sections list what you could do with the data. Pay 
 <img width="1874" height="1052" alt="image" src="https://github.com/user-attachments/assets/2593ceff-7b48-400b-8968-d7c1ee60594d" />
 <img width="1875" height="1052" alt="image" src="https://github.com/user-attachments/assets/46edeeee-502c-4002-8a3b-b69b74979de6" />
 
-# Tactical training 
+# Learning environment setup
 
-## Mission environment overview
-<img width="1432" alt="image" src="https://github.com/user-attachments/assets/62196479-36e3-43e5-b9b5-6cd64b4c5885" />
+<img width="1872" height="1050" alt="image" src="https://github.com/user-attachments/assets/2645a894-9e08-43e5-804c-ce01753d1ca7" />
 
-## Common tasks
-We will be using the `config.alloy` file to build pipelines for Infrastructure Observability and Applications Observability. 
-
-Whenever we make changes to the file, we must reload the config. 
-
-### Reloading the config
-
-To reload Alloy's config, hit the following endpoint in a browser or with a tool like `curl`:
-
-```bash
-curl -X POST http://localhost:12345/-/reload
+Before getting started, make sure you:
+- install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/)
+  
+- clone the repo for the learning environment :
 ```
-
-If the config is valid, you should see a response like the following:
-
+git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
 ```
-config reloaded
+- cd into the project, start a new command-line interface in your Operating System and run: 
 ```
-## Infrastructure Observability - collect, transform, and export logs and metrics
+make run
+```
+- To stop the environment, use the following command:
+```
+make stop
+```
+- In a separate terminal, open the project using a text editor of your choice.
+  - Expand the alloy folder and open the `config.alloy` file.
+  - We will be using this file to build pipelines for Infrastructure Observability and Applications Observability. 
+
+# Infrastructure Observability
+## Collect, process, and export infrastructure logs and metrics
 ### Section 1: Build a pipeline for infrastructure logs with Grafana Alloy
 #### Objectives
-
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
 - Use [`loki.relabel`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.relabel/) to add labels to the logs
-- Use [`loki.write`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) to write the logs to Loki
+- Use [`loki.write`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) to export the logs to Loki
 
 #### Instructions
 
@@ -137,7 +119,7 @@ loki.write "mythical" {
     } 
 }
 ```
-
+**Tasks**
 For the `logging` block, we want to set the log format to "logfmt" and the log level to "debug" and write the logs to the `loki.relabel.alloy_logs` component's receiver.
 
 For the `loki.relabel` component, we want to set the `group` label to "infrastructure" and the `service` label to "alloy" and forward the logs to the `loki.write.mythical` component's receiver.
@@ -147,6 +129,8 @@ For the `loki.write` component, we want to ship the logs to `http://loki:3100/lo
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/887f206b-683f-4107-aaf3-cb891c2226d1" />
 
 ### Reloading the config
+
+Whenever we make changes to the file, we must reload the config. 
 
 To reload Alloy's config, hit the following endpoint in a browser or with a tool like `curl`:
 
@@ -159,6 +143,7 @@ If the config is valid, you should see a response like the following:
 ```
 config reloaded
 ```
+
 
 #### Verification
 
