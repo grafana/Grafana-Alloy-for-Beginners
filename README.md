@@ -74,9 +74,9 @@ make run
 ```
 make stop
 ```
-- In a separate terminal, open the project using a text editor of your choice.
-  - Expand the alloy folder and open the `config.alloy` file.
-  - We will be using this file to build pipelines for Infrastructure Observability and Applications Observability. 
+In a separate terminal, open the project using a text editor of your choice.
+- Expand the alloy folder and open the `config.alloy` file.
+- We will be using this file to build pipelines for Infrastructure Observability and Applications Observability. 
 
 # Infrastructure Observability
 ## Collect, process, and export infrastructure logs and metrics
@@ -84,7 +84,7 @@ make stop
 #### Objectives
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
 - Use [`loki.relabel`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.relabel/) to add labels to the logs
-- Use [`loki.write`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) to export the logs to Loki
+- Use [`loki.write`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) to export logs to Loki
 
 #### Instructions
 
@@ -119,16 +119,24 @@ loki.write "mythical" {
     } 
 }
 ```
-**Tasks**
-For the `logging` block, we want to set the log format to "logfmt" and the log level to "debug" and write the logs to the `loki.relabel.alloy_logs` component's receiver.
+#### Tasks
 
-For the `loki.relabel` component, we want to set the `group` label to "infrastructure" and the `service` label to "alloy" and forward the logs to the `loki.write.mythical` component's receiver.
+`logging` block:
+- set the log format to "logfmt"
+- set the log level to "debug"
+- send the logs to the receiver of the`loki.relabel.alloy_logs` component
 
-For the `loki.write` component, we want to ship the logs to `http://loki:3100/loki/api/v1/push`.
+`loki.relabel` component:
+- set the `group` label to "infrastructure"
+- set the `service` label to "alloy"
+- forward the logs to the receiver of the `loki.write.mythical` component
 
-<img width="910" alt="image" src="https://github.com/user-attachments/assets/887f206b-683f-4107-aaf3-cb891c2226d1" />
+`loki.write` component:
+- export the logs to a locally running Loki database ("http://loki:3100/loki/api/v1/push")
 
-### Reloading the config
+<img width="1874" height="1053" alt="image" src="https://github.com/user-attachments/assets/649fe505-e3a6-4a74-b998-f00975f9d040" />
+
+#### Reloading the config
 
 Whenever we make changes to the file, we must reload the config. 
 
@@ -144,7 +152,6 @@ If the config is valid, you should see a response like the following:
 config reloaded
 ```
 
-
 #### Verification
 
 Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select the `Section 1 Verification` dashboard.
@@ -152,6 +159,10 @@ Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select t
 You should see the panels populated with data, showing the number of logs being sent by Alloy as well as the logs themselves.
 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/07d04e94-caa5-4316-92dc-a50ebfdb333a" />
+
+Expand a log line to view its labels. 
+
+You should see labels "group = infrastructure" and "service = alloy".
 
 ### Section 2: Collect and transform infrastructure metrics
 
