@@ -1,5 +1,3 @@
-# Grafana Alloy for Beginners
-
 <img width="1901" height="1042" alt="image" src="https://github.com/user-attachments/assets/b907b8dc-0b0f-4191-ab41-dda20b626e8a" />
 <img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/e3dd0e99-f78e-4767-9fda-d3e44daf9e1e" />
 <img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/68c41817-7f5b-4247-a23f-bdab60df8dcf" />
@@ -14,13 +12,13 @@
   - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
   - [Collect and forward data with Grafana Alloy](https://grafana.com/docs/alloy/latest/collect/)
   - [Grafana Alloy Tutorials](https://grafana.com/docs/alloy/latest/tutorials/)
-
-**NOTE**:
-This series was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
+- For **solutions to sections and hands on exercises**, check out the branches of this repo
+- The learning environment was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). 
+  - This repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
 
 ## Learning environment set up
 Before getting started, make sure you:
-- install [Docker desktop](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
+- install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/) 
 - clone the repo for the learning environment :
 ```
 git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
@@ -33,19 +31,20 @@ make run
 ```
 make stop
 ```
+- in a separate terminal, open the project using a text editor of your choice
+  - open `config.alloy` file under the alloy folder
+    
 # Alloy 101 
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/d37cbbce-2526-443c-83e5-9c0a3a6b481d" />
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/d0f35b76-3aa0-48c6-8678-8310ffc29cdc" />
-<img width="908" alt="image" src="https://github.com/user-attachments/assets/daf627f6-f743-4eda-b821-1794aabac1a9" />
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/f2aca8c7-a63c-4735-aceb-c5f64155cefc" />
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/85f2ea42-93d3-4477-be06-edaf84af1800" />
-<img width="907" alt="image" src="https://github.com/user-attachments/assets/d669cbc0-dad6-4997-99dc-fed755b3c295" />
-<img width="916" alt="image" src="https://github.com/user-attachments/assets/8e8422f6-205b-46e0-b19c-09eb4dbebd31" />
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/87e09054-937f-429e-a9e2-7167e1bf65ff" />
+<img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/2c5b4c90-e4cb-492f-814d-9a797cd710dd" />
+<img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/f0f919f3-b68b-4847-902d-b3b9c1f48a02" />
+<img width="1871" height="1050" alt="image" src="https://github.com/user-attachments/assets/57e43ff8-5f3e-4dae-aaa0-5cef3b49645d" />
+<img width="1873" height="1055" alt="image" src="https://github.com/user-attachments/assets/ec8c5f44-57cd-45aa-a70b-ba9de37a34fe" />
+<img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/b8a046b7-ce48-4837-acd4-ee4149e493c6" />
+<img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/fb39f801-a990-4924-b0e6-1f11572ffa29" />
 
-## Alloy syntax
+## Alloy configuration language 101
 
-### Think of Alloy as our secret weapon that can collect, transform, and deliver our telemetry data. 
+### Think of Alloy as our trusty pal who can collect, process, and export our telemetry data. 
 
 To instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
 
