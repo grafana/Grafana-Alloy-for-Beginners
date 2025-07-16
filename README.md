@@ -1,9 +1,11 @@
 # Grafana Alloy for Beginners
 
-<img width="917" alt="image" src="https://github.com/user-attachments/assets/9217f310-39c8-4baa-b748-0a19cc40a5ba" />
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/c74aef87-1586-4dbc-ba88-562ce96f4c2a" />
-<img width="911" alt="image" src="https://github.com/user-attachments/assets/2c49f7f1-fff2-44a3-b271-4f2f82e1be07" />
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/002d5e98-863d-48e8-9fc2-1aa99e3716df" />
+<img width="1901" height="1042" alt="image" src="https://github.com/user-attachments/assets/b907b8dc-0b0f-4191-ab41-dda20b626e8a" />
+<img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/e3dd0e99-f78e-4767-9fda-d3e44daf9e1e" />
+<img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/68c41817-7f5b-4247-a23f-bdab60df8dcf" />
+<img width="1874" height="1054" alt="image" src="https://github.com/user-attachments/assets/54aaf5d7-5904-43e8-88ef-60a937e35eb0" />
+<img width="1868" height="1051" alt="image" src="https://github.com/user-attachments/assets/3a6153b9-a909-4ba1-b812-0e27c1774faf" />
+<img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/722500e5-d485-411f-841e-32d729dd0d0b" />
 
 ## Resources 
 - [Add Grafana Alloy for Beginners YouTube Playlist here]
@@ -14,8 +16,7 @@
   - [Grafana Alloy Tutorials](https://grafana.com/docs/alloy/latest/tutorials/)
 
 **NOTE**:
-This series was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource
-for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
+This series was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). That repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
 
 ## Learning environment set up
 Before getting started, make sure you:
