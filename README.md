@@ -16,7 +16,7 @@
 - The learning environment was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). 
   - This repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
     
-# What is Alloy and when does it make sense to use it? 
+# What is Grafana Alloy and when does it make sense to use it? 
 <img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/2c5b4c90-e4cb-492f-814d-9a797cd710dd" />
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/f0f919f3-b68b-4847-902d-b3b9c1f48a02" />
 <img width="1871" height="1050" alt="image" src="https://github.com/user-attachments/assets/57e43ff8-5f3e-4dae-aaa0-5cef3b49645d" />
@@ -24,7 +24,7 @@
 <img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/b8a046b7-ce48-4837-acd4-ee4149e493c6" />
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/fb39f801-a990-4924-b0e6-1f11572ffa29" />
 
-# Alloy configuration language 101
+# Grafana Alloy configuration language 101
 
 ### Think of Alloy as our trusty pal who can collect, process, and export our telemetry data. 
 
@@ -164,7 +164,7 @@ Expand a log line to view its labels.
 
 You should see labels "group = infrastructure" and "service = alloy".
 
-### Section 2: Collect and transform infrastructure metrics
+### Section 2: Build a pipeline for infrastructure metrics with Grafana Alloy Part I
 
 #### Objectives
 
@@ -184,8 +184,6 @@ There could be 1000 servers going up and down whose names and addresses you don'
 You want to avoid having to manage this ever-changing list of things to scrape and get metrics from yourself.
 
 For example, let's say you are working with Amazon instances. Instead of hard coding all the names and addresses, you could reach out to an Amazon endpoint and have it find all of the instances for you and expose those as targets so alloy could scrape it.
-
-
 
 #### Instructions
 
@@ -213,7 +211,7 @@ prometheus.remote_write "mimir" {
 }
 ```
 
-In this section, we will be using the `discovery.http` component to ping an HTTP within our lab envirohment in charge of finding targets: "http://service-discovery/targets.json"
+In this section, we will be using the `discovery.http` component to ping an HTTP within our lab environment in charge of finding targets: "http://service-discovery/targets.json"
 
 This http endpoints are aware of all instances of loki, tempo, mimir, and pyroscope databases that are currently running within our environment
 
@@ -233,28 +231,7 @@ You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope serv
 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/a7f7d7f8-e0d8-4cc2-b76a-c0d03e55d8d5" />
 
-#### Alloy UI
-
-Alloy UI is a useful tool that helps you visualize how Alloy is configured and what it is doing so you are able to debug efficiently. 
-
-Navigate to `localhost:12345` to see the list of components (orange box) that alloy is currently configured with.
-Click on the blue ‘view’ button on the right side (red arrow).
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/5f4ac3f7-ab05-43f2-9840-0bac97a59fdd" />
-
-You will see details (green box) about what this component is configured with and what it is exporting.
-You can also access the links to view the documentation (orange arrow) for the component and the live debugging feature (yellow arrow). 
-<img width="907" alt="image" src="https://github.com/user-attachments/assets/84934f68-4964-4203-9dd5-47693d1a7505" />
-
-Navigate to the ‘Graph’ tab (blue arrow) to access the graph of components and how they are connected.
-
-The number (red box) shown on the dotted lines shows the rate of transfer between components. The window at the top (orange box) configures the interval over which alloy should calculate the per-second rate, so a window of ‘10’ means that alloy should look over the last 10 seconds to compute the rate.
-
-The color of the dotted line signifies what type of data are being transferred between components. See the color key (purple box) for clarification. 
-
-<img width="910" alt="image" src="https://github.com/user-attachments/assets/95b20759-971f-410d-9598-d5db3213eef7" />
-
-
-### Section 3: Collect and transfrom metrics from Postgres DB
+### Section 3: Build a pipeline for infrastructure metrics with Grafana Alloy Part II
 
 #### Objectives
 
@@ -333,9 +310,29 @@ You should also see an instance value of `mythical-database:5432/postgres` inste
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/5907b198-b732-4b7d-a0a5-65dcf47f7e4c" />
 
-## Application Observability - collect, transform, and export traces and logs
+### How to use the Alloy UI to debug pipelines
 
-### Section 4: Collect and transform metrics from Mythical-Services
+Alloy UI is a useful tool that helps you visualize how Alloy is configured and what it is doing so you are able to debug efficiently. 
+
+Navigate to `localhost:12345` to see the list of components (orange box) that alloy is currently configured with.
+Click on the blue ‘view’ button on the right side (red arrow).
+<img width="914" alt="image" src="https://github.com/user-attachments/assets/5f4ac3f7-ab05-43f2-9840-0bac97a59fdd" />
+
+You will see details (green box) about what this component is configured with and what it is exporting.
+You can also access the links to view the documentation (orange arrow) for the component and the live debugging feature (yellow arrow). 
+<img width="907" alt="image" src="https://github.com/user-attachments/assets/84934f68-4964-4203-9dd5-47693d1a7505" />
+
+Navigate to the ‘Graph’ tab (blue arrow) to access the graph of components and how they are connected.
+
+The number (red box) shown on the dotted lines shows the rate of transfer between components. The window at the top (orange box) configures the interval over which alloy should calculate the per-second rate, so a window of ‘10’ means that alloy should look over the last 10 seconds to compute the rate.
+
+The color of the dotted line signifies what type of data are being transferred between components. See the color key (purple box) for clarification. 
+
+<img width="910" alt="image" src="https://github.com/user-attachments/assets/95b20759-971f-410d-9598-d5db3213eef7" />
+
+# Application Observability 
+## Collect, transform, and export application metrics, traces, and logs
+### Section 4: Build a pipeline for application metrics with Grafana Alloy
 
 #### Objectives
 
@@ -403,7 +400,7 @@ Navigate to Dashboards > `Section 4 Verification` and you should see a panel wit
 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/e3271544-b277-4114-a969-733ce4da064b" />
 
-### Section 5: Ingesting OTel traces
+### Section 5: Build a pipeline for application traces with Grafana Alloy
 
 #### Objectives
 
@@ -491,8 +488,7 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/d0822e32-0af2-4f13-b6de-2c037d2e8a93" />
 
-### Section 6: Ingesting application logs
-
+### Section 6: Build a pipeline for application logs with Grafana Alloy
 #### Objectives
 
 - [Ingest](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) the logs that are being sent by the mythical services to port 3100
@@ -547,7 +543,7 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 6 Verifica
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/01b5718b-aa1c-47d6-92a1-206aca81066c" />
 
-### Section 7: Spanlogs
+### Section 7: Generate logs from application traces with Grafana Alloy
 
 #### Objectives
 
@@ -644,7 +640,7 @@ Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard
 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/fa6b332e-9f32-4844-8213-263f68427ba3" />
 
-
+# Hands-on Exercises
 ### Mission 1
 
 #### Description
