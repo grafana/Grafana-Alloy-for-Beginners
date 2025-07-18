@@ -5,7 +5,7 @@
 <img width="1871" height="1051" alt="image" src="https://github.com/user-attachments/assets/3737821c-dd0e-465d-8248-ec41a9f1013c" />
 <img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/722500e5-d485-411f-841e-32d729dd0d0b" />
 
-# Resources 
+# Resources c
 - [Add Grafana Alloy for Beginners YouTube Playlist here]
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
   - [Alloy configuration blocks](https://grafana.com/docs/alloy/latest/reference/config-blocks/)
