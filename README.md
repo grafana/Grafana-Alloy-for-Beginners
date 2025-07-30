@@ -53,6 +53,8 @@ The `arguments` and `blocks` sections list what you could do with the data. Pay 
 
 <img width="1873" height="1053" alt="image" src="https://github.com/user-attachments/assets/08888cf8-68cb-48d3-a51b-ed4ca89b1430" />
 <img width="1874" height="1052" alt="image" src="https://github.com/user-attachments/assets/2593ceff-7b48-400b-8968-d7c1ee60594d" />
+
+Focusing on these 3 things will point us in the right direction as we configure our pipeline. 
 <img width="1875" height="1052" alt="image" src="https://github.com/user-attachments/assets/46edeeee-502c-4002-8a3b-b69b74979de6" />
 
 # Learning environment setup
@@ -66,12 +68,14 @@ Before getting started, make sure you:
 ```
 git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
 ```
-- cd into the project, start a new command-line interface in your Operating System and run: 
+- start a new command-line interface in your Operating System and run: 
 ```
+#in the project directory
 make run
 ```
 - To stop the environment, use the following command:
 ```
+#in the project directory
 make stop
 ```
 In a separate terminal, open the project using a text editor of your choice.
@@ -127,8 +131,10 @@ loki.write "mythical" {
 - send the logs to the receiver of the`loki.relabel.alloy_logs` component
 
 `loki.relabel` component:
-- set the `group` label to "infrastructure"
-- set the `service` label to "alloy"
+- Use the `rule` block to
+  - set the `group` label to "infrastructure"
+  - set the `service` label to "alloy"
+  - **Note**: These rules are applied in the order they are written!
 - forward the logs to the receiver of the `loki.write.mythical` component
 
 `loki.write` component:
@@ -146,7 +152,7 @@ To reload Alloy's config, hit the following endpoint in a browser or with a tool
 curl -X POST http://localhost:12345/-/reload
 ```
 
-If the config is valid, you should see a response like the following:
+If the config is valid, we should see a response like the following:
 
 ```
 config reloaded
