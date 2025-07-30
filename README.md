@@ -176,19 +176,22 @@ You should see labels "group = infrastructure" and "service = alloy".
 
 - Use the [discovery.http](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) component to discover the targets to scrape
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to export metrics to the locally running Mimir
+- Use the [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) component to export metrics to the locally running Mimir
 
-We are going to introduce a new component called service discovery (`discovery.http`). 
+In this section, we will learn how to perform service discovery using Alloy. (`discovery.http`). 
 
-When you are observing your infrastructure/applications, it's likely that you are working with a dynamic environment.
+When we’re monitoring infrastructure or applications, we’re often working in dynamic environments where things are constantly changing.
 <img width="907" alt="image" src="https://github.com/user-attachments/assets/f420f7c3-87c6-40c6-9be4-d594aa498338" />
 
-There could be 1000 servers going up and down whose names and addresses you don't know.
+There could be 1000 servers or containers starting and stopping whose names and addresses are constantly changing.
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/fe1aae3a-4552-4c1a-8c34-6d05e18b1be6" />
 
-You want to avoid having to manage this ever-changing list of things to scrape and get metrics from yourself.
+We want to avoid keeping up with ever changing list of sources that we need to collect telemetry from. 
 
-For example, let's say you are working with Amazon instances. Instead of hard coding all the names and addresses, you could reach out to an Amazon endpoint and have it find all of the instances for you and expose those as targets so alloy could scrape it.
+Instead of hard coding all the names and addresses of all the telemetry sources, what if there was a system that automatically tracked all the telemetry sources in our environment and Alloy could query it to discover what to collect from?
+
+That’s exactly what service discovery components do. They are configured to query systems like the Kubernetes API or AWS EC2, which already track your infrastructure. Then they retrieve and format the list of discovered targets, exposing them to other Alloy components to collect telemetry from.
+
 
 #### Instructions
 
@@ -215,16 +218,25 @@ prometheus.remote_write "mimir" {
    }
 }
 ```
+#### Tasks
 
-In this section, we will be using the `discovery.http` component to ping an HTTP within our lab environment in charge of finding targets: "http://service-discovery/targets.json"
+`discovery.http.service_discovery` component:
+- ping an HTTP within our lab environment in charge of finding targets: "http://service-discovery/targets.json"
+  - this http endpoint is aware of all instances of Loki, Tempo, Mimir, and Pyroscope databases that are currently running within our environment
+- set the `refresh_interval` argument to 2 seconds for demo purposes.  
 
-This http endpoints are aware of all instances of loki, tempo, mimir, and pyroscope databases that are currently running within our environment
+`prometheus.scrape` component:
+- set the scrape interval and scrape timeout to 2 seconds
+- specify 
+  - where to scrape data from (targets)
+    - targets
+  - where to send the data (forward_ to)
+    - receiver 
 
-We will use a `prometheus.scrape` component to scrape metrics from the discovered targets.
+`prometheus.remote_write` component:
+- export metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
 
-As a last step, we will configure the `prometheus.remote_write` component to write the metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
-
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/845a4274-65e4-46da-868b-0fb71a8f92be" />
+<img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/43ac7e4e-0389-4624-a502-c57ec079dc6c" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
@@ -233,6 +245,8 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
 Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select the `Section 2 Verification` dashboard.
 
 You should see an `up` value of 1 for the Loki, Mimir, Tempo, and Pyroscope services.
+
+If we see a 0, that indicates there has been an error somewhere.
 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/a7f7d7f8-e0d8-4cc2-b76a-c0d03e55d8d5" />
 
