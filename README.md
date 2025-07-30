@@ -170,11 +170,11 @@ Expand a log line to view its labels.
 
 You should see labels "group = infrastructure" and "service = alloy".
 
-### Section 2: Build a pipeline for infrastructure metrics with Alloy Part I
+### Section 2: Build a pipeline for infrastructure metrics with Alloy - Part I
 
 #### Objectives
 
-- Use the [discovery.http](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) component to discover the targets to scrape
+- Use the [`discovery.http`](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) component to discover the targets to scrape
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use the [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) component to export metrics to the locally running Mimir
 
@@ -220,21 +220,21 @@ prometheus.remote_write "mimir" {
 ```
 #### Tasks
 
-`discovery.http.service_discovery` component:
-- ping an HTTP within our lab environment in charge of finding targets: "http://service-discovery/targets.json"
+`discovery.http` component:
+- Ping an HTTP within our lab environment in charge of finding targets: "http://service-discovery/targets.json"
   - this http endpoint is aware of all instances of Loki, Tempo, Mimir, and Pyroscope databases that are currently running within our environment
-- set the `refresh_interval` argument to 2 seconds for demo purposes.  
+- Set the `refresh_interval` argument to 2 seconds for demo purposes 
 
 `prometheus.scrape` component:
-- set the scrape interval and scrape timeout to 2 seconds
-- specify 
-  - where to scrape data from (targets)
-    - targets
-  - where to send the data (forward_ to)
-    - receiver 
+- Set the scrape interval and scrape timeout to 2 seconds
+- Specify 
+  - Where to scrape data from (targets)
+    - Targets
+  - Where to send the data (forward_ to)
+    - Receiver 
 
 `prometheus.remote_write` component:
-- export metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
+- Export metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
 
 <img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/43ac7e4e-0389-4624-a502-c57ec079dc6c" />
 
@@ -250,16 +250,16 @@ If we see a 0, that indicates there has been an error somewhere.
 
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/a7f7d7f8-e0d8-4cc2-b76a-c0d03e55d8d5" />
 
-### Section 3: Build a pipeline for infrastructure metrics with Grafana Alloy Part II
+### Section 3: Build a pipeline for infrastructure metrics with Alloy - Part II
 
 #### Objectives
 
-- Expose metrics from the Postgres DB using the [`prometheus.exporter.postgres](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.postgres/) component
-- Collect metrics from Postgres using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
+- Expose metrics from the Postgres DB using the [`prometheus.exporter.postgres`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.postgres/) component
+- Scrape metrics from Postgres using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use the [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to 
   - add the `group="infrastructure"` and `service="postgres"` labels
   - replace the value of 'instance' label for a value that matches the regex ("^postgresql://([^/]+)")
-- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) the metrics to Mimir
+- Export metrics to Mimir using the [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) component
 
 #### Instructions
 
@@ -311,21 +311,32 @@ prometheus.relabel "postgres" {
     }
 }
 ```
+#### Tasks
 
-For the `prometheus.scrape` component, we want to scrape the `prometheus.exporter.postgres.mythical` component's targets and forward the metrics to the `prometheus.relabel.postgres` component's receiver.
+`prometheus.exporter.postgres`:
+- Specify the url of a local Postgres database to connect to and expose metrics for a Postgres database
+  - "postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable"
 
-For the `prometheus.relabel` component, we want to add the `group="infrastructure"` and `service="postgres"` labels to the metrics.
+prometheus.scrape` component:
+-  Scrape the `prometheus.exporter.postgres.mythical` component's targets
+-  Forward the metrics to the `prometheus.relabel.postgres` component's receiver
 
-We also want to modify the `instance` label to clean it up. The regex `"^postgresql://(.+)"` will extract the value after `postgresql://`.
+`prometheus.relabel` component:
+- Add the `group="infrastructure"` and `service="postgres"` labels to the metrics
+- Modify the `instance` label to clean it up
+  - Before: `postgresql://mythical-database:5432/postgres`
+  - After: `mythical-database:5432/postgres`
 
-<img width="909" alt="image" src="https://github.com/user-attachments/assets/41d4f468-62c3-46cd-8694-efa2424049c2" />
+<img width="1873" height="1050" alt="image" src="https://github.com/user-attachments/assets/6bd9119e-ceaa-42c8-9d27-250e64f095c1" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 3 Verification` and you should see a dashboard populating with Postgres metrics. 
-You should also see an instance value of `mythical-database:5432/postgres` instead of `postgresql://mythical-database:5432/postgres`.
+Navigate to [Dashboards](http://localhost:3000/dashboards) and select `Section 3 Verification`.
+We should see a dashboard populating with Postgres metrics. 
+
+We should also see an instance value of `mythical-database:5432/postgres` instead of `postgresql://mythical-database:5432/postgres`.
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/5907b198-b732-4b7d-a0a5-65dcf47f7e4c" />
 
