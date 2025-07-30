@@ -1,8 +1,8 @@
 <img width="1901" height="1042" alt="image" src="https://github.com/user-attachments/assets/b907b8dc-0b0f-4191-ab41-dda20b626e8a" />
 <img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/e3dd0e99-f78e-4767-9fda-d3e44daf9e1e" />
 <img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/68c41817-7f5b-4247-a23f-bdab60df8dcf" />
-<img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/1fb44b38-f114-4381-b741-f33737b37928" />
-<img width="1871" height="1051" alt="image" src="https://github.com/user-attachments/assets/3737821c-dd0e-465d-8248-ec41a9f1013c" />
+<img width="1875" height="1055" alt="image" src="https://github.com/user-attachments/assets/10ed5e8d-fe6b-4529-ab14-4667012800ec" />
+<img width="1874" height="1053" alt="image" src="https://github.com/user-attachments/assets/9ba26adc-1ab3-4598-9fdb-ce61aafef952" />
 <img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/722500e5-d485-411f-841e-32d729dd0d0b" />
 
 # Resources 
@@ -16,7 +16,7 @@
 - The learning environment was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). 
   - This repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
     
-# What is Grafana Alloy and when does it make sense to use it? 
+# What is Alloy? When does it make sense to use it? 
 <img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/2c5b4c90-e4cb-492f-814d-9a797cd710dd" />
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/f0f919f3-b68b-4847-902d-b3b9c1f48a02" />
 <img width="1871" height="1050" alt="image" src="https://github.com/user-attachments/assets/57e43ff8-5f3e-4dae-aaa0-5cef3b49645d" />
@@ -24,7 +24,7 @@
 <img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/b8a046b7-ce48-4837-acd4-ee4149e493c6" />
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/fb39f801-a990-4924-b0e6-1f11572ffa29" />
 
-# Grafana Alloy configuration language 101
+# Alloy configuration language 101
 
 ### Think of Alloy as our trusty pal who can collect, process, and export our telemetry data. 
 
@@ -32,18 +32,18 @@
 
 To instruct Alloy on how we want that done, we must write these instructions in a language (`Alloy syntax`) that Alloy understands. 
 
-<img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/87eb530a-eb3b-40d3-90d4-6434609ed067" />
-<img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/19e40a8d-7a07-4564-9de2-5dbf2d3570b2" />
+<img width="1876" height="1052" alt="image" src="https://github.com/user-attachments/assets/451e990c-36a1-47f4-829f-d5c4bb1e7708" />
+<img width="1874" height="1051" alt="image" src="https://github.com/user-attachments/assets/e8675a8f-057d-4f15-aeb5-9bd2a333749a" />
 <img width="1872" height="1049" alt="image" src="https://github.com/user-attachments/assets/bf15e800-5dbf-4fe8-a467-3446365243c4" />
 <img width="1873" height="1053" alt="image" src="https://github.com/user-attachments/assets/44e33cfd-09ff-4363-b972-7a4c4778ec49" />
-<img width="1871" height="1050" alt="image" src="https://github.com/user-attachments/assets/33615290-7852-41b9-b12f-6530fab77556" />
-<img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/fe66d09c-1f24-4902-ba6d-066679f5c0c4" />
-<img width="1871" height="1051" alt="image" src="https://github.com/user-attachments/assets/bd9f447e-58e7-4e67-b2ae-8d8267339745" />
+<img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/b326bc81-bc3f-4895-b50b-7728a75b1ee4" />
+<img width="1877" height="1055" alt="image" src="https://github.com/user-attachments/assets/6291f81b-9205-4ad1-b443-e1ee8f1e16a0" />
+<img width="1875" height="1055" alt="image" src="https://github.com/user-attachments/assets/acfd967b-800e-4be7-ad9d-f931c41ef451" />
 <img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/29fdef87-2f43-49dc-879e-f299ea710c09" />
 <img width="1876" height="1054" alt="image" src="https://github.com/user-attachments/assets/344884c6-2fce-427a-b5c5-c633b0ae0a8c" />
-<img width="1874" height="1053" alt="image" src="https://github.com/user-attachments/assets/c90366ae-662e-435f-8cfa-0a445839abeb" />
+<img width="1873" height="1053" alt="image" src="https://github.com/user-attachments/assets/4452dd7e-c5d9-4963-8db9-2e0f301a0cbe" />
 <img width="1874" height="1052" alt="image" src="https://github.com/user-attachments/assets/c72f8819-68c5-46a2-866c-687489e75e2c" />
-<img width="1874" height="1052" alt="image" src="https://github.com/user-attachments/assets/dc9519b3-d54d-4fae-bf7b-c7d9c2f63e36" />
+<img width="1873" height="1054" alt="image" src="https://github.com/user-attachments/assets/5b4e0e98-c880-48bd-ac43-1aed2f3c6415" />
 
 The `usage` section gives you an example of how this particular component could be configured. 
 
