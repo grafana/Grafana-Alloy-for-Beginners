@@ -84,7 +84,7 @@ In a separate terminal, open the project using a text editor of your choice.
 
 # Infrastructure Observability
 ## Collect, process, and export infrastructure logs and metrics
-### Section 1: Build a pipeline for infrastructure logs with Grafana Alloy
+### Section 1: Build a pipeline for infrastructure logs with Alloy
 #### Objectives
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
 - Use [`loki.relabel`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.relabel/) to add labels to the logs
@@ -170,19 +170,18 @@ Expand a log line to view its labels.
 
 You should see labels "group = infrastructure" and "service = alloy".
 
-### Section 2: Build a pipeline for infrastructure metrics with Grafana Alloy Part I
+### Section 2: Build a pipeline for infrastructure metrics with Alloy Part I
 
 #### Objectives
 
 - Use the [discovery.http](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) component to discover the targets to scrape
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to write the metrics to the locally running Mimir
+- Use [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/)to export metrics to the locally running Mimir
 
 We are going to introduce a new component called service discovery (`discovery.http`). 
 
 When you are observing your infrastructure/applications, it's likely that you are working with a dynamic environment.
 <img width="907" alt="image" src="https://github.com/user-attachments/assets/f420f7c3-87c6-40c6-9be4-d594aa498338" />
-
 
 There could be 1000 servers going up and down whose names and addresses you don't know.
 <img width="908" alt="image" src="https://github.com/user-attachments/assets/fe1aae3a-4552-4c1a-8c34-6d05e18b1be6" />
