@@ -377,7 +377,7 @@ The Clustering page in the Alloy UI shows the status and role of each node, so y
 #### Objectives
 
 - Collect application metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- [Export](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
+- Export metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) component
 
 #### Instructions
 
@@ -441,9 +441,9 @@ Navigate to Dashboards > `Section 4 Verification` and we should see a panel with
 
 #### Objectives
 
-- Receive spans using the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
-- Batch spans using the [otelcol.processor.batch](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/) component
-- Export spans using the [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/) component
+- Receive spans using the [`otelcol.receiver.otlp`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
+- Batch spans using the [`otelcol.processor.batch`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/) component
+- Export spans using the [`otelcol.exporter.otlp`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/) component
 
 #### Instructions
 
@@ -494,18 +494,18 @@ otelcol.exporter.otlp "tempo" {
 ```
 `otelcol.receiver.otlp` component:
 - Open the doc for the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
-- Find the default port for grpc and set its endpoint equal to it.
-- Find the default port for http and set its endpoint equal to it. 
-- Using the `output` block, send the traces to the input of the `otelcol.processor.batch` component we will define next. 
+- Find the default port for grpc and set its endpoint equal to it
+- Find the default port for http and set its endpoint equal to it
+- Using the `output` block, send the traces to the input of the `otelcol.processor.batch` component we will define next 
 
 `otecol.processor.batch` component:
-- The batch processor will batch spans until a batch size or a timeout is met, before sending those batches on to another component. 
-- Configure it to batch minimum 1000 spans, up to 2000 spans, or until 2 seconds have elapsed.
-- Using the `output` block, send the batched traces to the input of the `otelcol.exporter.otlp` component we will define next.
+- The batch processor will batch spans until a batch size or a timeout is met, before sending those batches on to another component
+- Configure it to batch minimum 1000 spans, up to 2000 spans, or until 2 seconds have elapsed
+- Using the `output` block, send the batched traces to the input of the `otelcol.exporter.otlp` component we will define next
 
 `otelcol.exporter.otlp` component: 
 - Using the `client` block, export batches of spans to a local instance of Tempo
-- The Tempo url is "http://tempo:4317".
+- The Tempo url is "http://tempo:4317"
 
 <img width="1874" height="1054" alt="image" src="https://github.com/user-attachments/assets/f673aa97-192c-466a-8775-00bcf2d7d652" />
 
@@ -583,9 +583,9 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 6 Verifica
 
 #### Objectives
 
-- Recieve OTLP spans from app using the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
+- Recieve OTLP spans from app using the [`otelcol.receiver.otlp`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
 - Convert ingested traces to logs using the [`otelcol.connector.spanlogs`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.connector.spanlogs/) component 
-- Convert the logs to Loki formatted log entries using the [otelcol.exporter.loki](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.loki/) component
+- Convert the logs to Loki formatted log entries using the [`otelcol.exporter.loki`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.loki/) component
 - Use the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component to convert the format and add attributes to the logs
 - Export processed logs to Loki using the [`loki.write`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) component
 
