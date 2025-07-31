@@ -425,7 +425,7 @@ Add the following labels for each target.
 
 Forward the metrics to the `prometheus.write.queue` component we will define next. 
 
-`prometheus.write.queue` component writes metrics to the url of the database we specify. 
+`prometheus.write.queue` component exports metrics to the url of the database we specify. 
 
 Similar to `prometheus.remote_write` component, we use the `endpoint` block we label as "mimir". 
 We set the `url` equal the address of the locally running Mimir: "http://mimir:9009/api/v1/push"
@@ -446,7 +446,7 @@ Navigate to Dashboards > `Section 4 Verification` and you should see a panel wit
 
 - [Receive](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) spans from the Mythical services and Beyla
 - [Batch spans](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/) for efficient processing
-- [Write](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/) the spans to a local instance of Tempo
+- [Export](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/) the spans to a local instance of Tempo
 
 #### Instructions
 
@@ -510,7 +510,7 @@ otelcol.exporter.otlp "tempo" {
 
 `otelcol.exporter.otlp`
 
-- Using the `client` block, write batches of spans to a local instance of Tempo
+- Using the `client` block, export batches of spans to a local instance of Tempo
 - The Tempo url is "http://tempo:4317".
 
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/1e3dedbe-d69b-47b6-b7e0-ee3a2ae740e7" />
@@ -742,7 +742,7 @@ Go back to the portion of config from **Section 4**, where we started scraping m
 prometheus.relabel "mission_2" {
     forward_to = [prometheus.write.queue.experimental.receiver]
 
-  //write a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
+  //define a relabel rule to extract the cloud provider from the instance_id label and add it as a new label called cloud_provider
     rule {
         action        = "// TODO: Fill this in"
         target_label  = "// TODO: Fill this in"
