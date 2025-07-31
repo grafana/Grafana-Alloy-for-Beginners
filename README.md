@@ -686,7 +686,7 @@ Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard
 #### Description
 
 One of our trusted informants has stashed an encrypted file—`secret_message.txt.enc`—on a remote dead-drop.
-This filel can be found within the mission repo. 
+This file can be found within the series repo. 
 
 The decryption key? Hidden in plain sight, embedded in an internal label on the service discovery targets.
 Since internal labels are stripped before metrics make it to Mimir, this covert tactic kept the key out of enemy hands.
@@ -702,7 +702,7 @@ Your mission: use Alloy to uncover the hidden key, decrypt the message, and reve
 
 Access the [Alloy UI](http://localhost:12347) and look for the hidden key on one of the service discovery targets.
 
-To decrypt and print the AES-256-CBC encrypted secret message, run the following command in the terminal at the root of the lab repo directory, using the key you just found:
+To decrypt and print the AES-256-CBC encrypted secret message, run the following command in the terminal at the root of the project directory, using the key you just found:
 `openssl enc -aes-256-cbc -d -salt -pbkdf2 -in secret_message.txt.enc -k '<key>'`
 
 #### Verification
@@ -736,7 +736,7 @@ For this exercise, you may find the following components useful:
 
 - [prometheus.relabel](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/)
 
-Go back to the portion of config from Section 4, where we started scraping metrics from the mythical services. Paste the following in above the `prometheus.write.queue` component (**note**: the order of components does not matter, this is just for organization and readability):
+Go back to the portion of config from **Section 4**, where we started scraping metrics from the mythical services. Paste the following above the `prometheus.write.queue` component (**note**: the order of components does not matter, this is just for organization and readability):
 
 ```alloy
 prometheus.relabel "mission_2" {
@@ -769,6 +769,7 @@ Query for `count by (cloud_provider) (rate(mythical_db_request_count_total [$__r
 ### Mission 3
 
 After much debate, the various departments within IMF have reached a rare consensus: it's time to standardize the attribute name for service tiers.
+
 Until now, teams have been using conflicting keys like `servicetier` and `tier`, creating chaos in spanmetrics and cross-department dashboards.
 
 Headquarters has spoken: `service.tier` is the new standard.
@@ -778,15 +779,14 @@ Standardize the attribute across the board so that spanmetrics flow smoothly and
 
 #### Objectives
 
-- Use the [`otelcol.processor.attributes`](https://grafana.com/docs/agent/latest/flow/reference/components/otelcol.processor.attributes/) component to set the `service.tier` attribute to the value of
-  the `servicetier` or `tier` attributes.
+- Use the [`otelcol.processor.attributes`](https://grafana.com/docs/agent/latest/flow/reference/components/otelcol.processor.attributes/) component to set the `service.tier` attribute to the value of the `servicetier` or `tier` attributes.
 - Drop the `servicetier` and `tier` attributes.
 
 #### Instructions
 
 The [`otelcol.processor.attributes`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.attributes/) component allows you to add, set, or drop attributes.
 
-Go back to the portion of config from Section 5, where we received traces from the mythical services. Paste the following  above the `otelcol.processor.batch.default` component (**note**: the order of components does not matter, this is just for organization and readability):
+Go back to the portion of config from **Section 5**, where we received traces from the mythical services. Paste the following  above the `otelcol.processor.batch.default` component (**note**: the order of components does not matter, this is just for organization and readability):
 
 ```alloy
 otelcol.processor.attributes "mission_3" {
@@ -834,9 +834,11 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you
 #### Description
 
 The IMF needs your expertise for one final mission.
+
 An opposing state actor exploited a Zero-Day vulnerability in one of our servers, causing sensitive tokens to be logged by the mythical-requester.
 
 The security team is standing by, but before they can act, we need to make sure no tokens are being written to Loki.
+
 Your task: use Alloy to identify and redact any sensitive tokens from the mythical-service logs—effectively, clean up the trail and keep things secure.
 
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 4`. You will see logs coming in with sensitive token information. 
@@ -857,8 +859,3 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 4` and you
 panel showing the rate of logs with tokens coming from the mythical services as well as the logs themselves with the secret token redacted. 
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/02151116-d8c5-4aa1-844a-6c6d9a32285a" />
-
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/4f066278-ba62-4a0e-b905-75d1c4f25a34" />
-<img width="912" alt="image" src="https://github.com/user-attachments/assets/ae9e8f4a-9fcc-435d-bbf6-7b482b01c87a" />
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/ed565c8c-31e8-47f6-bc20-893e73b70eb6" />
-<img width="913" alt="image" src="https://github.com/user-attachments/assets/15e5a2cb-0e8f-46f0-b93e-4e32e27b992d" />
