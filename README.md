@@ -221,7 +221,7 @@ prometheus.remote_write "mimir" {
 #### Tasks
 
 `discovery.http` component:
-- Ping an HTTP within our lab environment in charge of finding targets: "http://service-discovery/targets.json"
+- Ping an HTTP within our lab environment in charge of finding targets("http://service-discovery/targets.json")
   - this http endpoint is aware of all instances of Loki, Tempo, Mimir, and Pyroscope databases that are currently running within our environment
 - Set the `refresh_interval` argument to 2 seconds for demo purposes 
 
@@ -365,7 +365,7 @@ A `cluster node` is an instance of Alloy that participates in workload distribut
 
 The Clustering page in the Alloy UI shows the status and role of each node, so you can easily monitor which nodes are active, their addresses, and its current state.
 
-**To debug using the UI**
+**To debug the piplines using the Alloy UI**
 - Ensure that no component is reported as unhealthy.
 - Ensure that the arguments and exports for misbehaving components appear correct.
 - Ensure that the live debugging data meets your expectations.
@@ -425,7 +425,7 @@ targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 - Forward the metrics to the `prometheus.write.queue` component we will define next. 
 
 `prometheus.write.queue` component:
-- Set the `url` equal the address of the locally running Mimir: "http://mimir:9009/api/v1/push"
+- Set the `url` equal the address of the locally running Mimir ("http://mimir:9009/api/v1/push")
 
 <img width="1872" height="1054" alt="image" src="https://github.com/user-attachments/assets/5d289b5b-acbc-40eb-8038-69ee4d7d47e3" />
 
@@ -493,20 +493,17 @@ otelcol.exporter.otlp "tempo" {
 
 ```
 `otelcol.receiver.otlp` component:
-
 - Open the doc for the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
 - Find the default port for grpc and set its endpoint equal to it.
 - Find the default port for http and set its endpoint equal to it. 
 - Using the `output` block, send the traces to the input of the `otelcol.processor.batch` component we will define next. 
 
 `otecol.processor.batch` component:
-
 - The batch processor will batch spans until a batch size or a timeout is met, before sending those batches on to another component. 
 - Configure it to batch minimum 1000 spans, up to 2000 spans, or until 2 seconds have elapsed.
 - Using the `output` block, send the batched traces to the input of the `otelcol.exporter.otlp` component we will define next.
 
 `otelcol.exporter.otlp` component: 
-
 - Using the `client` block, export batches of spans to a local instance of Tempo
 - The Tempo url is "http://tempo:4317".
 
@@ -520,12 +517,11 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 5 Verifica
 
 <img width="917" alt="image" src="https://github.com/user-attachments/assets/564236f6-e3b5-430c-a963-2f7509960e5c" />
 
-You can also navigate to [Dashboards](http://localhost:3000/dashboards) > `MLT Dashboard`. These dashboards are configured to use the metrics
-from Spanmetrics, so you should see data for the spans we're ingesting.
+You can also navigate to [Dashboards](http://localhost:3000/dashboards) > `MLT Dashboard`. These dashboards are configured to use the metrics from Spanmetrics, so you should see data for the spans we're ingesting.
 
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/d0822e32-0af2-4f13-b6de-2c037d2e8a93" />
 
-### Section 6: Build a pipeline for application logs with  Alloy
+### Section 6: Build a pipeline for application logs with Alloy
 #### Objectives
 
 - Ingest application logs using the [`loki.source.api`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) component
@@ -571,7 +567,7 @@ loki.process "mythical" {
 `loki.source.api` component:
 - Ingest application logs sent from the mythical services 
 
-`loki.process`component:
+`loki.process` component:
   - add a static `service="mythical" label
   - extract the timestamp from the log line using `stage.regex` with this regex: `^.*?loggedtime=(?P<loggedtime>\S+)`
   - set the timestamp of the log to the extracted timestamp
@@ -648,23 +644,21 @@ loki.process "autologging" {
 }
 ```
 #### Tasks
-**`otelcol.connector.spanlogs`**
+`otelcol.connector.spanlogs` component:
 
 - Forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in section 5 to the `otelcol.connector.spanlogs`'s input.
 - Generate a log for each full trace(root), not for each span or process 
 - Include the `http.method`,`http.status_code`, `http.target` attributes in the logs.
 - send the generated logs to the `otelcol.exporter.loki`'s input. 
 
-**`otelcol.exporter.loki`** 
+`otelcol.exporter.loki` component:
 
 - This component accepts OTLP-formatted logs from other otelcol components and converts them to Loki-formatted log entries without further configuration. 
 - Forward the Loki-formatted logs to the `loki.process "autologging"`'s receiver for further processing. 
 
-**`loki.process`**
-
-Use this component to:
-  - Convert the body from JSON to logfmt using the `stage.json` and `stage.logfmt` stages
-  - Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
+`loki.process` component: 
+- Convert the body from JSON to logfmt using the `stage.json` and `stage.logfmt` stages
+- Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
 
 <img width="1875" height="1053" alt="image" src="https://github.com/user-attachments/assets/b233bfc7-7b36-4137-913d-82e37bea4617" />
 
