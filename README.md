@@ -681,7 +681,7 @@ Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/fa6b332e-9f32-4844-8213-263f68427ba3" />
 
 # Hands-on Exercises
-### Mission 1
+### Mission 1: The Hidden Key
 
 #### Description
 
@@ -709,7 +709,7 @@ To decrypt and print the AES-256-CBC encrypted secret message, run the following
 
 You should see the secret message in the console!
 
-### Mission 2
+### Mission 2: The Cardinality Crisis
 
 #### Description
 
@@ -766,7 +766,7 @@ Query for `count by (cloud_provider) (rate(mythical_db_request_count_total [$__r
 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/7a2fc73e-03ea-4e5c-be12-e4053027172c" />
 
-### Mission 3
+### Mission 3: Attribute Alignment
 
 After much debate, the various departments within IMF have reached a rare consensus: it's time to standardize the attribute name for service tiers.
 
@@ -829,7 +829,7 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Mission 3` and you
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/db5b980b-83b1-4c92-9d19-b33e50a52530" />
 
 
-### Mission 4
+### Mission 4: Redact and Protect
 
 #### Description
 
