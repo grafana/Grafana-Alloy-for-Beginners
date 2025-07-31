@@ -372,11 +372,11 @@ The Clustering page in the Alloy UI shows the status and role of each node, so y
 
 # Application Observability 
 ## Collect, transform, and export application metrics, traces, and logs
-### Section 4: Build a pipeline for application metrics with Grafana Alloy
+### Section 4: Build a pipeline for application metrics with Alloy
 
 #### Objectives
 
-- Collect metrics from the Mythical services using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
+- Collect application metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - [Export](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
 
 #### Instructions
@@ -403,50 +403,47 @@ prometheus.write.queue "experimental" {
 }
 
 ```
-For the `prometheus.scrape` component, we can define scrape targets for mythical services directly by creating a scrape object. Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. 
 
-Any non-double-underscore keys are used as labels for the target.
-For example, the following scrape object will scrape Mimir's metrics endpoint and add `env="demo"` and `service="mimir"` labels to the target:
-
+#### Tasks
+`prometheus.scrape` component:
+- Define scrape targets for mythical services directly by creating a scrape object.
+  - Scrape targets are defined as a list of maps, where each map contains a `__address__` key with the address of the target to scrape. 
+  - Any non-double-underscore keys are used as labels for the target.
+    - For example, the following scrape object will scrape Mimir's metrics endpoint and add `env="demo"` and `service="mimir"` labels to the target:
+      
 ```alloy
 targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 ```
+- create two targets using the following addresses. 
+  - "mythical-server:4000"
+  - "mythical-requester:4001"
+- Add the following labels for each target. 
+  - mythical-server:
+   - group = "mythical", service = "mythical-server"
+  - mythical-requester:
+    - group = "mythical", service = "mythical-requester"
+- Forward the metrics to the `prometheus.write.queue` component we will define next. 
 
-For this exercise, create two targets using the following addresses. 
+`prometheus.write.queue` component:
+- Set the `url` equal the address of the locally running Mimir: "http://mimir:9009/api/v1/push"
 
-- "mythical-server:4000"
-- "mythical-requester:4001"
-
-Add the following labels for each target. 
-- mythical-server:
-  - group = "mythical", service = "mythical-server"
-- mythical-requester:
-  - group = "mythical", service = "mythical-requester"
-
-Forward the metrics to the `prometheus.write.queue` component we will define next. 
-
-`prometheus.write.queue` component exports metrics to the url of the database we specify. 
-
-Similar to `prometheus.remote_write` component, we use the `endpoint` block we label as "mimir". 
-We set the `url` equal the address of the locally running Mimir: "http://mimir:9009/api/v1/push"
-
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/6c7ebcef-c963-41d6-ba6d-a5805c8104d6" />
+<img width="1872" height="1054" alt="image" src="https://github.com/user-attachments/assets/5d289b5b-acbc-40eb-8038-69ee4d7d47e3" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 #### Verification
 
-Navigate to Dashboards > `Section 4 Verification` and you should see a panel with the request rate per beast flowing!
+Navigate to Dashboards > `Section 4 Verification` and we should see a panel with the request rate per beast flowing!
 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/e3271544-b277-4114-a969-733ce4da064b" />
 
-### Section 5: Build a pipeline for application traces with Grafana Alloy
+### Section 5: Build a pipeline for application traces with Alloy
 
 #### Objectives
 
-- [Receive](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) spans from the Mythical services and Beyla
-- [Batch spans](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/) for efficient processing
-- [Export](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/) the spans to a local instance of Tempo
+- Receive spans using the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
+- Batch spans using the [otelcol.processor.batch](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/) component
+- Export spans using the [otelcol.exporter.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.otlp/) component
 
 #### Instructions
 
@@ -495,25 +492,25 @@ otelcol.exporter.otlp "tempo" {
 
 
 ```
-`otelcol.receiver.otlp`
+`otelcol.receiver.otlp` component:
 
-- To configure the `otelcol.receiver.otlp` component, open the doc for the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
+- Open the doc for the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
 - Find the default port for grpc and set its endpoint equal to it.
 - Find the default port for http and set its endpoint equal to it. 
 - Using the `output` block, send the traces to the input of the `otelcol.processor.batch` component we will define next. 
 
-`otecol.processor.batch`
+`otecol.processor.batch` component:
 
 - The batch processor will batch spans until a batch size or a timeout is met, before sending those batches on to another component. 
-- Let's configure it to batch minimum 1000 spans, up to 2000 spans, or until 2 seconds have elapsed.
+- Configure it to batch minimum 1000 spans, up to 2000 spans, or until 2 seconds have elapsed.
 - Using the `output` block, send the batched traces to the input of the `otelcol.exporter.otlp` component we will define next.
 
-`otelcol.exporter.otlp`
+`otelcol.exporter.otlp` component: 
 
 - Using the `client` block, export batches of spans to a local instance of Tempo
 - The Tempo url is "http://tempo:4317".
 
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/1e3dedbe-d69b-47b6-b7e0-ee3a2ae740e7" />
+<img width="1874" height="1054" alt="image" src="https://github.com/user-attachments/assets/f673aa97-192c-466a-8775-00bcf2d7d652" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
@@ -528,14 +525,14 @@ from Spanmetrics, so you should see data for the spans we're ingesting.
 
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/d0822e32-0af2-4f13-b6de-2c037d2e8a93" />
 
-### Section 6: Build a pipeline for application logs with Grafana Alloy
+### Section 6: Build a pipeline for application logs with  Alloy
 #### Objectives
 
-- [Ingest](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) the logs that are being sent by the mythical services to port 3100
-- [Add](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) a `service=”mythical”` label to logs
+- Ingest application logs using the [`loki.source.api`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) component
+- Add labels to logs using the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component
 - [Use](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) `stage.regex` and `stage.timestamp` to extract the timestamp from the log lines and set the log’s timestamp
 
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/d9c8dbc0-29ed-460b-b487-8440075cec59" />
+<img width="1874" height="1055" alt="image" src="https://github.com/user-attachments/assets/5234c304-1357-4263-89b4-5d8134f1025e" />
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/8b8afaa5-ade1-4c5a-9935-6ccb607af0f9" />
 
 #### Instructions
@@ -570,27 +567,31 @@ loki.process "mythical" {
     forward_to = [loki.write.mythical.receiver]
 }
 ```
+#### Tasks
+`loki.source.api` component:
+- Ingest application logs sent from the mythical services 
 
-- Ingest application logs sent from the mythical services using the [`loki.source.api`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) component
-- Use the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component to:
+`loki.process`component:
   - add a static `service="mythical" label
   - extract the timestamp from the log line using `stage.regex` with this regex: `^.*?loggedtime=(?P<loggedtime>\S+)`
   - set the timestamp of the log to the extracted timestamp
   - Forward the processed logs to Loki
+    
 #### Verification
 
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 6 Verification` and you should see a dashboard with the rate of logs coming from the mythical apps as well as panels showing the logs themselves for the server and requester
 
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/01b5718b-aa1c-47d6-92a1-206aca81066c" />
 
-### Section 7: Generate logs from application traces with Grafana Alloy
+### Section 7: Generate logs from application traces with Alloy
 
 #### Objectives
 
-- Take the traces we're already ingesting and [convert them to logs (spanlogs)](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.connector.spanlogs/)
-- [Convert](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.loki/) the logs to Loki-formatted log entries and forward them to the `loki.processor`. 
-- Use [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) to convert the format and add attributes to the logs
-- Forward the processed logs to Loki
+- Recieve OTLP spans from app using the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
+- Convert ingested traces to logs using the [`otelcol.connector.spanlogs`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.connector.spanlogs/) component 
+- Convert the logs to Loki formatted log entries using the [otelcol.exporter.loki](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.loki/) component
+- Use the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component to convert the format and add attributes to the logs
+- Export processed logs to Loki using the [`loki.write`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/) component
 
 #### Instructions
 
@@ -646,21 +647,18 @@ loki.process "autologging" {
     forward_to = [// TODO: Fill this in]
 }
 ```
+#### Tasks
 **`otelcol.connector.spanlogs`**
 
-For the `otelcol.connector.spanlogs` component to work, we will need to forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in section 5 to the `otelcol.connector.spanlogs`'s input.
-
-We'd like to make sure to only generate a log for each full trace(root), not for each span or process (that would be a lot of logs!).
-
-We should also make sure to include the `http.method`,`http.status_code`, `http.target` attributes in the logs.
-
-Then send the generated logs to the `otelcol.exporter.loki`'s input. 
+- Forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in section 5 to the `otelcol.connector.spanlogs`'s input.
+- Generate a log for each full trace(root), not for each span or process 
+- Include the `http.method`,`http.status_code`, `http.target` attributes in the logs.
+- send the generated logs to the `otelcol.exporter.loki`'s input. 
 
 **`otelcol.exporter.loki`** 
 
-This component accepts OTLP-formatted logs from other otelcol components and converts them to Loki-formatted log entries without further configuration. 
-
-Forward the Loki-formatted logs to the `loki.process "autologging"`'s receiver for further processing. 
+- This component accepts OTLP-formatted logs from other otelcol components and converts them to Loki-formatted log entries without further configuration. 
+- Forward the Loki-formatted logs to the `loki.process "autologging"`'s receiver for further processing. 
 
 **`loki.process`**
 
@@ -668,7 +666,7 @@ Use this component to:
   - Convert the body from JSON to logfmt using the `stage.json` and `stage.logfmt` stages
   - Add the `method`, `status`, and `target` labels from the `http.method`, `http.status_code`, and `http.target` attributes
 
-<img width="917" alt="image" src="https://github.com/user-attachments/assets/10aaff15-6561-4c6a-b21b-9d1f2a2d5be5" />
+<img width="1875" height="1053" alt="image" src="https://github.com/user-attachments/assets/b233bfc7-7b36-4137-913d-82e37bea4617" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
