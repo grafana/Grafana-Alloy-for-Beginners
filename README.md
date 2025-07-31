@@ -227,11 +227,8 @@ prometheus.remote_write "mimir" {
 
 `prometheus.scrape` component:
 - Set the scrape interval and scrape timeout to 2 seconds
-- Specify 
-  - Where to scrape data from (targets)
-    - Targets
-  - Where to send the data (forward_ to)
-    - Receiver 
+- Scrape `discovery.http.service_discovery` component's target
+- Forward the metrics to `prometheus.remote_write.mimir` component's receiver
 
 `prometheus.remote_write` component:
 - Export metrics to a local Mimir database ("http://mimir:9009/api/v1/push")
@@ -256,9 +253,7 @@ If we see a 0, that indicates there has been an error somewhere.
 
 - Expose metrics from the Postgres DB using the [`prometheus.exporter.postgres`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.postgres/) component
 - Scrape metrics from Postgres using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- Use the [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to 
-  - add the `group="infrastructure"` and `service="postgres"` labels
-  - replace the value of 'instance' label for a value that matches the regex ("^postgresql://([^/]+)")
+- Use the [`prometheus.relabel`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.relabel/) to add and modify labels
 - Export metrics to Mimir using the [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) component
 
 #### Instructions
@@ -292,21 +287,21 @@ prometheus.relabel "postgres" {
         replacement  = "//TODO: Fill this in"
     }
 
- //What we have: postgres_table_rows_count{instance="postgresql://mythical-database:5432/postgres"}
- //What we want: postgres_table_rows_count{instance="mythical-database:5432/postgres"}
+ //What we have: {instance="postgresql://mythical-database:5432/postgres"}
+ //What we want: {instance="mythical-database:5432/postgres"}
     
     rule {
-        // Replace the targeted label.
+        // Replace a label's value.
         action        = "//TODO: Fill this in"
 
         // The label we want to replace is 'instance'.
         target_label  = "//TODO: Fill this in"
 
-        // Look in the existing 'instance' label for a value that matches the regex.
+        // Look in the existing 'instance' label for anything starting with postgresql:// and capture what follows.
         source_labels = ["//TODO: Fill this in"]
         regex         = "^postgresql://(.+)"
         
-        // Use the first value found in the 'instance' label that matches the regex as the replacement value.
+        // Replace the value with just the captured part, leaving out the prefix.
         replacement   = "$1"
     }
 }
@@ -314,10 +309,9 @@ prometheus.relabel "postgres" {
 #### Tasks
 
 `prometheus.exporter.postgres`:
-- Specify the url of a local Postgres database to connect to and expose metrics for a Postgres database
-  - "postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable"
+- Specify the url of a local Postgres database to connect to and expose metrics for a Postgres database ("postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable")
 
-prometheus.scrape` component:
+`prometheus.scrape` component:
 -  Scrape the `prometheus.exporter.postgres.mythical` component's targets
 -  Forward the metrics to the `prometheus.relabel.postgres` component's receiver
 
@@ -344,21 +338,37 @@ We should also see an instance value of `mythical-database:5432/postgres` instea
 
 Alloy UI is a useful tool that helps you visualize how Alloy is configured and what it is doing so you are able to debug efficiently. 
 
-Navigate to `localhost:12345` to see the list of components (orange box) that alloy is currently configured with.
+Navigate to `localhost:12347` to see the list of components (orange box) that alloy is currently configured with.
 Click on the blue ‘view’ button on the right side (red arrow).
-<img width="914" alt="image" src="https://github.com/user-attachments/assets/5f4ac3f7-ab05-43f2-9840-0bac97a59fdd" />
+<img width="1874" height="1055" alt="image" src="https://github.com/user-attachments/assets/96be0cde-1e05-4e4b-b619-98fc44e4c063" />
 
-You will see details (green box) about what this component is configured with and what it is exporting.
-You can also access the links to view the documentation (orange arrow) for the component and the live debugging feature (yellow arrow). 
-<img width="907" alt="image" src="https://github.com/user-attachments/assets/84934f68-4964-4203-9dd5-47693d1a7505" />
+This page shows us the health of the component, the arguments it's using, and its current exports (green box). 
+
+This page also gives us quick access to the component’s documentation (orange arrow) and a Live Debugging view (yellow arrow). 
+<img width="1874" height="1054" alt="image" src="https://github.com/user-attachments/assets/097eaa44-b346-4c29-badd-44cc90652b9e" />
+
+When we click on the Live Debugging view, we will be able to see a real-time stream of telemetry flowing through a component.
+<img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/55491d17-5cf7-48fb-9311-34057e84b3f9" />
 
 Navigate to the ‘Graph’ tab (blue arrow) to access the graph of components and how they are connected.
+<img width="1873" height="1053" alt="image" src="https://github.com/user-attachments/assets/d9996c31-4c1a-4ca3-8ec4-57ec19c4b10a" />
 
-The number (red box) shown on the dotted lines shows the rate of transfer between components. The window at the top (orange box) configures the interval over which alloy should calculate the per-second rate, so a window of ‘10’ means that alloy should look over the last 10 seconds to compute the rate.
+The number (pink box) shown on the dotted lines shows the rate of transfer between components. The window at the top (orange box) configures the interval over which alloy should calculate the per-second rate, so a window of ‘10’ means that alloy should look over the last 10 seconds to compute the rate.
 
 The color of the dotted line signifies what type of data are being transferred between components. See the color key (purple box) for clarification. 
 
-<img width="910" alt="image" src="https://github.com/user-attachments/assets/95b20759-971f-410d-9598-d5db3213eef7" />
+Navigate to the `Clustering` tab (blue arrow) to view the instances of Alloy. 
+
+<img width="1875" height="1054" alt="image" src="https://github.com/user-attachments/assets/bf8e300a-122a-4602-b250-d28bb4b78673" />
+
+A `cluster node` is an instance of Alloy that participates in workload distribution and ensures high availability.
+
+The Clustering page in the Alloy UI shows the status and role of each node, so you can easily monitor which nodes are active, their addresses, and its current state.
+
+**To debug using the UI**
+- Ensure that no component is reported as unhealthy.
+- Ensure that the arguments and exports for misbehaving components appear correct.
+- Ensure that the live debugging data meets your expectations.
 
 # Application Observability 
 ## Collect, transform, and export application metrics, traces, and logs
@@ -367,7 +377,7 @@ The color of the dotted line signifies what type of data are being transferred b
 #### Objectives
 
 - Collect metrics from the Mythical services using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
-- [Write](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
+- [Export](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) metrics to locally running Mimir using the [`prometheus.write.queue`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.write.queue/) component
 
 #### Instructions
 
