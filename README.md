@@ -12,7 +12,7 @@
   - [Alloy components](https://grafana.com/docs/alloy/latest/reference/components/)
   - [Collect and forward data with Grafana Alloy](https://grafana.com/docs/alloy/latest/collect/)
   - [Grafana Alloy Tutorials](https://grafana.com/docs/alloy/latest/tutorials/)
-- For **solutions to sections and hands on exercises**, check out the branches of this repo
+- For **solutions to hands on exercises**, check out the branches of this repo
 - The learning environment was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). 
   - This repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
     
@@ -68,7 +68,7 @@ Before getting started, make sure you:
 ```
 git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
 ```
-- To start the environmnet, use the following command: 
+- To start the environment, use the following command: 
 ```
 #in the project directory
 make run
