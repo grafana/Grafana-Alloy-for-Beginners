@@ -68,7 +68,7 @@ Before getting started, make sure you:
 ```
 git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
 ```
-- In your Operating System and run: 
+- To start the environmnet, use the following command: 
 ```
 #in the project directory
 make run
