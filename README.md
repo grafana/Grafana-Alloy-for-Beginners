@@ -79,7 +79,7 @@ To stop the environment, run the following command from within the project's roo
 make stop
 ```
 
-In a separate terminal, open the project using a text editor of your choice.
+Open the project using a text editor of your choice.
 - Expand the alloy folder and open the `config.alloy` file.
 - We will be using this file to build pipelines for Infrastructure Observability and Applications Observability. 
 
