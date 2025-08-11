@@ -68,16 +68,17 @@ Before getting started, make sure you:
 ```
 git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
 ```
-- To start the environment, use the following command: 
+
+To start the environment, run the following command from within the project's root directory:
 ```
-#in the project directory
 make run
 ```
-- To stop the environment, use the following command:
+
+To stop the environment, run the following command from within the project's root directory:
 ```
-#in the project directory
 make stop
 ```
+
 In a separate terminal, open the project using a text editor of your choice.
 - Expand the alloy folder and open the `config.alloy` file.
 - We will be using this file to build pipelines for Infrastructure Observability and Applications Observability. 
@@ -141,6 +142,40 @@ loki.write "mythical" {
 - export the logs to a locally running Loki database ("http://loki:3100/loki/api/v1/push")
 
 <img width="1874" height="1053" alt="image" src="https://github.com/user-attachments/assets/649fe505-e3a6-4a74-b998-f00975f9d040" />
+
+<details>
+  <summary><h4>Expand to see the solution</h4></summary>
+
+```alloy
+logging {
+    format = "logfmt"
+    level  = "debug"
+
+    write_to = [loki.relabel.alloy_logs.receiver]
+}
+
+loki.relabel "alloy_logs" {
+    forward_to = [loki.write.mythical.receiver]
+
+    rule {
+        target_label = "group"
+        replacement  = "infrastructure"
+    }
+
+    rule {
+        target_label = "service"
+        replacement  = "alloy" 
+    }
+}
+
+loki.write "mythical" {
+    endpoint {
+        url = "http://loki:3100/loki/api/v1/push"
+    } 
+}
+```
+
+</details>
 
 #### Reloading the config
 
@@ -237,6 +272,32 @@ prometheus.remote_write "mimir" {
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
+<details>
+  <summary><h4>Expand to see the solution</h4></summary>
+
+```alloy
+discovery.http "service_discovery" {
+    url              = "http://service-discovery/targets.json" 
+    refresh_interval = "2s"
+}
+
+prometheus.scrape "infrastructure" {
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    targets    = discovery.http.service_discovery.targets
+    forward_to = [prometheus.remote_write.mimir.receiver]
+}
+
+prometheus.remote_write "mimir" {
+    endpoint {
+        url = "http://mimir:9009/api/v1/push"
+    }
+}
+```
+
+</details>
+
 #### Verification
 
 Navigate to the [Dashboards](http://localhost:3000/dashboards) page and select the `Section 2 Verification` dashboard.
@@ -324,6 +385,54 @@ prometheus.relabel "postgres" {
 <img width="1873" height="1050" alt="image" src="https://github.com/user-attachments/assets/6bd9119e-ceaa-42c8-9d27-250e64f095c1" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
+
+<details>
+  <summary><h4>Expand to see the solution</h4></summary>
+
+```alloy
+prometheus.exporter.postgres "mythical" {
+    data_source_names = ["postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable"]
+}
+
+prometheus.scrape "postgres" {
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    targets    =  prometheus.exporter.postgres.mythical.targets
+    forward_to =  [prometheus.relabel.postgres.receiver]
+}
+
+prometheus.relabel "postgres" {
+    forward_to =  [prometheus.remote_write.mimir.receiver]
+
+    rule {
+        target_label = "group"
+        replacement  = "infrastructure"
+    }
+
+    rule {
+        target_label = "service"
+        replacement  = "alloy"
+    }
+
+    rule {
+        // Replace the targeted label.
+        action        = "replace"
+
+        // The label we want to replace is 'instance'.
+        target_label  = "instance"
+
+        // Look in the existing 'instance' label for a value that matches the regex.
+        source_labels = ["instance"]
+        regex         = "^postgresql://(.+)"
+
+        // Use the first value found in the 'instance' label that matches the regex as the replacement value.
+        replacement   = "$1"
+    }
+}
+```
+
+</details>
 
 #### Verification
 
@@ -431,6 +540,31 @@ targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
+<details>
+  <summary><h4>Expand to see the solution</h4></summary>
+
+```alloy
+prometheus.scrape "mythical" {
+    scrape_interval = "2s"
+    scrape_timeout  = "2s"
+
+    targets = [
+        {"__address__" = "mythical-server:4000", group = "mythical", service = "mythical-server"},
+        {"__address__" = "mythical-requester:4001", group = "mythical", service = "mythical-requester"}, 
+    ]
+
+    forward_to = [prometheus.write.queue.experimental.receiver]
+}
+
+prometheus.write.queue "experimental" {
+    endpoint "mimir" {
+        url = "http://mimir:9009/api/v1/push"
+    }
+}
+```
+
+</details>
+
 #### Verification
 
 Navigate to Dashboards > `Section 4 Verification` and we should see a panel with the request rate per beast flowing!
@@ -511,6 +645,53 @@ otelcol.exporter.otlp "tempo" {
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
+<details>
+  <summary><h4>Expand to see the solution</h4></summary>
+
+```alloy
+otelcol.receiver.otlp "otlp_receiver" {
+    grpc {
+        endpoint = "0.0.0.0:4317"
+    }
+    http {
+        endpoint = "0.0.0.0:4318"
+    }
+    output {
+        traces = [
+            otelcol.processor.batch.default.input,
+            otelcol.connector.spanlogs.autologging.input,
+        ]
+    }
+}
+
+otelcol.processor.batch "default" {
+    output {
+        traces = [
+            otelcol.exporter.otlp.tempo.input,
+        ]
+    }
+
+    send_batch_size     = 1000
+    send_batch_max_size = 2000
+
+    timeout = "2s"
+}
+
+otelcol.exporter.otlp "tempo" {
+    client {
+        endpoint = "http://tempo:4317"
+
+        // This is a local instance of Tempo, so we can skip TLS verification
+        tls {
+            insecure             = true
+            insecure_skip_verify = true
+        }
+    }
+}
+```
+
+</details>
+
 #### Verification
 
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 5 Verification` and you should see a dashboard with a populated service graph, table of traces coming from the mythical-requester, and the rate of span ingestion by Tempo
@@ -572,7 +753,42 @@ loki.process "mythical" {
   - extract the timestamp from the log line using `stage.regex` with this regex: `^.*?loggedtime=(?P<loggedtime>\S+)`
   - set the timestamp of the log to the extracted timestamp
   - Forward the processed logs to Loki
-    
+
+Don't forget to [reload the config](#reloading-the-config) after finishing.
+
+<details>
+  <summary><h4>Expand to see the solution</h4></summary>
+
+```alloy
+loki.source.api "mythical" {
+    http {
+        listen_address = "0.0.0.0"
+        listen_port    = "3100"
+    }
+    forward_to = [loki.process.mythical.receiver]
+}
+
+loki.process "mythical" {
+    stage.static_labels {
+        values = {
+           service = "mythical",
+        }
+    }
+    stage.regex {
+            expression=`^.*?loggedtime=(?P<loggedtime>\S+)`
+    }
+
+    stage.timestamp {
+        source = "loggedtime"
+        format = "2006-01-02T15:04:05.000Z07:00"
+    }
+
+    forward_to = [loki.write.mythical.receiver]
+}
+```
+
+</details>
+
 #### Verification
 
 Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 6 Verification` and you should see a dashboard with the rate of logs coming from the mythical apps as well as panels showing the logs themselves for the server and requester
@@ -663,6 +879,58 @@ loki.process "autologging" {
 <img width="1875" height="1053" alt="image" src="https://github.com/user-attachments/assets/b233bfc7-7b36-4137-913d-82e37bea4617" />
 
 Don't forget to [reload the config](#reloading-the-config) after finishing.
+    
+<details>
+  <summary><h4>Expand to see the solution</h4></summary>
+
+```alloy
+otelcol.connector.spanlogs "autologging" {
+    roots = true
+    spans = false
+    processes = false
+
+    span_attributes = ["http.method", "http.target", "http.status_code"]
+
+    output {
+        logs = [otelcol.exporter.loki.autologging.input]
+    }
+}
+
+otelcol.exporter.loki "autologging" {
+    forward_to = [loki.process.autologging.receiver]
+}
+
+loki.process "autologging" {
+    stage.json {
+       expressions = {"body" = ""}
+    }
+
+    stage.output {
+       source = "body"
+    }
+
+    stage.logfmt {
+        mapping = {
+            http_method_extracted      = "http.method",
+            http_status_code_extracted = "http.target",
+            http_target_extracted      = "http.status_code",
+
+        }
+    }
+
+    stage.labels {
+        values = {
+            method = "http_method_extracted",
+            status = "http_status_code_extracted",
+            target = "http_target_extracted",
+        }
+    }
+
+    forward_to = [loki.write.mythical.receiver]
+}
+```
+
+</details>
 
 #### Verification
 
