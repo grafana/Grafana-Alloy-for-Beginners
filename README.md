@@ -68,16 +68,16 @@ Before getting started, make sure you:
 ```
 git clone https://github.com/grafana/Grafana-Alloy-for-Beginners.git
 ```
-- In your Operating System and run: 
+
+To start the environment, use the following command in the project directory:
 ```
-#in the project directory
 make run
 ```
-- To stop the environment, use the following command:
+To stop the environment, use the following command in the project directory:
 ```
-#in the project directory
 make stop
 ```
+
 In a separate terminal, open the project using a text editor of your choice.
 - Expand the alloy folder and open the `config.alloy` file.
 - We will be using this file to build pipelines for Infrastructure Observability and Applications Observability. 
@@ -143,7 +143,7 @@ loki.write "mythical" {
 <img width="1874" height="1053" alt="image" src="https://github.com/user-attachments/assets/649fe505-e3a6-4a74-b998-f00975f9d040" />
 
 <details>
-  <summary><h4>Solution</h4></summary>
+  <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
 logging {
@@ -272,7 +272,7 @@ prometheus.remote_write "mimir" {
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 <details>
-  <summary><h4>Solution</h4></summary>
+  <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
 discovery.http "service_discovery" {
@@ -386,7 +386,7 @@ prometheus.relabel "postgres" {
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 <details>
-  <summary><h4>Solution</h4></summary>
+  <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
 prometheus.exporter.postgres "mythical" {
@@ -540,7 +540,7 @@ targets = [{"__address__" = "mimir:9009",  env = "demo", service = "mimir"}]
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 <details>
-  <summary><h4>Solution</h4></summary>
+  <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
 prometheus.scrape "mythical" {
@@ -645,7 +645,7 @@ otelcol.exporter.otlp "tempo" {
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 <details>
-  <summary><h4>Solution</h4></summary>
+  <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
 otelcol.receiver.otlp "otlp_receiver" {
@@ -756,7 +756,7 @@ loki.process "mythical" {
 Don't forget to [reload the config](#reloading-the-config) after finishing.
 
 <details>
-  <summary><h4>Solution</h4></summary>
+  <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
 loki.source.api "mythical" {
@@ -880,7 +880,7 @@ loki.process "autologging" {
 Don't forget to [reload the config](#reloading-the-config) after finishing.
     
 <details>
-  <summary><h4>Solution</h4></summary>
+  <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
 otelcol.connector.spanlogs "autologging" {
