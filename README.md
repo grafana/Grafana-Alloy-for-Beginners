@@ -420,13 +420,13 @@ prometheus.relabel "postgres" {
 
      rule {
         // Replace a label's value.
-        action        = "//TODO: Fill this in"
+        action        = "replace"
 
         // The label we want to replace is 'instance'.
-        target_label  = "//TODO: Fill this in"
+        target_label  = "instance"
 
         // Look in the existing 'instance' label for anything starting with postgresql:// and capture what follows.
-        source_labels = ["//TODO: Fill this in"]
+         source_labels = ["instance"]
         regex         = "^postgresql://(.+)"
         
         // Replace the value with just the captured part, leaving out the prefix.
