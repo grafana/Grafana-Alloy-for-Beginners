@@ -412,7 +412,7 @@ prometheus.relabel "postgres" {
 
     rule {
         target_label = "service"
-        replacement  = "alloy"
+        replacement  = "postgres"
     }
 
      rule {
