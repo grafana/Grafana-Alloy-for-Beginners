@@ -147,6 +147,7 @@ loki.write "mythical" {
   <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
+//Section 1
 logging {
     format = "logfmt"
     level  = "debug"
@@ -276,6 +277,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
   <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
+//Section 2
 discovery.http "service_discovery" {
     url              = "http://service-discovery/targets.json" 
     refresh_interval = "2s"
@@ -390,6 +392,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
   <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
+//Section 3
 prometheus.exporter.postgres "mythical" {
     data_source_names = ["postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable"]
 }
@@ -544,6 +547,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
   <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
+//Section 4
 prometheus.scrape "mythical" {
     scrape_interval = "2s"
     scrape_timeout  = "2s"
@@ -649,6 +653,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
   <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
+//Section 5
 otelcol.receiver.otlp "otlp_receiver" {
     grpc {
         endpoint = "0.0.0.0:4317"
@@ -760,6 +765,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
   <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
+//Section 6
 loki.source.api "mythical" {
     http {
         listen_address = "0.0.0.0"
@@ -884,6 +890,7 @@ Don't forget to [reload the config](#reloading-the-config) after finishing.
   <summary><h4>Expand to see the solution</h4></summary>
 
 ```alloy
+//Section 7
 otelcol.connector.spanlogs "autologging" {
     roots = true
     spans = false
