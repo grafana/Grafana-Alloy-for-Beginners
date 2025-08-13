@@ -371,7 +371,7 @@ prometheus.relabel "postgres" {
 ```
 #### Tasks
 
-`prometheus.exporter.postgres`:
+`prometheus.exporter.postgres` component:
 - Specify the url of a local Postgres database to connect to and expose metrics for a Postgres database ("postgresql://postgres:mythical@mythical-database:5432/postgres?sslmode=disable")
 
 `prometheus.scrape` component:
@@ -631,7 +631,7 @@ otelcol.exporter.otlp "tempo" {
 
 ```
 `otelcol.receiver.otlp` component:
-- Open the doc for the [otelcol.receiver.otlp](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
+- Open the doc for the [`otelcol.receiver.otlp`](https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/) component
 - Find the default port for grpc and set its endpoint equal to it
 - Find the default port for http and set its endpoint equal to it
 - Using the `output` block, send the traces to the input of the `otelcol.processor.batch` component we will define next 
@@ -871,7 +871,7 @@ loki.process "autologging" {
 - Forward the spans from the `otelcol.receiver.otlp`'s output > traces we have defined in section 5 to the `otelcol.connector.spanlogs`'s input.
 - Generate a log for each full trace(root), not for each span or process 
 - Include the `http.method`,`http.status_code`, `http.target` attributes in the logs.
-- send the generated logs to the `otelcol.exporter.loki`'s input. 
+- Send the generated logs to the `otelcol.exporter.loki`'s input. 
 
 `otelcol.exporter.loki` component:
 
