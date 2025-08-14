@@ -571,7 +571,7 @@ prometheus.write.queue "experimental" {
 
 #### Verification
 
-Navigate to Dashboards > `Section 4 Verification` and we should see a panel with the request rate per beast flowing!
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 4 Verification` and we should see a panel with the request rate per beast flowing!
 
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/e3271544-b277-4114-a969-733ce4da064b" />
 
