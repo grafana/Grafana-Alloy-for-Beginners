@@ -941,7 +941,7 @@ loki.process "autologging" {
 
 #### Verification
 
-Navigate to Dashboards > `Section 7 Verification` and you should see a dashboard with panels containing the rate of spanlog ingestion as well as the spanlogs themselves.
+Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 7 Verification` and you should see a dashboard with panels containing the rate of spanlog ingestion as well as the spanlogs themselves.
 
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/07cea252-4ba4-489b-957f-eaaeccb07418" />
 
