@@ -1,13 +1,5 @@
 <img width="1874" height="1055" alt="image" src="https://github.com/user-attachments/assets/aaa6863c-967f-43fd-bd0c-538138d4fdc7" />
 
-[![Watch the video](https://img.youtube.com/vi/KWWI0WONPVE/0.jpg)](https://www.youtube.com/watch?v=KWWI0WONPVE)
-
-<img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/e3dd0e99-f78e-4767-9fda-d3e44daf9e1e" />
-<img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/68c41817-7f5b-4247-a23f-bdab60df8dcf" />
-<img width="1875" height="1055" alt="image" src="https://github.com/user-attachments/assets/10ed5e8d-fe6b-4529-ab14-4667012800ec" />
-<img width="1874" height="1053" alt="image" src="https://github.com/user-attachments/assets/9ba26adc-1ab3-4598-9fdb-ce61aafef952" />
-<img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/722500e5-d485-411f-841e-32d729dd0d0b" />
-
 # Resources 
 - [Grafana Alloy for Beginners YouTube Playlist](https://www.youtube.com/playlist?list=PLDGkOdUX1UjoUmd6Z-lKgGaGzmZvYxRWs)
 - [Grafana Alloy documentation](https://grafana.com/docs/alloy/latest/)
@@ -18,8 +10,20 @@
 - For **solutions to hands on exercises**, check out the branches of this repo
 - The learning environment was based off of [grafana/intro-to-mltp](https://github.com/grafana/intro-to-mltp). 
   - This repo is a great resource for learning about the Grafana stack end to end, so check it out if you'd like a full end-to-end working example!
+
+# Series overview
+⬇️ Click below to watch the Grafana Alloy for Beginners series overview.
+[![Watch the video](https://img.youtube.com/vi/KWWI0WONPVE/0.jpg)](https://www.youtube.com/watch?v=KWWI0WONPVE)
+
+<img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/e3dd0e99-f78e-4767-9fda-d3e44daf9e1e" />
+<img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/68c41817-7f5b-4247-a23f-bdab60df8dcf" />
+<img width="1875" height="1055" alt="image" src="https://github.com/user-attachments/assets/10ed5e8d-fe6b-4529-ab14-4667012800ec" />
+<img width="1874" height="1053" alt="image" src="https://github.com/user-attachments/assets/9ba26adc-1ab3-4598-9fdb-ce61aafef952" />
+<img width="1872" height="1053" alt="image" src="https://github.com/user-attachments/assets/722500e5-d485-411f-841e-32d729dd0d0b" />
     
 # What is Alloy? When does it make sense to use it? 
+💡 Watch the episode below to see what this section is all about!
+[![Watch the video](https://img.youtube.com/vi/bFyGd_Sr5W4/0.jpg)](https://www.youtube.com/watch?v=bFyGd_Sr5W4)
 <img width="1873" height="1052" alt="image" src="https://github.com/user-attachments/assets/2c5b4c90-e4cb-492f-814d-9a797cd710dd" />
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/f0f919f3-b68b-4847-902d-b3b9c1f48a02" />
 <img width="1871" height="1050" alt="image" src="https://github.com/user-attachments/assets/57e43ff8-5f3e-4dae-aaa0-5cef3b49645d" />
@@ -28,6 +32,9 @@
 <img width="1872" height="1051" alt="image" src="https://github.com/user-attachments/assets/fb39f801-a990-4924-b0e6-1f11572ffa29" />
 
 # Alloy configuration language 101
+🧩 Watch the episode below to learn the basics of Alloy’s configuration language and how to start building your own pipelines!
+
+[![Watch the video](https://img.youtube.com/vi/fN0uwuwm1Fo/0.jpg)](https://www.youtube.com/watch?v=fN0uwuwm1Fo)
 
 ### Think of Alloy as our trusty pal who can collect, process, and export our telemetry data. 
 
@@ -61,7 +68,9 @@ Focusing on these 3 things will point us in the right direction as we configure 
 <img width="1875" height="1052" alt="image" src="https://github.com/user-attachments/assets/46edeeee-502c-4002-8a3b-b69b74979de6" />
 
 # Learning environment setup
+✨ Watch the episode below to learn how to set up your Grafana Alloy learning environment and get ready to build your first pipelines!
 
+[![Watch the video](https://img.youtube.com/vi/fZRwVwCvLAg/0.jpg)](https://www.youtube.com/watch?v=fZRwVwCvLAg)
 <img width="1872" height="1050" alt="image" src="https://github.com/user-attachments/assets/2645a894-9e08-43e5-804c-ce01753d1ca7" />
 
 Before getting started, make sure you:
@@ -89,6 +98,9 @@ Open the project using a text editor of your choice.
 # Infrastructure Observability
 ## Collect, process, and export infrastructure logs and metrics
 ### Section 1: Build a pipeline for infrastructure logs with Alloy
+🪵 Watch the episode below to learn how to build a pipeline for infrastructure logs using Grafana Alloy!
+[![Watch the video](https://img.youtube.com/vi/FFtvoc6iQVE/0.jpg)](https://www.youtube.com/watch?v=FFtvoc6iQVE)
+
 #### Objectives
 - Collect logs from Alloy using the [`logging`](https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/) block
 - Use [`loki.relabel`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.relabel/) to add labels to the logs
@@ -210,9 +222,11 @@ Expand a log line to view its labels.
 You should see labels "group = infrastructure" and "service = alloy".
 
 ### Section 2: Build a pipeline for infrastructure metrics with Alloy - Part I
+📊 Watch the episode below to learn how to discover, collect, process, and export infrastructure metrics using Grafana Alloy!
+
+[![Watch the video](https://img.youtube.com/vi/tT2r5gHFqzY/0.jpg)](https://www.youtube.com/watch?v=tT2r5gHFqzY)
 
 #### Objectives
-
 - Use the [`discovery.http`](https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.http/) component to discover the targets to scrape
 - Scrape the targets' metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
 - Use the [`prometheus.remote_write`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/) component to export metrics to the locally running Mimir
@@ -314,6 +328,9 @@ If we see a 0, that indicates there has been an error somewhere.
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/a7f7d7f8-e0d8-4cc2-b76a-c0d03e55d8d5" />
 
 ### Section 3: Build a pipeline for infrastructure metrics with Alloy - Part II
+📈 Watch the episode below to learn how to expose, scrape, process, and export metrics from a Postgres database using Grafana Alloy!
+
+[![Watch the video](https://img.youtube.com/vi/U_MWuJR76d4/0.jpg)](https://www.youtube.com/watch?v=U_MWuJR76d4)
 
 #### Objectives
 
@@ -450,6 +467,10 @@ We should also see an instance value of `mythical-database:5432/postgres` instea
 <img width="910" alt="image" src="https://github.com/user-attachments/assets/5907b198-b732-4b7d-a0a5-65dcf47f7e4c" />
 
 ### How to use the Alloy UI to debug pipelines
+
+🐞 Watch the episode below to learn how to debug pipelines visually with the Alloy UI!
+
+[![Watch the video](https://img.youtube.com/vi/B-5bcVlVuMY/0.jpg)](https://www.youtube.com/watch?v=B-5bcVlVuMY)
 
 Alloy UI is a useful tool that helps you visualize how Alloy is configured and what it is doing so you are able to debug efficiently. 
 
