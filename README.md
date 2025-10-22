@@ -1,6 +1,6 @@
 <img width="1874" height="1055" alt="image" src="https://github.com/user-attachments/assets/aaa6863c-967f-43fd-bd0c-538138d4fdc7" />
 
-[![Watch the video](https://img.youtube.com/vi/_KWWI0WONPVE/0.jpg)](https://www.youtube.com/watch?v=_KWWI0WONPVE)
+[![Watch the video](https://img.youtube.com/vi/KWWI0WONPVE/0.jpg)](https://www.youtube.com/watch?v=KWWI0WONPVE)
 
 <img width="1873" height="1051" alt="image" src="https://github.com/user-attachments/assets/e3dd0e99-f78e-4767-9fda-d3e44daf9e1e" />
 <img width="1872" height="1052" alt="image" src="https://github.com/user-attachments/assets/68c41817-7f5b-4247-a23f-bdab60df8dcf" />
