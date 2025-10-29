@@ -837,7 +837,7 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 6 Verifica
 
 ### Section 7: Generate logs from application traces with Alloy
 
-💡 Watch the video below to learn how to generate logs from application traces with Alloy!
+🌟 Watch the video below to learn how to generate logs from application traces with Alloy!
 [![Watch the video](https://img.youtube.com/vi/r4qawjD7j4M/0.jpg)](https://www.youtube.com/watch?v=r4qawjD7j4M)
 
 #### Objectives
