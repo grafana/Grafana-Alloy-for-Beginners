@@ -510,6 +510,10 @@ The Clustering page in the Alloy UI shows the status and role of each node, so y
 ## Collect, transform, and export application metrics, traces, and logs
 ### Section 4: Build a pipeline for application metrics with Alloy
 
+🔧 Watch the video below to learn how to build your appplication metrics pipeline with Alloy!
+
+[![Watch the video](https://img.youtube.com/vi/73Y2LwucXNg/0.jpg)](https://www.youtube.com/watch?v=73Y2LwucXNg)
+
 #### Objectives
 
 - Collect application metrics using the [`prometheus.scrape`](https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.scrape/) component
@@ -600,6 +604,9 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 4 Verifica
 <img width="909" alt="image" src="https://github.com/user-attachments/assets/e3271544-b277-4114-a969-733ce4da064b" />
 
 ### Section 5: Build a pipeline for application traces with Alloy
+
+🚀 Watch the video below to learn how to build your appplication traces pipeline with Alloy!
+[![Watch the video](https://img.youtube.com/vi/0Twbc69n03A/0.jpg)](https://www.youtube.com/watch?v=0Twbc69n03A)
 
 #### Objectives
 
@@ -732,8 +739,11 @@ You can also navigate to [Dashboards](http://localhost:3000/dashboards) > `MLT D
 <img width="914" alt="image" src="https://github.com/user-attachments/assets/d0822e32-0af2-4f13-b6de-2c037d2e8a93" />
 
 ### Section 6: Build a pipeline for application logs with Alloy
-#### Objectives
 
+💡 Watch the video below to learn how to build your appplication logs pipeline with Alloy!
+[![Watch the video](https://img.youtube.com/vi/EpJSBPlW-iA/0.jpg)](https://www.youtube.com/watch?v=EpJSBPlW-iA)
+
+#### Objectives
 - Ingest application logs using the [`loki.source.api`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.api/) component
 - Add labels to logs using the [`loki.process`](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) component
 - [Use](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/) `stage.regex` and `stage.timestamp` to extract the timestamp from the log lines and set the log’s timestamp
@@ -826,6 +836,9 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 6 Verifica
 <img width="913" alt="image" src="https://github.com/user-attachments/assets/01b5718b-aa1c-47d6-92a1-206aca81066c" />
 
 ### Section 7: Generate logs from application traces with Alloy
+
+💡 Watch the video below to learn how to generate logs from application traces with Alloy!
+[![Watch the video](https://img.youtube.com/vi/r4qawjD7j4M/0.jpg)](https://www.youtube.com/watch?v=r4qawjD7j4M)
 
 #### Objectives
 
