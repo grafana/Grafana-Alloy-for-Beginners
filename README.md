@@ -200,7 +200,7 @@ Whenever we make changes to the file, we must reload the config.
 To reload Alloy's config, hit the following endpoint in a browser or with a tool like `curl`:
 
 ```bash
-curl -X POST http://localhost:12345/-/reload
+curl -X POST http://localhost:12347/-/reload
 ```
 
 If the config is valid, we should see a response like the following:
