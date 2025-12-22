@@ -119,6 +119,15 @@ logging {
   write_to = [//TODO: Fill this in]
 }
 
+loki.source.api "mythical_apps" {
+    http {
+        listen_address = "//TODO: Fill this in"
+        listen_port    = //TODO: FIll this in
+    }
+
+    forward_to = [//TODO: Fill this in]
+}
+
 loki.relabel "alloy_logs" {
    forward_to = [//TODO: Fill this in]
 
@@ -146,6 +155,12 @@ loki.write "mythical" {
 - set the log level to "debug"
 - send the logs to the receiver of the`loki.relabel.alloy_logs` component
 
+`loki.source.api` block:
+
+- Use the `http` block to
+  - listen on `"0.0.0.0"` address and `3100` port
+- forward logs to `loki.write.mythical.receiver` component
+
 `loki.relabel` component:
 - Use the `rule` block to
   - set the `group` label to "infrastructure"
@@ -168,6 +183,15 @@ logging {
     level  = "debug"
 
     write_to = [loki.relabel.alloy_logs.receiver]
+}
+
+loki.source.api "mythical_apps" {
+    http {
+        listen_address = "0.0.0.0"
+        listen_port    = 3100
+    }
+
+    forward_to = [loki.write.mythical.receiver]
 }
 
 loki.relabel "alloy_logs" {
