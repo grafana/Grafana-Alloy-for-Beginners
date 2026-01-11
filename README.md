@@ -191,7 +191,7 @@ loki.source.api "mythical_apps" {
         listen_port    = 3100
     }
 
-    forward_to = [loki.write.mythical.receiver]
+    forward_to = [loki.relabel.alloy_logs.receiver]
 }
 
 loki.relabel "alloy_logs" {
