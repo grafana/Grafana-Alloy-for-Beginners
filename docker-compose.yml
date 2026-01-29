@@ -136,7 +136,7 @@ services:
   # The Tempo service stores traces send to it by Grafana Alloy, and takes
   # queries from Grafana to visualise those traces.
   tempo:
-    image: grafana/tempo:2.7.0
+    image: grafana/tempo:2.10.0@sha256:d7f4c72e0bad2b42b4e7263b0addaf3f5bbc105cec6b1917eba0aae3b9b70364
     ports:
       - "3200:3200"
       - "9411:9411"
