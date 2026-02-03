@@ -985,6 +985,7 @@ Navigate to [Dashboards](http://localhost:3000/dashboards) > `Section 7 Verifica
 <img width="911" alt="image" src="https://github.com/user-attachments/assets/fa6b332e-9f32-4844-8213-263f68427ba3" />
 
 # Hands-on Exercises
+🕵️‍♂️ Take a look at these videos to uncover the mission and how the solutions come together.
 
 [![Watch the video](https://img.youtube.com/vi/obUholL0E58/0.jpg)](https://www.youtube.com/watch?v=obUholL0E58)
 [![Watch the video](https://img.youtube.com/vi/qmwMGXx7FFE/0.jpg)](https://www.youtube.com/watch?v=qmwMGXx7FFE)
