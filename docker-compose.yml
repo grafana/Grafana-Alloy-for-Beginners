@@ -166,7 +166,7 @@ services:
       - "./mimir/mimir.yaml:/etc/mimir.yaml"
 
   pyroscope:
-    image: grafana/pyroscope:1.13.1
+    image: grafana/pyroscope:1.21.1@sha256:23f366803b418ca6b80f510f2dbcec22178a836dfe1fe828261d93273c0a4f97
     ports:
       - "4040:4040"
     command: ["server"]
