@@ -26,7 +26,7 @@ services:
 
   # The Grafana dashboarding server.
   grafana:
-    image: grafana/grafana:11.5.1
+    image: grafana/grafana:11.6.16@sha256:d67af92050b8d93b393dc741864752a69c9da1ffa39c1bb9af49ad5d9e47d2c3
     volumes:
       - "./grafana/definitions:/var/lib/grafana/dashboards"
       - "./grafana/provisioning:/etc/grafana/provisioning"
