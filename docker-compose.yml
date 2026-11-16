@@ -158,7 +158,7 @@ services:
       - "./loki/loki.yaml:/etc/loki/loki.yaml"
 
   mimir:
-    image: grafana/mimir:2.15.0
+    image: grafana/mimir:2.17.12@sha256:16eae6cb98dc028e7356370bb58f38b93bb711e2a91c004694836d60d2c2f3fa
     command: ["-ingester.native-histograms-ingestion-enabled=true", "-config.file=/etc/mimir.yaml"]
     ports:
       - "9009:9009"
